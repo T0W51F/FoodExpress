@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Cart - FoodExpress</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/responsive.css">
+    <link rel="stylesheet" href="../assets/css/cart.css?v=20260331-2230">
+    <link rel="stylesheet" href="../assets/css/checkout-modal.css?v=20260408">
+    <style>
+        body.cart-page .cart-shell { padding-top: 40px; padding-bottom: 56px; }
+        body.cart-page .cart-page-header { margin-bottom: 28px; }
+        body.cart-page .cart-kicker {
+            display: inline-flex;
+            align-items: center;
+            padding: 8px 14px;
+            border-radius: 999px;
+            background: rgba(232, 92, 44, 0.12);
+            border: 1px solid rgba(232, 92, 44, 0.22);
+            color: #ffb89d;
+            font-size: 0.82rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+        body.cart-page .cart-items,
+        body.cart-page .order-summary { border-radius: 28px; overflow: hidden; }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/svg+xml" href="../assets/images/favicon.svg">
+</head>
+<body class="site-dark cart-page">
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="logo home-logo">
+                <span class="logo-mark" aria-hidden="true">
+                    <i class="fas fa-utensils"></i>
+                </span>
+                <span class="logo-lockup">
+                    <span class="logo-wordmark"><span class="food">Food</span><span class="express">Express</span></span>
+                </span>
+            </a>
+            
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="restaurants.html">Restaurants</a>
+                <a href="orders.html">My Orders</a>
+                <a href="cart.html" class="cart-icon active">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count">0</span>
+                </a>
+                <div class="user-menu">
+                    <button class="user-btn">
+                        <i class="fas fa-user"></i>
+                        <span id="username">Guest</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="user-dropdown">
+                        <a href="settings.html"><i class="fas fa-cog"></i> Settings</a>
+                        <hr>
+                        <a href="login.html" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </div>
+                </div>
+            </div>
+            
+            <button class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <div class="container cart-shell">
+        <div class="page-header cart-page-header">
+            <span class="cart-kicker">Ready To Review</span>
+            <h1>Your Shopping Cart</h1>
+            <p>Adjust quantities, confirm delivery details, and keep the order clean before checkout.</p>
+        </div>
+        
+        <div class="cart-container">
+            <div class="cart-items" id="cart-items">
+                <div class="cart-empty" id="cart-empty">
+                    <i class="fas fa-shopping-cart"></i>
+                    <h3>Your cart is empty</h3>
+                    <p>Add some delicious food from our restaurants!</p>
+                    <a href="restaurants.html" class="btn btn-primary">Browse Restaurants</a>
+                </div>
+            </div>
+            
+            <div class="order-summary checkout-card">
+                <div class="checkout-card-head">
+                    <span class="checkout-kicker">Checkout</span>
+                    <h3>Order Summary</h3>
+                    <p>Everything in one place before you lock the order in.</p>
+                </div>
+
+                <div class="checkout-stat-strip">
+                    <div>
+                        <span>Delivery</span>
+                        <strong id="delivery-time">25-35 minutes</strong>
+                    </div>
+                    <div>
+                        <span>Payment</span>
+                        <strong>Secure</strong>
+                    </div>
+                </div>
+                
+                <div class="summary-details checkout-summary-details">
+                    <div class="summary-row">
+                        <span>Subtotal</span>
+                        <span id="subtotal">Tk 0.00</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Delivery Fee</span>
+                        <span id="delivery-fee">Tk 0.00</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Tax (8.5%)</span>
+                        <span id="tax">Tk 0.00</span>
+                    </div>
+                    <div class="summary-row total">
+                        <span>Total</span>
+                        <span id="total">Tk 0.00</span>
+                    </div>
+                </div>
+                
+                <div class="delivery-info checkout-delivery-note">
+                    <h4><i class="fas fa-clock"></i> Timing Window</h4>
+                    <p>Freshly prepared and routed as fast as possible.</p>
+                </div>
+                
+                <div class="promo-code checkout-promo">
+                    <input type="text" id="promo-code" placeholder="Promo Code">
+                    <button class="btn btn-outline" id="apply-promo">Apply</button>
+                </div>
+                
+                <div class="checkout-buttons">
+                    <button class="btn btn-primary btn-large" id="checkout-btn">
+                        <i class="fas fa-lock"></i> Proceed to Checkout
+                    </button>
+                    <a href="restaurants.html" class="btn btn-outline btn-large">
+                        Continue Shopping
+                    </a>
+                </div>
+                
+                <div class="payment-methods checkout-payment-shell">
+                    <p><i class="fas fa-shield-alt"></i> Secure payment methods</p>
+                    <div class="payment-icons">
+                        <i class="fab fa-cc-visa"></i>
+                        <i class="fab fa-cc-mastercard"></i>
+                        <i class="fab fa-cc-amex"></i>
+                        <i class="fab fa-cc-paypal"></i>
+                        <i class="fab fa-cc-apple-pay"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="checkout-modal">
+        <div class="co-shell">
+
+            <!-- Header -->
+            <div class="co-header">
+                <span class="co-title">Checkout</span>
+                <button class="co-close modal-close">&times;</button>
+            </div>
+
+            <!-- Step bar -->
+            <div class="co-stepbar checkout-steps">
+                <div class="co-stepitem step active" data-step="1">
+                    <div class="co-stepnum"><span>1</span></div>
+                    <span class="co-steplabel">Delivery</span>
+                </div>
+                <div class="co-stepline"></div>
+                <div class="co-stepitem step" data-step="2">
+                    <div class="co-stepnum"><span>2</span></div>
+                    <span class="co-steplabel">Payment</span>
+                </div>
+                <div class="co-stepline"></div>
+                <div class="co-stepitem step" data-step="3">
+                    <div class="co-stepnum"><span>3</span></div>
+                    <span class="co-steplabel">Confirm</span>
+                </div>
+            </div>
+
+            <!-- Body -->
+            <div class="co-body">
+                <form id="checkout-form">
+
+                    <!-- Step 1: Delivery -->
+                    <div class="checkout-step active" id="step-1">
+                        <div class="co-row">
+                            <div class="co-field">
+                                <label for="contact-name">Name</label>
+                                <input type="text" id="contact-name" placeholder="Full name" required>
+                            </div>
+                            <div class="co-field">
+                                <label for="contact-phone">Phone</label>
+                                <input type="tel" id="contact-phone" placeholder="01XXXXXXXXX" required>
+                            </div>
+                        </div>
+                        <div class="co-field">
+                            <label for="delivery-address">Delivery Address</label>
+                            <input type="text" id="delivery-address" placeholder="Street, area, apt / floor..." required>
+                        </div>
+                        <div class="co-field">
+                            <label for="delivery-instructions">Notes <span class="co-opt">optional</span></label>
+                            <textarea id="delivery-instructions" rows="2" placeholder="Landmark, gate code, any instructions..."></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Step 2: Payment -->
+                    <div class="checkout-step" id="step-2">
+                        <p class="co-hint">Select a payment method</p>
+                        <div class="co-paylist">
+                            <label class="co-payopt payment-option active">
+                                <input type="radio" name="payment" value="card" checked>
+                                <span class="co-radio"></span>
+                                <span class="co-paylabel">Credit / Debit Card</span>
+                            </label>
+                            <label class="co-payopt payment-option">
+                                <input type="radio" name="payment" value="paypal">
+                                <span class="co-radio"></span>
+                                <span class="co-paylabel">PayPal</span>
+                            </label>
+                            <label class="co-payopt payment-option">
+                                <input type="radio" name="payment" value="cash">
+                                <span class="co-radio"></span>
+                                <span class="co-paylabel">Cash on Delivery</span>
+                            </label>
+                        </div>
+                        <div class="co-cardbox card-details" id="card-details">
+                            <div class="co-field">
+                                <label for="card-number">Card Number</label>
+                                <input type="text" id="card-number" placeholder="1234 5678 9012 3456">
+                            </div>
+                            <div class="co-row">
+                                <div class="co-field">
+                                    <label for="expiry-date">Expiry</label>
+                                    <input type="text" id="expiry-date" placeholder="MM/YY">
+                                </div>
+                                <div class="co-field">
+                                    <label for="cvv">CVV</label>
+                                    <input type="text" id="cvv" placeholder="123">
+                                </div>
+                            </div>
+                            <div class="co-field">
+                                <label for="card-name">Name on Card</label>
+                                <input type="text" id="card-name" placeholder="As printed on card">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 3: Confirmation -->
+                    <div class="checkout-step" id="step-3">
+                        <div class="co-confirmed">
+                            <div class="co-checkicon confirmation-icon">
+                                <i class="fas fa-check"></i>
+                            </div>
+                            <h4 class="co-confirmed-title">Order Confirmed!</h4>
+                            <p class="co-confirmed-sub">Order #<span id="order-number">—</span> placed successfully</p>
+                            <p class="co-confirmed-eta">Estimated delivery: <strong id="confirmed-delivery-time">25–35 min</strong></p>
+                        </div>
+                        <div class="co-summary order-summary-confirm">
+                            <div class="co-summary-head">Order Summary</div>
+                            <div class="co-summary-items summary-items" id="confirm-items"></div>
+                            <div class="co-summary-total summary-total">
+                                <span>Total</span>
+                                <strong id="confirm-total">Tk 0.00</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+
+            <!-- Footer -->
+            <div class="co-footer">
+                <button class="co-btn-ghost" id="prev-step">Previous</button>
+                <div class="co-footer-right">
+                    <button class="co-btn-primary" id="next-step">Next Step</button>
+                    <button class="co-btn-primary" id="place-order" style="display:none">Place Order</button>
+                    <a href="index.html" class="co-btn-primary" id="back-to-home" style="display:none">Back to Home</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2026 FoodExpress. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../assets/js/main.js"></script>
+    <script src="../assets/js/cart.js"></script>
+    <script src="../assets/js/api.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            checkLoginStatus();
+            loadCartItems();
+            updateCartCount();
+            setupCheckoutModal();
+        });
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+

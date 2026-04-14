@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Orders - FoodExpress</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/responsive.css">
+    <link rel="stylesheet" href="../assets/css/orders.css?v=20260401-0015">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/svg+xml" href="../assets/images/favicon.svg">
+</head>
+<body class="site-dark orders-page">
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="logo home-logo">
+                <span class="logo-mark" aria-hidden="true"><i class="fas fa-utensils"></i></span>
+                <span class="logo-lockup"><span class="logo-wordmark"><span class="food">Food</span><span class="express">Express</span></span></span>
+            </a>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="restaurants.html">Restaurants</a>
+                <a href="orders.html" class="active">My Orders</a>
+                <a href="cart.html" class="cart-icon"><i class="fas fa-shopping-cart"></i><span class="cart-count">0</span></a>
+                <div class="user-menu">
+                    <button class="user-btn">
+                        <i class="fas fa-user"></i>
+                        <span id="username">Guest</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="user-dropdown">
+                        <a href="orders.html"><i class="fas fa-history"></i> Order History</a>
+                        <a href="settings.html"><i class="fas fa-cog"></i> Settings</a>
+                        <hr>
+                        <a href="login.html" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </div>
+                </div>
+            </div>
+            <button class="menu-toggle"><i class="fas fa-bars"></i></button>
+        </div>
+    </nav>
+
+    <main class="orders-shell container">
+        <section class="orders-header">
+            <div>
+                <h1>My Orders</h1>
+                <p>Track current orders and review past ones.</p>
+            </div>
+            <a href="restaurants.html" class="btn btn-outline"><i class="fas fa-store"></i> Browse Food</a>
+        </section>
+
+        <section class="orders-tabs-panel">
+            <div class="orders-tabs">
+                <button class="tab-btn active" data-status="all">All</button>
+                <button class="tab-btn" data-status="pending">Pending</button>
+                <button class="tab-btn" data-status="preparing">Preparing</button>
+                <button class="tab-btn" data-status="delivering">On the Way</button>
+                <button class="tab-btn" data-status="delivered">Delivered</button>
+            </div>
+        </section>
+
+        <section class="active-order" id="active-order"></section>
+
+        <section class="orders-list-section">
+            <div class="orders-list" id="orders-list"></div>
+
+            <div class="no-orders" id="no-orders" style="display: none;">
+                <i class="fas fa-shopping-bag"></i>
+                <h3>No Orders Yet</h3>
+                <p>Your orders will appear here after checkout.</p>
+                <a href="restaurants.html" class="btn btn-primary">Order Now</a>
+            </div>
+
+            <div class="load-more" hidden>
+                <button class="btn btn-outline" id="load-more-orders">
+                    <i class="fas fa-history"></i> Load More Orders
+                </button>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer footer-minimal">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2026 FoodExpress. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../assets/js/main.js"></script>
+    <script src="../assets/js/api.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            checkLoginStatus();
+            loadOrders();
+            updateCartCount();
+            setupOrderTabs();
+        });
+    </script>
+</body>
+</html>
+
+

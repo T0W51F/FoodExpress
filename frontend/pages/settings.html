@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Settings - FoodExpress</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/responsive.css">
+    <link rel="stylesheet" href="../assets/css/settings.css">
+    <link rel="icon" type="image/svg+xml" href="../assets/images/favicon.svg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="site-dark settings-page">
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="logo home-logo">
+                <span class="logo-mark" aria-hidden="true"><i class="fas fa-utensils"></i></span>
+                <span class="logo-lockup"><span class="logo-wordmark"><span class="food">Food</span><span class="express">Express</span></span></span>
+            </a>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="restaurants.html">Restaurants</a>
+                <a href="orders.html">My Orders</a>
+                <a href="cart.html" class="cart-icon"><i class="fas fa-shopping-cart"></i><span class="cart-count">0</span></a>
+                <div class="user-menu">
+                    <button class="user-btn"><i class="fas fa-user"></i><span id="username">Guest</span><i class="fas fa-chevron-down"></i></button>
+                    <div class="user-dropdown">
+                        <a href="settings.html"><i class="fas fa-cog"></i> Settings</a>
+                        <hr>
+                        <a href="login.html" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </div>
+                </div>
+            </div>
+            <button class="menu-toggle"><i class="fas fa-bars"></i></button>
+        </div>
+    </nav>
+
+    <main class="settings-shell container">
+        <section class="settings-hero">
+            <div class="settings-hero-copy">
+                <span class="settings-kicker">Account Center</span>
+                <h1>Refine how your profile shows up across FoodExpress.</h1>
+                <p>Update the details your account uses for checkout, order tracking, and the signed-in experience across the app.</p>
+                <div class="settings-hero-actions">
+                    <a href="index.html" class="btn btn-primary"><i class="fas fa-house"></i> Back Home</a>
+                </div>
+            </div>
+            <div class="settings-hero-panel">
+                <div class="settings-hero-chip"><i class="fas fa-shield-heart"></i> Profile updates sync instantly</div>
+                <div class="settings-hero-grid">
+                    <div>
+                        <span>Account Type</span>
+                        <strong>Customer</strong>
+                    </div>
+                    <div>
+                        <span>Checkout Status</span>
+                        <strong>Ready</strong>
+                    </div>
+                    <div>
+                        <span>Profile Visibility</span>
+                        <strong>Navbar Enabled</strong>
+                    </div>
+                    <div>
+                        <span>Delivery Contact</span>
+                        <strong>Editable</strong>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="settings-layout settings-layout-single">
+            <aside class="settings-sidebar-card">
+                <div class="settings-profile-card">
+                    <div id="settings-avatar" class="user-avatar settings-avatar">U</div>
+                    <h2 id="settings-display-name">Your Profile</h2>
+                    <p>Changes here shape the name and identity cues used across the storefront.</p>
+                    <div class="settings-profile-meta">
+                        <div>
+                            <span>Signed-in Experience</span>
+                            <strong>Personalized</strong>
+                        </div>
+                        <div>
+                            <span>Status</span>
+                            <strong>Active</strong>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <section class="settings-main-card">
+                <div class="settings-section-head">
+                    <div>
+                        <span class="settings-section-label">Personal Details</span>
+                        <h2>Profile Information</h2>
+                    </div>
+                </div>
+
+                <form id="settings-form" class="settings-form">
+                    <div class="settings-form-grid two-up">
+                        <label class="settings-field">
+                            <span>First Name</span>
+                            <input id="settings-first-name" type="text" required>
+                        </label>
+                        <label class="settings-field">
+                            <span>Last Name</span>
+                            <input id="settings-last-name" type="text" required>
+                        </label>
+                    </div>
+
+                    <div class="settings-form-grid two-up">
+                        <label class="settings-field settings-field-locked">
+                            <span>Email Address</span>
+                            <input id="settings-email" type="email" disabled>
+                            <small>Used for sign-in and secured at the account level.</small>
+                        </label>
+                        <label class="settings-field">
+                            <span>Phone Number</span>
+                            <input id="settings-phone" type="text" placeholder="+8801XXXXXXXXX">
+                            <small>Used for order coordination and rider contact.</small>
+                        </label>
+                    </div>
+
+                    <div class="settings-strip">
+                        <div>
+                            <span>Live Preview</span>
+                            <strong>Your updated initials and display name refresh as you type.</strong>
+                        </div>
+                        <div>
+                            <i class="fas fa-wand-magic-sparkles"></i>
+                        </div>
+                    </div>
+
+                    <div class="settings-actions">
+                        <button type="submit" class="btn btn-primary"><i class="fas fa-floppy-disk"></i> Save Changes</button>
+                        <a href="index.html" class="btn btn-outline"><i class="fas fa-arrow-left"></i> Cancel</a>
+                    </div>
+                </form>
+            </section>
+        </section>
+    </main>
+
+    <script src="../assets/js/api.js"></script>
+    <script src="../assets/js/main.js"></script>
+    <script src="../assets/js/settings.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const firstNameInput = document.getElementById('settings-first-name');
+            const lastNameInput = document.getElementById('settings-last-name');
+            const displayName = document.getElementById('settings-display-name');
+
+            function updateDisplayName() {
+                if (!displayName || !firstNameInput || !lastNameInput) return;
+                const fullName = `${firstNameInput.value || ''} ${lastNameInput.value || ''}`.trim();
+                displayName.textContent = fullName || 'Your Profile';
+            }
+
+            firstNameInput?.addEventListener('input', updateDisplayName);
+            lastNameInput?.addEventListener('input', updateDisplayName);
+            setTimeout(updateDisplayName, 0);
+        });
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+

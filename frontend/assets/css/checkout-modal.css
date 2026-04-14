@@ -1,0 +1,501 @@
+/* ================================================
+   CHECKOUT MODAL — FULL REBUILD
+   All styles scoped to #checkout-modal
+   ================================================ */
+
+/* Overlay (base .modal show/hide handled by style.css) */
+#checkout-modal {
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+/* Main shell */
+#checkout-modal .co-shell {
+    width: 100%;
+    max-width: 540px;
+    max-height: 88vh;
+    background: rgba(10, 13, 17, 0.78);
+    backdrop-filter: blur(28px);
+    -webkit-backdrop-filter: blur(28px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 24px 64px rgba(0, 0, 0, 0.5);
+}
+
+/* ── Header ─────────────────────────────────── */
+#checkout-modal .co-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 22px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    flex-shrink: 0;
+    background: rgba(255, 255, 255, 0.02);
+}
+
+#checkout-modal .co-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #f0f4f8;
+}
+
+#checkout-modal .co-close {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255, 255, 255, 0.07);
+    color: rgba(240, 244, 248, 0.65);
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.15s, color 0.15s;
+}
+
+#checkout-modal .co-close:hover {
+    background: rgba(255, 255, 255, 0.14);
+    color: #f0f4f8;
+}
+
+/* ── Step bar ────────────────────────────────── */
+#checkout-modal .co-stepbar {
+    display: flex !important;
+    align-items: center;
+    padding: 14px 22px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    flex-shrink: 0;
+    /* kill style.css grid */
+    grid-template-columns: unset !important;
+    gap: 0 !important;
+    margin-bottom: 0 !important;
+}
+
+#checkout-modal .co-stepbar::before {
+    display: none !important;
+}
+
+#checkout-modal .co-stepitem {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    /* kill style.css .step overrides */
+    min-height: unset !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+    background: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    transform: none !important;
+    text-align: center;
+    justify-content: unset;
+}
+
+#checkout-modal .co-stepnum {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.18);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: border-color 0.2s, background 0.2s;
+}
+
+/* kill style.css span:first-child sizing */
+#checkout-modal .co-stepnum span {
+    width: unset !important;
+    height: unset !important;
+    background: none !important;
+    border: none !important;
+    border-radius: 0 !important;
+    display: inline !important;
+    font-size: 0.78rem !important;
+    font-weight: 700;
+    color: rgba(240, 244, 248, 0.45);
+}
+
+#checkout-modal .co-steplabel {
+    font-size: 0.7rem !important;
+    font-weight: 500;
+    color: rgba(240, 244, 248, 0.4) !important;
+}
+
+#checkout-modal .co-stepitem.active .co-stepnum {
+    border-color: #e85c2c;
+    background: #e85c2c;
+}
+
+#checkout-modal .co-stepitem.active .co-stepnum span {
+    color: #fff !important;
+}
+
+#checkout-modal .co-stepitem.active .co-steplabel {
+    color: #ffb89d !important;
+    font-weight: 600;
+}
+
+#checkout-modal .co-stepitem.completed .co-stepnum {
+    border-color: rgba(232, 92, 44, 0.5);
+    background: rgba(232, 92, 44, 0.15);
+}
+
+#checkout-modal .co-stepitem.completed .co-stepnum span {
+    color: #ffb89d !important;
+}
+
+#checkout-modal .co-stepline {
+    flex: 1;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.1);
+    margin: 0 8px 18px;
+}
+
+/* ── Scrollable body ─────────────────────────── */
+#checkout-modal .co-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px 22px;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(232, 92, 44, 0.35) transparent;
+}
+
+/* ── Step panels ─────────────────────────────── */
+#checkout-modal .checkout-step {
+    display: none !important;
+}
+
+#checkout-modal .checkout-step.active {
+    display: flex !important;
+    flex-direction: column;
+    gap: 14px;
+}
+
+/* ── Fields ──────────────────────────────────── */
+#checkout-modal .co-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+#checkout-modal .co-field label {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: rgba(240, 244, 248, 0.7);
+}
+
+#checkout-modal .co-opt {
+    font-weight: 400;
+    font-size: 0.74rem;
+    color: rgba(240, 244, 248, 0.32);
+    margin-left: 3px;
+}
+
+#checkout-modal .co-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+/* ── Inputs & textarea ───────────────────────── */
+#checkout-modal input:not([type="radio"]):not([type="checkbox"]),
+#checkout-modal textarea {
+    width: 100%;
+    box-sizing: border-box;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.11);
+    border-radius: 9px;
+    padding: 10px 13px;
+    font-size: 0.93rem;
+    color: #f0f4f8;
+    outline: none;
+    font-family: inherit;
+    transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+#checkout-modal input:not([type="radio"]):not([type="checkbox"])::placeholder,
+#checkout-modal textarea::placeholder {
+    color: rgba(240, 244, 248, 0.25);
+}
+
+#checkout-modal input:not([type="radio"]):not([type="checkbox"]):focus,
+#checkout-modal textarea:focus {
+    border-color: #e85c2c;
+    box-shadow: 0 0 0 3px rgba(232, 92, 44, 0.12);
+}
+
+#checkout-modal textarea {
+    resize: none;
+    line-height: 1.5;
+}
+
+/* ── Payment options ─────────────────────────── */
+#checkout-modal .co-hint {
+    font-size: 0.82rem;
+    color: rgba(240, 244, 248, 0.4);
+    margin: 0;
+}
+
+#checkout-modal .co-paylist {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+#checkout-modal .co-payopt {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 13px 16px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    cursor: pointer;
+    user-select: none;
+    transition: border-color 0.15s, background 0.15s;
+}
+
+#checkout-modal .co-payopt:hover {
+    border-color: rgba(232, 92, 44, 0.4);
+}
+
+#checkout-modal .co-payopt.active {
+    border-color: #e85c2c;
+    background: rgba(232, 92, 44, 0.08);
+}
+
+#checkout-modal .co-payopt input[type="radio"] {
+    display: none;
+}
+
+#checkout-modal .co-radio {
+    width: 17px;
+    height: 17px;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.22);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: border-color 0.15s, background 0.15s;
+}
+
+#checkout-modal .co-payopt.active .co-radio {
+    border-color: #e85c2c;
+    background: #e85c2c;
+}
+
+#checkout-modal .co-payopt.active .co-radio::after {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #fff;
+    display: block;
+}
+
+#checkout-modal .co-paylabel {
+    font-size: 0.92rem;
+    font-weight: 500;
+    color: #f0f4f8;
+}
+
+/* ── Card details box ────────────────────────── */
+#checkout-modal .co-cardbox {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 11px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* ── Confirmation ────────────────────────────── */
+#checkout-modal .co-confirmed {
+    text-align: center;
+    padding: 6px 0 10px;
+}
+
+#checkout-modal .co-checkicon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: rgba(232, 92, 44, 0.12);
+    border: 2px solid rgba(232, 92, 44, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 14px;
+    font-size: 1.5rem;
+    color: #ffb89d;
+}
+
+#checkout-modal .co-confirmed-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #ffb89d;
+    margin-bottom: 6px;
+}
+
+#checkout-modal .co-confirmed-sub {
+    font-size: 0.88rem;
+    color: rgba(240, 244, 248, 0.65);
+    margin-bottom: 3px;
+}
+
+#checkout-modal .co-confirmed-eta {
+    font-size: 0.88rem;
+    color: rgba(240, 244, 248, 0.5);
+}
+
+#checkout-modal .co-confirmed-eta strong {
+    color: #f0f4f8;
+}
+
+/* ── Order summary box ───────────────────────── */
+#checkout-modal .co-summary {
+    background: rgba(255, 255, 255, 0.04) !important;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.09) !important;
+    border-radius: 12px !important;
+    padding: 15px !important;
+    margin-top: 0 !important;
+}
+
+#checkout-modal .co-summary-head {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: rgba(240, 244, 248, 0.42);
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    margin-bottom: 12px;
+}
+
+#checkout-modal .co-summary-items {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    margin-bottom: 10px;
+}
+
+#checkout-modal .co-summary-items .summary-item {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.88rem;
+    color: rgba(240, 244, 248, 0.75);
+    margin-bottom: 0;
+}
+
+#checkout-modal .co-summary-total {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 10px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+    font-size: 0.98rem;
+    font-weight: 700;
+    color: #f0f4f8;
+}
+
+/* ── Footer ──────────────────────────────────── */
+#checkout-modal .co-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 22px;
+    border-top: 1px solid rgba(255, 255, 255, 0.07);
+    flex-shrink: 0;
+    background: rgba(255, 255, 255, 0.02);
+}
+
+#checkout-modal .co-footer-right {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+#checkout-modal .co-btn-ghost {
+    padding: 9px 20px;
+    border-radius: 9px;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    background: transparent;
+    color: rgba(240, 244, 248, 0.75);
+    font-size: 0.88rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    transition: border-color 0.15s, color 0.15s;
+}
+
+#checkout-modal .co-btn-ghost:hover {
+    border-color: rgba(255, 255, 255, 0.32);
+    color: #f0f4f8;
+}
+
+#checkout-modal .co-btn-primary {
+    padding: 9px 22px;
+    border-radius: 9px;
+    border: none;
+    background: #e85c2c;
+    color: #fff;
+    font-size: 0.88rem;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: inherit;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    transition: background 0.15s, transform 0.1s;
+}
+
+#checkout-modal .co-btn-primary:hover {
+    background: #d04e22;
+}
+
+#checkout-modal .co-btn-primary:active {
+    transform: scale(0.97);
+}
+
+/* ── Mobile ──────────────────────────────────── */
+@media (max-width: 580px) {
+    #checkout-modal .co-shell {
+        max-height: 95vh;
+        border-radius: 16px;
+    }
+
+    #checkout-modal .co-row {
+        grid-template-columns: 1fr;
+    }
+
+    #checkout-modal .co-footer {
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    #checkout-modal .co-btn-ghost,
+    #checkout-modal .co-footer-right {
+        width: 100%;
+    }
+
+    #checkout-modal .co-btn-primary {
+        flex: 1;
+        justify-content: center;
+    }
+}

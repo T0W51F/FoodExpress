@@ -1,0 +1,63 @@
+{
+  "restaurants": [
+    {
+      "id": 1,
+      "name": "Pizzaburg",
+      "cuisine": "Pizza & Burgers",
+      "delivery_time": "20-30 min",
+      "rating": 4.7,
+      "reviews": 10000,
+      "delivery_fee": 20,
+      "min_order": 50,
+      "image": "Pizzaburg_2x.png",
+      "featured": true,
+      "is_open": true,
+      "categories": [
+        "Pizza",
+        "Combo",
+        "Burger",
+        "Snacks",
+        "Set Menu",
+        "Koken"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Peyari Tehari",
+      "cuisine": "Tehari & Curry",
+      "delivery_time": "30-45 min",
+      "rating": 4.3,
+      "reviews": 891,
+      "delivery_fee": 30,
+      "min_order": 50,
+      "image": "Peyari Tehari/Main Cover.jpg",
+      "featured": false,
+      "is_open": true,
+      "categories": [
+        "Popular",
+        "Tehari",
+        "Tehari Combo",
+        "Curry",
+        "Dessert",
+        "Beverage",
+        "Sides"
+      ]
+    }
+  ],
+  "categories": [
+    "All",
+    "Pizza",
+    "Combo",
+    "Burger",
+    "Snacks",
+    "Set Menu",
+    "Koken",
+    "Popular",
+    "Tehari",
+    "Tehari Combo",
+    "Curry",
+    "Dessert",
+    "Beverage",
+    "Sides"
+  ]
+}

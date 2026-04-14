@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:www.foodpanda.com.bd)",
+      "WebFetch(domain:webcache.googleusercontent.com)",
+      "WebFetch(domain:web.archive.org)",
+      "WebFetch(domain:www.google.com)",
+      "WebFetch(domain:www.shohoz.com)",
+      "WebFetch(domain:pathao.com)",
+      "WebFetch(domain:hungrynaki.com)",
+      "WebFetch(domain:www.chaldal.com)",
+      "WebFetch(domain:www.khaabo.com)"
+    ]
+  }
+}

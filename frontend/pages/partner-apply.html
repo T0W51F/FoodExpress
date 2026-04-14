@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Partner with FoodExpress - Grow Your Restaurant Business</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/partner-apply.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/svg+xml" href="../assets/images/favicon.svg">
+</head>
+<body class="site-dark partner-apply-page">
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="logo home-logo">
+                <span class="logo-mark" aria-hidden="true"><i class="fas fa-utensils"></i></span>
+                <span class="logo-lockup">
+                    <span class="logo-wordmark"><span class="food">Food</span><span class="express">Express</span></span>
+                </span>
+            </a>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="restaurants.html">Restaurants</a>
+                <a href="partner-apply.html" class="active partner-nav-link">Partner with us</a>
+                <a href="cart.html" class="cart-icon">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count">0</span>
+                </a>
+                <div class="auth-buttons">
+                    <a href="login.html" class="btn btn-outline">Login</a>
+                    <a href="register.html" class="btn btn-primary">Sign Up</a>
+                </div>
+            </div>
+            <button class="menu-toggle"><i class="fas fa-bars"></i></button>
+        </div>
+    </nav>
+
+    <!-- Hero Banner -->
+    <section class="partner-hero">
+        <div class="container">
+            <div class="partner-hero-content">
+                <div class="partner-hero-text">
+                    <div class="partner-badge">
+                        <i class="fas fa-handshake"></i>
+                        Become a Partner
+                    </div>
+                    <h1>Grow Your Restaurant with FoodExpress</h1>
+                    <p>Join hundreds of restaurants already earning more with our platform. Reach thousands of hungry customers in your area.</p>
+                    <div class="partner-stats">
+                        <div class="partner-stat">
+                            <span class="stat-num">50K+</span>
+                            <span class="stat-label">Daily Orders</span>
+                        </div>
+                        <div class="partner-stat">
+                            <span class="stat-num">200+</span>
+                            <span class="stat-label">Partner Restaurants</span>
+                        </div>
+                        <div class="partner-stat">
+                            <span class="stat-num">4.8</span>
+                            <span class="stat-label">Avg. Rating</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="partner-hero-benefits">
+                    <div class="benefit-card">
+                        <i class="fas fa-chart-line"></i>
+                        <h3>Boost Revenue</h3>
+                        <p>Average partners see a 35% revenue increase in the first 3 months.</p>
+                    </div>
+                    <div class="benefit-card">
+                        <i class="fas fa-users"></i>
+                        <h3>New Customers</h3>
+                        <p>Reach customers who would never have found your restaurant otherwise.</p>
+                    </div>
+                    <div class="benefit-card">
+                        <i class="fas fa-tablet-alt"></i>
+                        <h3>Easy Dashboard</h3>
+                        <p>Manage your menu, orders, and profile from one simple interface.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content: Application Form + Status Check -->
+    <section class="partner-main">
+        <div class="container">
+            <div class="partner-grid">
+
+                <!-- Application Form -->
+                <div class="partner-form-card" id="apply-section">
+                    <div class="form-card-header">
+                        <div class="form-card-icon"><i class="fas fa-store"></i></div>
+                        <div>
+                            <h2>Apply to Partner</h2>
+                            <p>Fill in your restaurant details. Our team reviews every application within 2 business days.</p>
+                        </div>
+                    </div>
+
+                    <div id="apply-success" class="success-message hidden">
+                        <div class="success-icon"><i class="fas fa-check-circle"></i></div>
+                        <h3>Application Submitted!</h3>
+                        <p>We received your application for <strong id="success-business-name"></strong>. Our team will review it within 2 business days.</p>
+                        <p>You can track your application status using the email you provided.</p>
+                        <button class="btn btn-outline" onclick="document.getElementById('apply-success').classList.add('hidden'); document.getElementById('partner-form').reset();">Submit Another</button>
+                    </div>
+
+                    <form id="partner-form" novalidate>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="business-name">Business Name <span class="required">*</span></label>
+                                <div class="input-with-icon">
+                                    <i class="fas fa-store"></i>
+                                    <input type="text" id="business-name" placeholder="e.g. Mama's Kitchen" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="contact-name">Contact Person <span class="required">*</span></label>
+                                <div class="input-with-icon">
+                                    <i class="fas fa-user"></i>
+                                    <input type="text" id="contact-name" placeholder="Your full name" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="apply-email">Business Email <span class="required">*</span></label>
+                                <div class="input-with-icon">
+                                    <i class="fas fa-envelope"></i>
+                                    <input type="email" id="apply-email" placeholder="contact@yourbusiness.com" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="apply-phone">Phone Number <span class="required">*</span></label>
+                                <div class="input-with-icon">
+                                    <i class="fas fa-phone"></i>
+                                    <input type="tel" id="apply-phone" placeholder="+8801XXXXXXXXX" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="apply-address">Restaurant Address <span class="required">*</span></label>
+                            <div class="input-with-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <input type="text" id="apply-address" placeholder="Full address including city" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="apply-description">Tell us about your restaurant</label>
+                            <textarea id="apply-description" placeholder="Describe your cuisine, specialties, atmosphere, and what makes your restaurant unique..." rows="4"></textarea>
+                        </div>
+
+                        <div id="apply-error" class="form-error hidden"></div>
+
+                        <button type="submit" class="btn btn-primary btn-block btn-submit" id="apply-submit-btn">
+                            <i class="fas fa-paper-plane"></i>
+                            <span>Submit Application</span>
+                        </button>
+
+                        <p class="form-note">
+                            <i class="fas fa-lock"></i>
+                            Your information is encrypted and will only be used to process your application.
+                        </p>
+                    </form>
+                </div>
+
+                <!-- Status Check -->
+                <div class="partner-status-card">
+                    <div class="form-card-header">
+                        <div class="form-card-icon status-icon"><i class="fas fa-search"></i></div>
+                        <div>
+                            <h2>Check Application Status</h2>
+                            <p>Already applied? Enter your business email to see your status.</p>
+                        </div>
+                    </div>
+
+                    <form id="status-form" novalidate>
+                        <div class="form-group">
+                            <label for="status-email">Business Email</label>
+                            <div class="input-with-icon">
+                                <i class="fas fa-envelope"></i>
+                                <input type="email" id="status-email" placeholder="contact@yourbusiness.com" required>
+                            </div>
+                        </div>
+
+                        <div id="status-error" class="form-error hidden"></div>
+
+                        <button type="submit" class="btn btn-outline btn-block">
+                            <i class="fas fa-search"></i>
+                            Check Status
+                        </button>
+                    </form>
+
+                    <div id="status-result" class="status-result hidden">
+                        <div class="status-result-header">
+                            <h3 id="status-business-name"></h3>
+                            <span class="status-badge" id="status-badge"></span>
+                        </div>
+                        <p class="status-submitted">Submitted: <span id="status-date"></span></p>
+                        <div id="status-rejection-reason" class="rejection-reason hidden">
+                            <i class="fas fa-exclamation-circle"></i>
+                            <span id="status-reason-text"></span>
+                        </div>
+                        <div id="status-approved-msg" class="approved-msg hidden">
+                            <i class="fas fa-check-circle"></i>
+                            <p>Congratulations! Your application has been approved. Check your email for login credentials to your restaurant dashboard.</p>
+                        </div>
+                        <div id="status-pending-msg" class="pending-msg hidden">
+                            <i class="fas fa-clock"></i>
+                            <p>Your application is under review. We'll notify you within 2 business days.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- How it Works -->
+    <section class="how-it-works">
+        <div class="container">
+            <h2>How the Partnership Works</h2>
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-num">1</div>
+                    <h3>Apply Online</h3>
+                    <p>Fill out the form above. It takes less than 3 minutes.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-num">2</div>
+                    <h3>Get Reviewed</h3>
+                    <p>Our team reviews your application within 2 business days.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-num">3</div>
+                    <h3>Set Up Your Menu</h3>
+                    <p>Log in to your restaurant dashboard and add your menu items.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-num">4</div>
+                    <h3>Start Receiving Orders</h3>
+                    <p>Go live and start earning. Track orders in real time.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="../assets/js/api.js"></script>
+    <script src="../assets/js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.getElementById('partner-form');
+            const statusForm = document.getElementById('status-form');
+            const applyError = document.getElementById('apply-error');
+            const applySuccess = document.getElementById('apply-success');
+            const successBusinessName = document.getElementById('success-business-name');
+            const submitBtn = document.getElementById('apply-submit-btn');
+
+            form.addEventListener('submit', async function (e) {
+                e.preventDefault();
+                applyError.classList.add('hidden');
+                applyError.textContent = '';
+
+                const data = {
+                    business_name: document.getElementById('business-name').value.trim(),
+                    contact_name: document.getElementById('contact-name').value.trim(),
+                    email: document.getElementById('apply-email').value.trim(),
+                    phone: document.getElementById('apply-phone').value.trim(),
+                    address: document.getElementById('apply-address').value.trim(),
+                    description: document.getElementById('apply-description').value.trim()
+                };
+
+                if (!data.business_name || !data.contact_name || !data.email || !data.phone || !data.address) {
+                    applyError.textContent = 'Please fill in all required fields.';
+                    applyError.classList.remove('hidden');
+                    return;
+                }
+
+                submitBtn.disabled = true;
+                submitBtn.querySelector('span').textContent = 'Submitting...';
+
+                try {
+                    await API.service.submitPartnerApplication(data);
+                    form.classList.add('hidden');
+                    successBusinessName.textContent = data.business_name;
+                    applySuccess.classList.remove('hidden');
+                } catch (err) {
+                    applyError.textContent = err.message || 'Failed to submit. Please try again.';
+                    applyError.classList.remove('hidden');
+                } finally {
+                    submitBtn.disabled = false;
+                    submitBtn.querySelector('span').textContent = 'Submit Application';
+                }
+            });
+
+            statusForm.addEventListener('submit', async function (e) {
+                e.preventDefault();
+                const statusError = document.getElementById('status-error');
+                const statusResult = document.getElementById('status-result');
+                statusError.classList.add('hidden');
+                statusResult.classList.add('hidden');
+
+                const email = document.getElementById('status-email').value.trim();
+                if (!email) {
+                    statusError.textContent = 'Please enter your email address.';
+                    statusError.classList.remove('hidden');
+                    return;
+                }
+
+                try {
+                    const result = await API.service.getApplicationStatus(email);
+                    document.getElementById('status-business-name').textContent = result.business_name;
+                    document.getElementById('status-date').textContent = result.submitted_at
+                        ? new Date(result.submitted_at).toLocaleDateString()
+                        : 'Unknown';
+
+                    const badge = document.getElementById('status-badge');
+                    badge.textContent = result.status.charAt(0).toUpperCase() + result.status.slice(1);
+                    badge.className = 'status-badge status-' + result.status;
+
+                    const rejectionDiv = document.getElementById('status-rejection-reason');
+                    const approvedMsg = document.getElementById('status-approved-msg');
+                    const pendingMsg = document.getElementById('status-pending-msg');
+                    rejectionDiv.classList.add('hidden');
+                    approvedMsg.classList.add('hidden');
+                    pendingMsg.classList.add('hidden');
+
+                    if (result.status === 'rejected' && result.rejection_reason) {
+                        document.getElementById('status-reason-text').textContent = result.rejection_reason;
+                        rejectionDiv.classList.remove('hidden');
+                    } else if (result.status === 'approved') {
+                        approvedMsg.classList.remove('hidden');
+                    } else if (result.status === 'pending') {
+                        pendingMsg.classList.remove('hidden');
+                    }
+
+                    statusResult.classList.remove('hidden');
+                } catch (err) {
+                    statusError.textContent = err.message.includes('404') || err.message.toLowerCase().includes('not found')
+                        ? 'No application found for this email address.'
+                        : err.message;
+                    statusError.classList.remove('hidden');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

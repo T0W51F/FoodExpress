@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - FoodExpress</title>
+    <link rel="stylesheet" href="../assets/css/auth.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/responsive.css">
+    <link rel="stylesheet" href="../assets/css/login-redesign.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/svg+xml" href="../assets/images/favicon.svg">
+</head>
+<body class="site-dark login-page">
+    <div class="auth-container">
+        <div class="auth-left">
+            <div class="auth-content">
+                <a href="index.html" class="auth-logo">
+                    <i class="fas fa-utensils"></i>
+                    <span>FoodExpress</span>
+                </a>
+                
+                <div class="auth-hero">
+                    <h1>Late-night cravings, handled.</h1>
+                    <p>Pick up where you left off. Track orders, reorder favorites, and keep every craving a tap away.</p>
+                    
+                    <div class="auth-features">
+                        <div class="feature">
+                            <i class="fas fa-bolt"></i>
+                            <span>One-tap reorders</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-star"></i>
+                            <span>Fresh daily deals</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-history"></i>
+                            <span>Live order tracking</span>
+                        </div>
+                    </div>
+                    
+                    <img src="../assets/images/foods/auth-foods.jpg" alt="Food" class="auth-image">
+                </div>
+            </div>
+        </div>
+        
+        <div class="auth-right">
+            <div class="auth-form-container">
+                <div class="auth-header">
+                    <h2>Sign In</h2>
+                    <p>Sign in to continue to your dashboard, saved addresses, and recent orders.</p>
+                </div>
+
+                <div id="banned-notice" style="display:none;background:rgba(214,48,49,.15);border:1px solid rgba(214,48,49,.4);border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:1.25rem;align-items:flex-start;gap:0.75rem;">
+                    <i class="fas fa-ban" style="color:#fc8181;margin-top:0.1rem;flex-shrink:0;"></i>
+                    <span style="color:#fc8181;font-size:0.9rem;">Your account has been banned. Please contact support.</span>
+                </div>
+
+                <form id="login-form">
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-envelope"></i>
+                            <input type="email" id="email" placeholder="you@example.com" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" id="password" placeholder="Enter your password" required>
+                            <button type="button" class="password-toggle">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                        <div class="form-options">
+                            <label class="checkbox">
+                                <input type="checkbox" id="remember-me">
+                                <span>Remember me</span>
+                            </label>
+                            <a href="#" class="forgot-password">Forgot password?</a>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary btn-block">
+                        <i class="fas fa-sign-in-alt"></i> Sign In
+                    </button>
+                </form>
+                
+                <div class="auth-footer">
+                    <p>Need an account? <a href="register.html">Create one here</a>.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../assets/js/auth.js"></script>
+    <script src="../assets/js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if user is already logged in
+            if (localStorage.getItem('userLoggedIn') === 'true') {
+                window.location.href = 'index.html';
+            }
+
+            // Show banned notice if redirected here after a ban
+            if (new URLSearchParams(window.location.search).get('banned') === '1') {
+                const notice = document.getElementById('banned-notice');
+                if (notice) notice.style.display = 'flex';
+            }
+        });
+    </script>
+</body>
+</html>
+
+
+
+
+
+

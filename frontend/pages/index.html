@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FoodExpress - Delicious Food Delivered</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/responsive.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/svg+xml" href="../assets/images/favicon.svg">
+</head>
+<body class="site-dark home-frosted">
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="logo home-logo">
+                <span class="logo-mark" aria-hidden="true">
+                    <i class="fas fa-utensils"></i>
+                </span>
+                <span class="logo-lockup">
+                    <span class="logo-wordmark"><span class="food">Food</span><span class="express">Express</span></span>
+                </span>
+            </a>
+            
+            <div class="nav-links">
+                <a href="index.html" class="active">Home</a>
+                <a href="restaurants.html">Restaurants</a>
+                <a href="orders.html">My Orders</a>
+                <a href="partner-apply.html" class="partner-nav-link">Partner with us</a>
+                <a href="cart.html" class="cart-icon">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count">0</span>
+                </a>
+                <div class="auth-buttons">
+                    <a href="login.html" class="btn btn-outline">Login</a>
+                    <a href="register.html" class="btn btn-primary">Sign Up</a>
+                </div>
+            </div>
+            
+            <button class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Craving something delicious?</h1>
+                <p>Order food from the best restaurants in your area. Fast delivery, great prices, and amazing food!</p>
+                
+                <form class="search-box" id="hero-search-form">
+                    <input type="text" placeholder="Find Restaurants Around You" id="address-input" autocomplete="off">
+                    <button class="btn btn-primary" type="submit" id="hero-search-btn">
+                        <i class="fas fa-search"></i> Search
+                    </button>
+                </form>
+            </div>
+            
+            <div class="hero-image">
+                <img src="../assets/images/foods/delivery-hero.jpg" alt="Food Delivery">
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="how-it-works">
+        <div class="container">
+            <h2 class="section-title">How It Works</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <h3>Choose Location</h3>
+                    <p>Enter your delivery address to see available restaurants</p>
+                </div>
+                <div class="step">
+                    <div class="step-icon">
+                        <i class="fas fa-utensils"></i>
+                    </div>
+                    <h3>Order Food</h3>
+                    <p>Browse menus and add items to your cart</p>
+                </div>
+                <div class="step">
+                    <div class="step-icon">
+                        <i class="fas fa-truck"></i>
+                    </div>
+                    <h3>Fast Delivery</h3>
+                    <p>Get your food delivered hot and fresh to your door</p>
+                </div>
+                <div class="step">
+                    <div class="step-icon">
+                        <i class="fas fa-smile"></i>
+                    </div>
+                    <h3>Enjoy Meal</h3>
+                    <p>Savor delicious food from the comfort of your home</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Restaurants -->
+    <section class="featured-restaurants">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Featured Restaurants</h2>
+                <a href="restaurants.html" class="view-all">View All <i class="fas fa-arrow-right"></i></a>
+            </div>
+            
+            <div class="restaurants-grid" id="featured-restaurants">
+                <!-- Dynamic content will be loaded here -->
+                <div class="loading">Loading restaurants...</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Popular Foods -->
+    <section class="popular-foods">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Popular Dishes</h2>
+                <a href="menu.html?restaurant_id=1" class="view-all">View All <i class="fas fa-arrow-right"></i></a>
+            </div>
+            
+            <div class="foods-grid" id="popular-foods">
+                <!-- Dynamic content will be loaded here -->
+                <div class="loading">Loading dishes...</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- App Download -->
+    <section class="app-download">
+        <div class="container">
+            <div class="app-content">
+                <h2>Get the FoodExpress App</h2>
+                <p>Order food, track delivery, and get exclusive offers with our mobile app</p>
+                
+                <div class="app-buttons">
+                    <a href="#" class="app-store">
+                        <i class="fab fa-apple"></i>
+                        <div>
+                            <span>Download on the</span>
+                            <strong>App Store</strong>
+                        </div>
+                    </a>
+                    <a href="#" class="google-play">
+                        <i class="fab fa-google-play"></i>
+                        <div>
+                            <span>Get it on</span>
+                            <strong>Google Play</strong>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="app-image">
+                <img src="../assets/images/foods/app-screens.jpg" alt="Mobile App">
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <a href="index.html" class="logo home-logo footer-logo">
+                        <span class="logo-mark" aria-hidden="true">
+                            <i class="fas fa-utensils"></i>
+                        </span>
+                        <span class="logo-lockup">
+                            <span class="logo-wordmark"><span class="food">Food</span><span class="express">Express</span></span>
+                        </span>
+                    </a>
+                    <p>Delivering happiness to your doorstep</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-col">
+                    <!-- <h4>Company</h4> -->
+                    <h4 style="color: #ebeff3;">Company</h4>
+                    <a href="#">About Us</a>
+                    <a href="#">Careers</a>
+                    <a href="#">Contact</a>
+                    <a href="#">Blog</a>
+                </div>
+                
+                <div class="footer-col">
+                    <h4 style="color: #ebeff3;">Support</h4>
+                    <a href="#">Help Center</a>
+                    <a href="#">Safety</a>
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                </div>
+                
+                <div class="footer-col">
+                    <h4 style="color: #ebeff3;">Contact</h4>
+                    <p><i class="fas fa-map-marker-alt"></i> 24 Rampur Ward, Chattogram City</p>
+                    <p><i class="fas fa-phone"></i> (+880) 1781886622</p>
+                    <p><i class="fas fa-envelope"></i> support@foodexpress.com</p>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2026 FoodExpress. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../assets/js/main.js"></script>
+    <script src="../assets/js/api.js"></script>
+    <!-- <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load featured restaurants
+            loadFeaturedRestaurants();
+            
+            // Load popular foods
+            loadPopularFoods();
+            
+            // Update cart count
+            updateCartCount();
+        });
+    </script> -->
+    <script>
+    async function updateCartCount() {
+        try {
+            const apiBaseUrl = window.API?.config?.BASE_URL || 'http://localhost:5000/api';
+            const response = await fetch(`${apiBaseUrl}/orders/cart/`, {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('access_token')}`
+                }
+            });
+
+            if (response.ok) {
+                const cart = await response.json();
+                const totalItems = cart.items?.length || 0;
+
+                document.querySelectorAll('.cart-count').forEach(el => {
+                    el.textContent = totalItems;
+                });
+
+                if (document.getElementById('mobile-cart-count')) {
+                    document.getElementById('mobile-cart-count').textContent = totalItems;
+                }
+            }
+        } catch (error) {
+            console.log('Cart not loaded, may be logged out');
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        checkLoginStatus();
+        loadFeaturedRestaurants();
+        loadPopularFoods();
+        updateCartCount();
+
+        const heroSearchForm = document.getElementById('hero-search-form');
+        const heroSearchInput = document.getElementById('address-input');
+        if (heroSearchForm && heroSearchInput) {
+            heroSearchForm.addEventListener('submit', function(event) {
+                event.preventDefault();
+                const query = heroSearchInput.value.trim();
+                const nextUrl = new URL('restaurants.html', window.location.href);
+                if (query) {
+                    nextUrl.searchParams.set('search', query);
+                }
+                window.location.href = nextUrl.toString();
+            });
+        }
+    });
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+

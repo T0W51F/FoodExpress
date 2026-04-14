@@ -1,0 +1,573 @@
+/* =============================================
+   Partner Apply Page — Frosted Glass Theme
+   Matches login/register aesthetic
+   ============================================= */
+
+.partner-apply-page {
+    position: relative;
+    min-height: 100vh;
+    overflow-x: hidden;
+    color: #e2e8f0;
+    background:
+        radial-gradient(circle at 15% 20%, rgba(232, 92, 44, 0.18), transparent 38%),
+        radial-gradient(circle at 85% 75%, rgba(232, 92, 44, 0.10), transparent 32%),
+        radial-gradient(circle at 50% 50%, rgba(9, 132, 227, 0.05), transparent 50%),
+        linear-gradient(135deg, #050607 0%, #0a0d10 52%, #050607 100%);
+}
+
+/* Ambient food texture layer */
+.partner-apply-page::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+        linear-gradient(135deg, rgba(5, 7, 8, 0.88) 0%, rgba(5, 7, 8, 0.72) 50%, rgba(5, 7, 8, 0.88) 100%),
+        url('../images/foods/auth-foods.jpg') center center / cover no-repeat;
+    opacity: 0.22;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.partner-apply-page > * {
+    position: relative;
+    z-index: 1;
+}
+
+/* Nav partner link accent */
+.partner-nav-link {
+    color: var(--primary-color) !important;
+    font-weight: 600;
+}
+
+/* ---- Hero ---- */
+.partner-hero {
+    padding: 5rem 0 4rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    background: transparent;
+}
+
+.partner-hero-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+}
+
+.partner-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(232, 92, 44, 0.14);
+    color: #ff8558;
+    padding: 0.4rem 1rem;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    border: 1px solid rgba(232, 92, 44, 0.28);
+    margin-bottom: 1.25rem;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+.partner-hero-text h1 {
+    font-size: 2.75rem;
+    font-weight: 700;
+    color: #fbfcfd;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    margin-bottom: 1rem;
+}
+
+.partner-hero-text p {
+    color: rgba(239, 243, 247, 0.72);
+    font-size: 1.1rem;
+    line-height: 1.7;
+    margin-bottom: 2rem;
+}
+
+.partner-stats {
+    display: flex;
+    gap: 2.5rem;
+}
+
+.partner-stat {
+    display: flex;
+    flex-direction: column;
+}
+
+.stat-num {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #ff8558;
+    line-height: 1;
+}
+
+.stat-label {
+    font-size: 0.8rem;
+    color: rgba(239, 243, 247, 0.46);
+    margin-top: 0.2rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+.partner-hero-benefits {
+    display: flex;
+    flex-direction: column;
+    gap: 0.875rem;
+}
+
+.benefit-card {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 18px;
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    transition: border-color 0.25s, background 0.25s;
+}
+
+.benefit-card:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(232, 92, 44, 0.28);
+}
+
+.benefit-card i {
+    font-size: 1.4rem;
+    color: #ff8558;
+    margin-top: 0.1rem;
+    flex-shrink: 0;
+}
+
+.benefit-card h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #f1f5f9;
+    margin-bottom: 0.2rem;
+}
+
+.benefit-card p {
+    font-size: 0.875rem;
+    color: rgba(239, 243, 247, 0.54);
+    margin: 0;
+}
+
+/* ---- Main Grid ---- */
+.partner-main {
+    padding: 4rem 0;
+    background: transparent;
+}
+
+.partner-grid {
+    display: grid;
+    grid-template-columns: 1fr 420px;
+    gap: 2rem;
+    align-items: start;
+}
+
+/* ---- Cards (Frosted Glass) ---- */
+.partner-form-card,
+.partner-status-card {
+    background: linear-gradient(180deg, rgba(16, 19, 22, 0.88), rgba(9, 11, 14, 0.86));
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 28px;
+    padding: 2rem;
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    box-shadow: 0 28px 56px rgba(0, 0, 0, 0.38), 0 0 0 0.5px rgba(255, 255, 255, 0.03) inset;
+}
+
+.form-card-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 1.75rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.form-card-icon {
+    width: 48px;
+    height: 48px;
+    background: rgba(232, 92, 44, 0.14);
+    border: 1px solid rgba(232, 92, 44, 0.22);
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.form-card-icon i {
+    font-size: 1.2rem;
+    color: #ff8558;
+}
+
+.status-icon {
+    background: rgba(9, 132, 227, 0.14);
+    border: 1px solid rgba(9, 132, 227, 0.22);
+}
+
+.status-icon i {
+    color: #4dabf7;
+}
+
+.form-card-header h2 {
+    font-size: 1.25rem;
+    color: #f7f9fb;
+    margin-bottom: 0.25rem;
+    letter-spacing: -0.01em;
+}
+
+.form-card-header p {
+    font-size: 0.875rem;
+    color: rgba(239, 243, 247, 0.54);
+    margin: 0;
+}
+
+/* ---- Form Elements ---- */
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.form-group {
+    margin-bottom: 1.25rem;
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: rgba(246, 248, 250, 0.82);
+    margin-bottom: 0.5rem;
+}
+
+.required {
+    color: #ff8558;
+}
+
+.input-with-icon {
+    position: relative;
+}
+
+.input-with-icon i {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #e85c2c;
+    font-size: 0.875rem;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.input-with-icon input {
+    width: 100%;
+    min-height: 52px;
+    padding: 0.875rem 1rem 0.875rem 2.75rem;
+    background: rgba(246, 249, 255, 0.93);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 14px;
+    color: #101417;
+    font-size: 0.9rem;
+    font-family: inherit;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    outline: none;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.42);
+}
+
+.input-with-icon input:focus {
+    border-color: rgba(232, 92, 44, 0.5);
+    box-shadow: 0 0 0 3px rgba(232, 92, 44, 0.14), inset 0 1px 0 rgba(255, 255, 255, 0.42);
+}
+
+.input-with-icon input::placeholder {
+    color: rgba(16, 20, 23, 0.44);
+}
+
+textarea {
+    width: 100%;
+    min-height: 52px;
+    padding: 0.875rem 1rem;
+    background: rgba(246, 249, 255, 0.93);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 14px;
+    color: #101417;
+    font-size: 0.9rem;
+    font-family: inherit;
+    resize: vertical;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    outline: none;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.42);
+}
+
+textarea:focus {
+    border-color: rgba(232, 92, 44, 0.5);
+    box-shadow: 0 0 0 3px rgba(232, 92, 44, 0.14), inset 0 1px 0 rgba(255, 255, 255, 0.42);
+}
+
+textarea::placeholder {
+    color: rgba(16, 20, 23, 0.44);
+}
+
+.btn-submit {
+    padding: 0.9rem;
+    font-size: 1rem;
+    gap: 0.6rem;
+    margin-top: 0.5rem;
+    min-height: 52px;
+    border-radius: 14px;
+    box-shadow: 0 16px 32px rgba(232, 92, 44, 0.22);
+    letter-spacing: 0.01em;
+}
+
+.form-note {
+    text-align: center;
+    font-size: 0.8rem;
+    color: rgba(239, 243, 247, 0.4);
+    margin-top: 0.75rem;
+    margin-bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+}
+
+/* ---- Error / Success ---- */
+.form-error {
+    background: rgba(214, 48, 49, 0.10);
+    border: 1px solid rgba(214, 48, 49, 0.26);
+    color: #fc8181;
+    padding: 0.75rem 1rem;
+    border-radius: 10px;
+    font-size: 0.875rem;
+    margin-bottom: 1rem;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.success-message {
+    text-align: center;
+    padding: 2rem 1rem;
+}
+
+.success-icon {
+    font-size: 3rem;
+    color: #55efc4;
+    margin-bottom: 1rem;
+}
+
+.success-message h3 {
+    font-size: 1.4rem;
+    color: #f1f5f9;
+    margin-bottom: 0.5rem;
+}
+
+.success-message p {
+    color: rgba(239, 243, 247, 0.68);
+    font-size: 0.9rem;
+}
+
+/* ---- Status Result ---- */
+.status-result {
+    margin-top: 1.5rem;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
+    padding: 1.25rem;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+
+.status-result-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.status-result-header h3 {
+    font-size: 1rem;
+    color: #f1f5f9;
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 0.3rem 0.8rem;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+
+.status-pending {
+    background: rgba(253, 203, 110, 0.12);
+    color: #fdcb6e;
+    border: 1px solid rgba(253, 203, 110, 0.26);
+}
+
+.status-approved {
+    background: rgba(0, 184, 148, 0.12);
+    color: #55efc4;
+    border: 1px solid rgba(0, 184, 148, 0.26);
+}
+
+.status-rejected {
+    background: rgba(214, 48, 49, 0.12);
+    color: #ff7675;
+    border: 1px solid rgba(214, 48, 49, 0.26);
+}
+
+.status-submitted {
+    font-size: 0.8rem;
+    color: rgba(239, 243, 247, 0.42);
+    margin-bottom: 0.75rem;
+}
+
+.rejection-reason,
+.approved-msg,
+.pending-msg {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    padding: 0.75rem;
+    border-radius: 10px;
+    font-size: 0.875rem;
+}
+
+.rejection-reason {
+    background: rgba(214, 48, 49, 0.08);
+    color: #fc8181;
+}
+
+.approved-msg {
+    background: rgba(0, 184, 148, 0.08);
+    color: #55efc4;
+}
+
+.pending-msg {
+    background: rgba(253, 203, 110, 0.08);
+    color: #fdcb6e;
+}
+
+.rejection-reason p,
+.approved-msg p,
+.pending-msg p {
+    margin: 0;
+}
+
+/* ---- How it Works ---- */
+.how-it-works {
+    padding: 5rem 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    background: transparent;
+}
+
+.how-it-works h2 {
+    text-align: center;
+    font-size: 2rem;
+    color: #f8fafc;
+    letter-spacing: -0.02em;
+    margin-bottom: 3rem;
+}
+
+.steps-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+}
+
+.step-card {
+    text-align: center;
+    padding: 2rem 1.5rem;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 22px;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    transition: border-color 0.25s, background 0.25s, transform 0.25s;
+}
+
+.step-card:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(232, 92, 44, 0.28);
+    transform: translateY(-4px);
+}
+
+.step-num {
+    width: 48px;
+    height: 48px;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1.25rem;
+    margin: 0 auto 1rem;
+    box-shadow: 0 8px 20px rgba(232, 92, 44, 0.28);
+}
+
+.step-card h3 {
+    color: #f1f5f9;
+    font-size: 1.05rem;
+    margin-bottom: 0.5rem;
+}
+
+.step-card p {
+    color: rgba(239, 243, 247, 0.5);
+    font-size: 0.875rem;
+    margin: 0;
+}
+
+/* ---- Responsive ---- */
+@media (max-width: 1024px) {
+    .partner-hero-content {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+    }
+
+    .partner-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .steps-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .partner-hero {
+        padding: 3rem 0;
+    }
+
+    .partner-hero-text h1 {
+        font-size: 2rem;
+    }
+
+    .partner-stats {
+        gap: 1.5rem;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+
+    .steps-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .partner-form-card,
+    .partner-status-card {
+        border-radius: 20px;
+        padding: 1.5rem;
+    }
+}

@@ -1,0 +1,1286 @@
+[
+  {
+    "id": 1,
+    "restaurant_id": 1,
+    "name": "Meaty Onion Pizza",
+    "description": "Onion, Meat, Sausage, Spice",
+    "price": 305,
+    "image": "Meaty Onion Pizza.webp",
+    "category": "Pizza",
+    "vegetarian": false,
+    "spicy_level": 1,
+    "rating": 4.6,
+    "popular": false,
+    "addons": [
+      {
+        "name": "Extra Onion",
+        "price": 20
+      },
+      {
+        "name": "Extra Meat",
+        "price": 60
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "restaurant_id": 1,
+    "name": "Cheddar Cream Pizza",
+    "description": "Salty, Cheese, Chicken, Cult favourite.",
+    "price": 325,
+    "image": "Cheddar Cream Pizza.webp",
+    "category": "Pizza",
+    "vegetarian": false,
+    "spicy_level": 0,
+    "rating": 4.6,
+    "popular": false,
+    "addons": [
+      {
+        "name": "Extra Cheddar Sauce",
+        "price": 35
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "restaurant_id": 1,
+    "name": "Tender Beef Pizza",
+    "description": "Mashed beef, Pepperoni,(Too Juicy).",
+    "price": 325,
+    "image": "Tender Beef Pizza.webp",
+    "category": "Pizza",
+    "vegetarian": false,
+    "spicy_level": 1,
+    "rating": 4.6,
+    "popular": false,
+    "addons": [
+      {
+        "name": "Extra Pepperoni",
+        "price": 45
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "restaurant_id": 1,
+    "name": "Four Flavors Pizza",
+    "description": "Name says it all.",
+    "price": 345,
+    "image": "Four Flavours Pizza.webp",
+    "category": "Pizza",
+    "vegetarian": false,
+    "spicy_level": 1,
+    "rating": 4.8,
+    "popular": false,
+    "addons": [
+      {
+        "name": "Cheese Burst Edge",
+        "price": 75
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "restaurant_id": 1,
+    "name": "Mac & Cheese Pizza",
+    "description": "Pasta, Mixed Cheese, Corn, Sausage, Chicken.",
+    "price": 335,
+    "image": "Mac & Cheese Pizza.webp",
+    "category": "Pizza",
+    "vegetarian": false,
+    "spicy_level": 0,
+    "rating": 4.7,
+    "popular": false,
+    "addons": [
+      {
+        "name": "Extra Corn",
+        "price": 20
+      },
+      {
+        "name": "Extra Cheese",
+        "price": 40
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "restaurant_id": 1,
+    "name": "The Everything Beef Pizza",
+    "description": "For The 1st timer, Pick and get addicted.",
+    "price": 495,
+    "image": "The Everything Beef Pizza.webp",
+    "category": "Pizza",
+    "vegetarian": false,
+    "spicy_level": 1,
+    "rating": 4.7,
+    "popular": false,
+    "addons": [
+      {
+        "name": "Extra Beef",
+        "price": 60
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "restaurant_id": 1,
+    "name": "Royal Silk",
+    "description": "Tangy flavor and the pizza base sauce gives an absolute kick with Thai basil, onions, tomatoes, and chicken keema.",
+    "price": 349,
+    "image": "Royal Silk Pizza.webp",
+    "category": "Pizza",
+    "vegetarian": false,
+    "spicy_level": 1,
+    "rating": 4.6,
+    "popular": false,
+    "addons": [
+      {
+        "name": "Extra Chicken Keema",
+        "price": 55
+      }
+    ]
+  },
+  {
+    "id": 8,
+    "restaurant_id": 1,
+    "name": "Couple Combo",
+    "description": "1:2 - Personal pizza, sauteed mushroom, BBQ sausage, and 4 pcs chicken lollipop.",
+    "price": 549,
+    "image": "Couple combo.webp",
+    "category": "Combo",
+    "vegetarian": false,
+    "spicy_level": 1,
+    "rating": 4.7,
+    "popular": false,
+    "addons": [
+      {
+        "name": "Extra Lollipop (2 pcs)",
+        "price": 99
+      }
+    ]
+  },
+  {
+    "id": 9,
+    "restaurant_id": 1,
+    "name": "Combo",
+    "description": "1:4 - 9 inch Meaty Onion Pizza, fried rice, chicken chili onion, and 8 pcs chicken wings.",
+    "price": 1099,
+    "image": "Combo.webp",
+    "category": "Combo",
+    "vegetarian": false,
+    "spicy_level": 1,
+    "rating": 4.8,
+    "popular": false,
+    "addons": [
+      {
+        "name": "Extra Wings (4 pcs)",
+        "price": 149
+      }
+    ]
+  },
+  {
+    "id": 10,
+    "restaurant_id": 1,
+    "name": "Premium Platter - 1",
+    "description": "1:2 - 2 pcs saucy chicken chaap, aromatic rice, chicken chili onion, Chinese vegetable, and BBQ coin sausages.",
+    "price": 749,
+    "image": "Premium platter-1.webp",
+    "category": "Combo",
+    "vegetarian": false,
+    "spicy_level": 1,
+    "rating": 4.6,
+    "popular": false,
+    "addons": [
+      {
+        "name": "Extra Chaap",
+        "price": 139
+      }
+    ]
+  },
+  {
+    "id": 11,
+    "restaurant_id": 1,
+    "name": "Premium Platter - 2",
+    "description": "1:1 - 1 pc saucy chicken chaap, aromatic rice, chicken chili onion, Chinese vegetable, and BBQ coin sausages.",
+    "price": 375,
+    "image": "Premium platter-2.webp",
+    "category": "Combo",
+    "vegetarian": false,
+    "spicy_level": 1,
+    "rating": 4.5,
+    "popular": false,
+    "addons": [
+      {
+        "name": "Extra Sausage Mix",
+        "price": 69
+      }
+    ]
+  },
+  {
+    "id": 12,
+    "restaurant_id": 1,
+    "name": "Chicken Cheese Volcano",
+    "description": "1 pc - Juicy chicken patty sandwiched inside soft buns with an explosion of cheese.",
+    "price": 339,
+    "image": "Chicken Cheese Volcano.webp",
+    "category": "Burger",
+    "vegetarian": false,
+    "spicy_level": 0,
+    "rating": 4.7,
+    "popular": false,
+    "addons": [
+      {
+        "name": "Extra Cheese",
+        "price": 35
+      },
+      {
+        "name": "Fries Add-on",
+        "price": 99
+      }
+    ]
+  },
+  {
+    "id": 13,
+    "restaurant_id": 1,
+    "name": "Beef Cheese Volcano",
+    "description": "1 pc - Meaty beef patty sandwiched inside soft buns with an explosion of cheese.",
+    "price": 379,
+    "image": "Beef Cheese Volcano.webp",
+    "category": "Burger",
+    "vegetarian": false,
+    "spicy_level": 0,
+    "rating": 4.8,
+    "popular": false,
+    "addons": [
+      {
+        "name": "Extra Patty",
+        "price": 119
+      }
+    ]
+  },
+  {
+    "id": 14,
+    "restaurant_id": 1,
+    "name": "Chicken Tongue Slayer",
+    "description": "1 pc - Cheesy burger loaded with tender chicken and 25% naga sauce.",
+    "price": 229,
+    "image": "Chicken Tongue Slayer.webp",
+    "category": "Burger",
+    "vegetarian": false,
+    "spicy_level": 3,
+    "rating": 4.6,
+    "popular": false,
+    "addons": [
+      {
+        "name": "Extra Naga Sauce",
+        "price": 20
+      }
+    ]
+  },
+  {
+    "id": 15,
+    "restaurant_id": 1,
+    "name": "BBQ Chicken Burger",
+    "description": "1 pc - Burger loaded with juicy BBQ chicken, melty cheese, and BBQ sauce.",
+    "price": 219,
+    "image": "BBQ Chicken Burger.webp",
+    "category": "Burger",
+    "vegetarian": false,
+    "spicy_level": 0,
+    "rating": 4.5,
+    "popular": false,
+    "addons": [
+      {
+        "name": "Double Cheese",
+        "price": 30
+      }
+    ]
+  },
+  {
+    "id": 16,
+    "restaurant_id": 1,
+    "name": "BBQ Beef Burger",
+    "description": "1 pc - Burger loaded with delicious BBQ beef, melty cheese, and BBQ sauce.",
+    "price": 259,
+    "image": "BBQ Beef Burger.webp",
+    "category": "Burger",
+    "vegetarian": false,
+    "spicy_level": 0,
+    "rating": 4.6,
+    "popular": false,
+    "addons": [
+      {
+        "name": "Extra BBQ Sauce",
+        "price": 20
+      }
+    ]
+  },
+  {
+    "id": 17,
+    "restaurant_id": 1,
+    "name": "Beef Juicy Bomb",
+    "description": "1 pc - Delicious burger with a meaty beef patty and oozing cheese inside.",
+    "price": 239,
+    "image": "Beef Juicy Bomb.webp",
+    "category": "Burger",
+    "vegetarian": false,
+    "spicy_level": 0,
+    "rating": 4.5,
+    "popular": false,
+    "addons": [
+      {
+        "name": "Extra Patty",
+        "price": 119
+      }
+    ]
+  },
+  {
+    "id": 18,
+    "restaurant_id": 1,
+    "name": "Chicken Juicy Bomb",
+    "description": "1 pc - Delicious burger with a juicy chicken patty and oozing cheese inside.",
+    "price": 199,
+    "image": "Chicken Juicy Bomb.webp",
+    "category": "Burger",
+    "vegetarian": false,
+    "spicy_level": 0,
+    "rating": 4.5,
+    "popular": false,
+    "addons": [
+      {
+        "name": "Extra Chicken Patty",
+        "price": 99
+      }
+    ]
+  },
+  {
+    "id": 19,
+    "restaurant_id": 1,
+    "name": "Beef Tongue Slayer",
+    "description": "1 pc - Meaty beef patty with an explosion of cheese and 25% naga sauce.",
+    "price": 269,
+    "image": "Beef Tongue Slayer.webp",
+    "category": "Burger",
+    "vegetarian": false,
+    "spicy_level": 3,
+    "rating": 4.6,
+    "popular": false,
+    "addons": [
+      {
+        "name": "Extra Naga Sauce",
+        "price": 20
+      }
+    ]
+  },
+  {
+    "id": 20,
+    "restaurant_id": 1,
+    "name": "American Fries",
+    "description": "Large - Slender baton-cut potatoes fried to crispy perfection.",
+    "price": 199,
+    "image": "American Fries.webp",
+    "category": "Snacks",
+    "vegetarian": true,
+    "spicy_level": 0,
+    "rating": 4.4,
+    "popular": false,
+    "addons": [
+      {
+        "name": "Cheese Sauce",
+        "price": 35
+      },
+      {
+        "name": "Chili Flakes",
+        "price": 15
+      }
+    ]
+  },
+  {
+    "id": 21,
+    "restaurant_id": 1,
+    "name": "Chicken Lollipop",
+    "description": "6 pcs - Lollipop decorated with garden salad and a cup of secret sauce.",
+    "price": 199,
+    "image": "Chicken Lollipop.webp",
+    "category": "Snacks",
+    "vegetarian": false,
+    "spicy_level": 1,
+    "rating": 4.5,
+    "popular": false,
+    "addons": [
+      {
+        "name": "Extra Secret Sauce",
+        "price": 25
+      }
+    ]
+  },
+  {
+    "id": 22,
+    "restaurant_id": 1,
+    "name": "Set Menu - 1",
+    "description": "1:1 - Mild spicy rice, red chili chicken, 1 pc chicken sheek kebab, sausage vegetable curry, and garden salad.",
+    "price": 199,
+    "image": "Set Menu-1.webp",
+    "category": "Set Menu",
+    "vegetarian": false,
+    "spicy_level": 1,
+    "rating": 4.4,
+    "popular": false,
+    "addons": [
+      {
+        "name": "Extra Rice",
+        "price": 39
+      }
+    ]
+  },
+  {
+    "id": 23,
+    "restaurant_id": 1,
+    "name": "Set Menu - 2",
+    "description": "1:1 - Mildly spiced rice, 1 pc creamed chicken steak, red chili chicken, sausage vegetable curry, and garden salad.",
+    "price": 279,
+    "image": "Set Menu-2.webp",
+    "category": "Set Menu",
+    "vegetarian": false,
+    "spicy_level": 1,
+    "rating": 4.5,
+    "popular": false,
+    "addons": [
+      {
+        "name": "Extra Chicken Steak",
+        "price": 99
+      }
+    ]
+  },
+  {
+    "id": 24,
+    "restaurant_id": 1,
+    "name": "Set Menu - 3",
+    "description": "1:1 - Mild spicy rice, Turkish steak, chicken shish kebab, red chili chicken, sausage, vegetable curry, and garden salad.",
+    "price": 349,
+    "image": "Set Menu-3.webp",
+    "category": "Set Menu",
+    "vegetarian": false,
+    "spicy_level": 1,
+    "rating": 4.6,
+    "popular": false,
+    "addons": [
+      {
+        "name": "Extra Kebab",
+        "price": 79
+      }
+    ]
+  },
+  {
+    "id": 25,
+    "restaurant_id": 1,
+    "name": "Fat Boy",
+    "description": "1:1 - Fried rice, 3 pcs chicken lollipop, Chinese vegetable, chicken chili onion, salad, and chutney.",
+    "price": 319,
+    "image": "Fat Boy.webp",
+    "category": "Set Menu",
+    "vegetarian": false,
+    "spicy_level": 1,
+    "rating": 4.6,
+    "popular": false,
+    "addons": [
+      {
+        "name": "Extra Lollipop",
+        "price": 69
+      }
+    ]
+  },
+  {
+    "id": 26,
+    "restaurant_id": 1,
+    "name": "Vanilla Silk",
+    "description": "1:1 - Thick and creamy delicious drink with vanilla extracts.",
+    "price": 299,
+    "image": "Vanilla Silk.webp",
+    "category": "Koken",
+    "vegetarian": true,
+    "spicy_level": 0,
+    "rating": 4.4,
+    "popular": false,
+    "addons": []
+  },
+  {
+    "id": 27,
+    "restaurant_id": 1,
+    "name": "Killer KitKat",
+    "description": "KitKat milkshake blended with vanilla ice cream and milk.",
+    "price": 349,
+    "image": "Killer KitKat.webp",
+    "category": "Koken",
+    "vegetarian": true,
+    "spicy_level": 0,
+    "rating": 4.6,
+    "popular": false,
+    "addons": []
+  },
+  {
+    "id": 28,
+    "restaurant_id": 1,
+    "name": "Velvet Strawberry",
+    "description": "A thick and creamy strawberry-flavored house drink.",
+    "price": 299,
+    "image": "Velvet Strawberry.webp",
+    "category": "Koken",
+    "vegetarian": true,
+    "spicy_level": 0,
+    "rating": 4.4,
+    "popular": false,
+    "addons": []
+  },
+  {
+    "id": 29,
+    "restaurant_id": 1,
+    "name": "Chocolate Fantasy",
+    "description": "A thick creamy chocolate milkshake built for dessert lovers.",
+    "price": 299,
+    "image": "Chocolate Fantasy.webp",
+    "category": "Koken",
+    "vegetarian": true,
+    "spicy_level": 0,
+    "rating": 4.5,
+    "popular": false,
+    "addons": []
+  },
+  {
+    "id": 30,
+    "restaurant_id": 1,
+    "name": "Oreo Orchestra",
+    "description": "A chilled Oreo-forward blended drink.",
+    "price": 349,
+    "image": "Oreo Orchestra.webp",
+    "category": "Koken",
+    "vegetarian": true,
+    "spicy_level": 0,
+    "rating": 4.5,
+    "popular": false,
+    "addons": []
+  },
+  {
+    "id": 31,
+    "restaurant_id": 1,
+    "name": "Iced Lemon Tea",
+    "description": "A refreshing iced lemon tea to boost your energy.",
+    "price": 249,
+    "image": "Iced Lemon Tea.webp",
+    "category": "Koken",
+    "vegetarian": true,
+    "spicy_level": 0,
+    "rating": 4.3,
+    "popular": false,
+    "addons": []
+  },
+  {
+    "id": 32,
+    "restaurant_id": 1,
+    "name": "Blue Ocean",
+    "description": "A refreshing blue mocktail to brighten your mood.",
+    "price": 249,
+    "image": "Blue Ocean.webp",
+    "category": "Koken",
+    "vegetarian": true,
+    "spicy_level": 0,
+    "rating": 4.3,
+    "popular": false,
+    "addons": []
+  },
+  {
+    "id": 33,
+    "restaurant_id": 1,
+    "name": "Orange Mojito",
+    "description": "A bright and refreshing orange mojito mocktail.",
+    "price": 249,
+    "image": "Orange Mojito.webp",
+    "category": "Koken",
+    "vegetarian": true,
+    "spicy_level": 0,
+    "rating": 4.3,
+    "popular": false,
+    "addons": []
+  },
+  {
+    "id": 34,
+    "restaurant_id": 1,
+    "name": "Cappuccino",
+    "description": "Sweet and creamy coffee with a rich roasted aroma.",
+    "price": 249,
+    "image": "Cappuccino.webp",
+    "category": "Koken",
+    "vegetarian": true,
+    "spicy_level": 0,
+    "rating": 4.3,
+    "popular": false,
+    "addons": []
+  },
+  {
+    "id": 35,
+    "restaurant_id": 1,
+    "name": "Americano",
+    "description": "Fresh coffee extract finished with hot water for a clean cup.",
+    "price": 199,
+    "image": "Americano.webp",
+    "category": "Koken",
+    "vegetarian": true,
+    "spicy_level": 0,
+    "rating": 4.2,
+    "popular": false,
+    "addons": []
+  },
+  {
+    "id": 36,
+    "restaurant_id": 1,
+    "name": "Espresso",
+    "description": "A concentrated hot shot of espresso with creamy milk notes.",
+    "price": 149,
+    "image": "Espresso.webp",
+    "category": "Koken",
+    "vegetarian": true,
+    "spicy_level": 0,
+    "rating": 4.2,
+    "popular": false,
+    "addons": []
+  },
+  {
+    "id": 37,
+    "restaurant_id": 1,
+    "name": "Hot Chocolate",
+    "description": "Steamed milk blended with rich chocolate sauce.",
+    "price": 299,
+    "image": "Hot Chocolate.webp",
+    "category": "Koken",
+    "vegetarian": true,
+    "spicy_level": 0,
+    "rating": 4.4,
+    "popular": false,
+    "addons": []
+  },
+  {
+    "id": 38,
+    "restaurant_id": 1,
+    "name": "Fresh Lemon Soda",
+    "description": "A chilled lemon soda made for hot days.",
+    "price": 249,
+    "image": "Fresh Lemon Soda.jpg",
+    "category": "Koken",
+    "vegetarian": true,
+    "spicy_level": 0,
+    "rating": 4.3,
+    "popular": false,
+    "addons": []
+  },
+  {
+    "id": 39,
+    "restaurant_id": 1,
+    "name": "Green Apple Lemon Mint",
+    "description": "A sharp green apple and mint cooler.",
+    "price": 249,
+    "image": "Green Apple Lemon Mint.jpg",
+    "category": "Koken",
+    "vegetarian": true,
+    "spicy_level": 0,
+    "rating": 4.3,
+    "popular": false,
+    "addons": []
+  },
+  {
+    "id": 40,
+    "restaurant_id": 1,
+    "name": "Cox's Lemon",
+    "description": "A bright citrus refresher built for a cooling finish.",
+    "price": 249,
+    "image": "Cox's Lemon.jpg",
+    "category": "Koken",
+    "vegetarian": true,
+    "spicy_level": 0,
+    "rating": 4.3,
+    "popular": false,
+    "addons": []
+  },
+  {
+    "id": 41,
+    "restaurant_id": 1,
+    "name": "Lemon Mint Mojito",
+    "description": "A cool zesty mocktail blending lemon and mint.",
+    "price": 249,
+    "image": "Lemon Mint Mojito.jpg",
+    "category": "Koken",
+    "vegetarian": true,
+    "spicy_level": 0,
+    "rating": 4.4,
+    "popular": false,
+    "addons": []
+  },
+  {
+    "id": 42,
+    "restaurant_id": 1,
+    "name": "Raspberry Mojito",
+    "description": "A fruity mojito twist with raspberry and fresh mint.",
+    "price": 249,
+    "image": "Raspberry Mojito.jpg",
+    "category": "Koken",
+    "vegetarian": true,
+    "spicy_level": 0,
+    "rating": 4.4,
+    "popular": false,
+    "addons": []
+  },
+  {
+    "id": 43,
+    "restaurant_id": 1,
+    "name": "Blueberry Mojito",
+    "description": "A blueberry mojito mocktail with a refreshing mint finish.",
+    "price": 249,
+    "image": "Blueberry Mojito.jpg",
+    "category": "Koken",
+    "vegetarian": true,
+    "spicy_level": 0,
+    "rating": 4.4,
+    "popular": false,
+    "addons": []
+  },
+  {
+    "id": 44,
+    "restaurant_id": 1,
+    "name": "Kiwi Mojito",
+    "description": "A sweet and tangy kiwi-infused mocktail with mint.",
+    "price": 249,
+    "image": "Kiwi Mojito.jpg",
+    "category": "Koken",
+    "vegetarian": true,
+    "spicy_level": 0,
+    "rating": 4.4,
+    "popular": false,
+    "addons": []
+  },
+  {
+    "id": 45,
+    "restaurant_id": 1,
+    "name": "Hazelnut Iced Latte",
+    "description": "A cool blended coffee with espresso, milk, ice, and hazelnut flavor.",
+    "price": 349,
+    "image": "Hazelnut Iced Latte.jpg",
+    "category": "Koken",
+    "vegetarian": true,
+    "spicy_level": 0,
+    "rating": 4.5,
+    "popular": false,
+    "addons": []
+  },
+  {
+    "id": 46,
+    "restaurant_id": 1,
+    "name": "Caramel Iced Latte",
+    "description": "A sweet refreshing espresso-based iced latte with caramel sauce.",
+    "price": 349,
+    "image": "Caramel Iced Latte.jpg",
+    "category": "Koken",
+    "vegetarian": true,
+    "spicy_level": 0,
+    "rating": 4.5,
+    "popular": false,
+    "addons": []
+  },
+  {
+    "id": 47,
+    "restaurant_id": 1,
+    "name": "Cheesecake Iced Latte",
+    "description": "A creamy blended coffee with cheesecake flavoring.",
+    "price": 349,
+    "image": "Cheesecake Iced Latte.jpg",
+    "category": "Koken",
+    "vegetarian": true,
+    "spicy_level": 0,
+    "rating": 4.5,
+    "popular": false,
+    "addons": []
+  },
+  {
+    "id": 48,
+    "restaurant_id": 1,
+    "name": "Cookie Iced Latte",
+    "description": "A blended coffee with espresso, milk, ice, and cookie crumbles.",
+    "price": 349,
+    "image": "Cookie Iced Latte.jpg",
+    "category": "Koken",
+    "vegetarian": true,
+    "spicy_level": 0,
+    "rating": 4.5,
+    "popular": false,
+    "addons": []
+  },
+  {
+    "id": 49,
+    "restaurant_id": 1,
+    "name": "Vanilla Iced Latte",
+    "description": "A smooth sweet blended coffee with vanilla syrup.",
+    "price": 349,
+    "image": "Vanilla Iced Latte.jpg",
+    "category": "Koken",
+    "vegetarian": true,
+    "spicy_level": 0,
+    "rating": 4.4,
+    "popular": false,
+    "addons": []
+  },
+  {
+    "id": 50,
+    "restaurant_id": 1,
+    "name": "Mocha",
+    "description": "A cafe-style mocha balancing coffee and chocolate.",
+    "price": 299,
+    "image": "Mocha.jpg",
+    "category": "Koken",
+    "vegetarian": true,
+    "spicy_level": 0,
+    "rating": 4.4,
+    "popular": false,
+    "addons": []
+  },
+  {
+    "id": 51,
+    "restaurant_id": 1,
+    "name": "BBQ Meat Machine Pizza",
+    "description": "Topped with beef and chicken together with freshly cut vegetables, cheese, and soft pizza dough.",
+    "price": 335,
+    "image": "BBQ Meat Machine Pizza.webp",
+    "category": "Pizza",
+    "vegetarian": false,
+    "spicy_level": 1,
+    "rating": 4.8,
+    "popular": true,
+    "addons": [
+      {
+        "name": "Extra BBQ Sauce",
+        "price": 30
+      },
+      {
+        "name": "Extra Meat Mix",
+        "price": 65
+      }
+    ]
+  },
+  {
+    "id": 52,
+    "restaurant_id": 1,
+    "name": "Meat Masala Pizza",
+    "description": "Lots of meat with a spiced masala finish.",
+    "price": 335,
+    "image": "Meat Masala Pizza.webp",
+    "category": "Pizza",
+    "vegetarian": false,
+    "spicy_level": 2,
+    "rating": 4.7,
+    "popular": true,
+    "addons": [
+      {
+        "name": "Extra Masala Spice",
+        "price": 20
+      },
+      {
+        "name": "Extra Meat",
+        "price": 60
+      }
+    ]
+  },
+  {
+    "id": 53,
+    "restaurant_id": 1,
+    "name": "Kebab Cocktail Pizza",
+    "description": "Five types of chicken with a bold kebab spice profile.",
+    "price": 345,
+    "image": "Kebab Cocktail Pizza.webp",
+    "category": "Pizza",
+    "vegetarian": false,
+    "spicy_level": 2,
+    "rating": 4.8,
+    "popular": true,
+    "addons": [
+      {
+        "name": "Extra Kebab Chicken",
+        "price": 65
+      }
+    ]
+  },
+  {
+    "id": 54,
+    "restaurant_id": 1,
+    "name": "Sausage Carnival Pizza",
+    "description": "Big sausage pieces, mushrooms, and a savory spice blend.",
+    "price": 335,
+    "image": "Sausage Carnival Pizza.webp",
+    "category": "Pizza",
+    "vegetarian": false,
+    "spicy_level": 1,
+    "rating": 4.7,
+    "popular": true,
+    "addons": [
+      {
+        "name": "Extra Sausage",
+        "price": 50
+      },
+      {
+        "name": "Extra Mushroom",
+        "price": 25
+      }
+    ]
+  },
+  {
+    "id": 55,
+    "restaurant_id": 1,
+    "name": "The Everything Chicken Pizza",
+    "description": "A loaded first-timer favorite built around a chicken-heavy everything topping mix.",
+    "price": 495,
+    "image": "The Everything Chicken Pizza.webp",
+    "category": "Pizza",
+    "vegetarian": false,
+    "spicy_level": 1,
+    "rating": 4.8,
+    "popular": true,
+    "addons": [
+      {
+        "name": "Extra Chicken",
+        "price": 60
+      }
+    ]
+  },
+  {
+    "id": 88,
+    "restaurant_id": 2,
+    "name": "Signature Ghee Beef Tehari - Full Plate",
+    "description": "Prepared with chittagong original ghee infused tender beef tehari, served in traditional matka",
+    "price": 275,
+    "image": "Peyari Tehari/Signature Gee Beef Tehari.webp",
+    "category": "Popular",
+    "vegetarian": false,
+    "spicy_level": 1,
+    "rating": 4.5,
+    "popular": true,
+    "addons": []
+  },
+  {
+    "id": 89,
+    "restaurant_id": 2,
+    "name": "Signature Ghee Beef Teheri - Half Plate",
+    "description": "Prepared with chittagong original ghee infused tender beef tehari, served in traditional matka",
+    "price": 155,
+    "image": "Peyari Tehari/Signature Gee Beef Tehari.webp",
+    "category": "Popular",
+    "vegetarian": false,
+    "spicy_level": 1,
+    "rating": 4.5,
+    "popular": true,
+    "addons": []
+  },
+  {
+    "id": 90,
+    "restaurant_id": 2,
+    "name": "Shorisha Mutton Tehari - Full Plate",
+    "description": "Dhakaiya shorisha mutton tehari prepared with the classic flavors of old dhaka",
+    "price": 280,
+    "image": "Peyari Tehari/Shorisha Mutton Tehari.webp",
+    "category": "Popular",
+    "vegetarian": false,
+    "spicy_level": 1,
+    "rating": 4.5,
+    "popular": true,
+    "addons": []
+  },
+  {
+    "id": 91,
+    "restaurant_id": 2,
+    "name": "Shorisha Mutton Teheri - Half Plate",
+    "description": "Dhakaiya shorisha mutton tehari prepared with the classic flavors of old dhaka",
+    "price": 160,
+    "image": "Peyari Tehari/Shorisha Mutton Tehari.webp",
+    "category": "Popular",
+    "vegetarian": false,
+    "spicy_level": 1,
+    "rating": 4.5,
+    "popular": true,
+    "addons": []
+  },
+  {
+    "id": 92,
+    "restaurant_id": 2,
+    "name": "Chicken Tehari - Full Plate",
+    "description": "Slow cooked in ghee, the most tender chicken tehari you have ever tried",
+    "price": 200,
+    "image": "Peyari Tehari/Chicken Tehari.webp",
+    "category": "Popular",
+    "vegetarian": false,
+    "spicy_level": 1,
+    "rating": 4.5,
+    "popular": true,
+    "addons": []
+  },
+  {
+    "id": 93,
+    "restaurant_id": 2,
+    "name": "Signature Ghee Beef Tehari - 1 kg Matka",
+    "description": "1 kg - Prepared with chittagong original ghee infused tender beef tehari, served in traditional matka",
+    "price": 550,
+    "image": "Peyari Tehari/Signature Ghee Beef Tehari - 1 kg Matka.webp",
+    "category": "Popular",
+    "vegetarian": false,
+    "spicy_level": 1,
+    "rating": 4.5,
+    "popular": true,
+    "addons": []
+  },
+  {
+    "id": 94,
+    "restaurant_id": 2,
+    "name": "Signature Ghee Beef Teheri - Half Plate",
+    "description": "Prepared with chittagong original ghee infused tender beef tehari, served in traditional matka",
+    "price": 155,
+    "image": "Peyari Tehari/Signature Gee Beef Tehari.webp",
+    "category": "Tehari",
+    "vegetarian": false,
+    "spicy_level": 1,
+    "rating": 4.5,
+    "popular": false,
+    "addons": []
+  },
+  {
+    "id": 95,
+    "restaurant_id": 2,
+    "name": "Signature Ghee Beef Tehari - Full Plate",
+    "description": "Prepared with chittagong original ghee infused tender beef tehari, served in traditional matka",
+    "price": 275,
+    "image": "Peyari Tehari/Signature Gee Beef Tehari.webp",
+    "category": "Tehari",
+    "vegetarian": false,
+    "spicy_level": 1,
+    "rating": 4.5,
+    "popular": false,
+    "addons": []
+  },
+  {
+    "id": 96,
+    "restaurant_id": 2,
+    "name": "Signature Ghee Beef Tehari - 1 kg Matka",
+    "description": "1 kg - Prepared with chittagong original ghee infused tender beef tehari, served in traditional matka",
+    "price": 550,
+    "image": "Peyari Tehari/Signature Ghee Beef Tehari - 1 kg Matka.webp",
+    "category": "Tehari",
+    "vegetarian": false,
+    "spicy_level": 1,
+    "rating": 4.5,
+    "popular": false,
+    "addons": []
+  },
+  {
+    "id": 97,
+    "restaurant_id": 2,
+    "name": "Shorisha Mutton Teheri - Half Plate",
+    "description": "Dhakaiya shorisha mutton tehari prepared with the classic flavors of old dhaka",
+    "price": 160,
+    "image": "Peyari Tehari/Shorisha Mutton Tehari.webp",
+    "category": "Tehari",
+    "vegetarian": false,
+    "spicy_level": 1,
+    "rating": 4.5,
+    "popular": false,
+    "addons": []
+  },
+  {
+    "id": 98,
+    "restaurant_id": 2,
+    "name": "Shorisha Mutton Tehari - Full Plate",
+    "description": "Dhakaiya shorisha mutton tehari prepared with the classic flavors of old dhaka",
+    "price": 280,
+    "image": "Peyari Tehari/Shorisha Mutton Tehari.webp",
+    "category": "Tehari",
+    "vegetarian": false,
+    "spicy_level": 1,
+    "rating": 4.5,
+    "popular": false,
+    "addons": []
+  },
+  {
+    "id": 99,
+    "restaurant_id": 2,
+    "name": "Shorisha Mutton Tehari - 1 kg Matka",
+    "description": "Dhakaiya shorisha mutton tehari prepared with the classic flavors of old dhaka",
+    "price": 560,
+    "image": "Peyari Tehari/Shorisha Mutton Tehari - 1 kg Matka.webp",
+    "category": "Tehari",
+    "vegetarian": false,
+    "spicy_level": 1,
+    "rating": 4.5,
+    "popular": false,
+    "addons": []
+  },
+  {
+    "id": 100,
+    "restaurant_id": 2,
+    "name": "Chicken Tehari - Full Plate",
+    "description": "Slow cooked in ghee, the most tender chicken tehari you have ever tried",
+    "price": 200,
+    "image": "Peyari Tehari/Chicken Tehari.webp",
+    "category": "Tehari",
+    "vegetarian": false,
+    "spicy_level": 1,
+    "rating": 4.5,
+    "popular": false,
+    "addons": []
+  },
+  {
+    "id": 101,
+    "restaurant_id": 2,
+    "name": "Chicken Tehari - 1 kg Matka",
+    "description": "Slow cooked in ghee, the most tender chicken tehari you have ever tried",
+    "price": 400,
+    "image": "Peyari Tehari/Chicken Tehari - 1 kg Matka.webp",
+    "category": "Tehari",
+    "vegetarian": false,
+    "spicy_level": 1,
+    "rating": 4.5,
+    "popular": false,
+    "addons": []
+  },
+  {
+    "id": 102,
+    "restaurant_id": 2,
+    "name": "Chicken Tehari Combo",
+    "description": "1:1 - Consists of chicken tehari, ghee egg curry & mineral water",
+    "price": 260,
+    "image": "Peyari Tehari/Chicken Tehari Combo.webp",
+    "category": "Tehari Combo",
+    "vegetarian": false,
+    "spicy_level": 1,
+    "rating": 4.5,
+    "popular": false,
+    "addons": []
+  },
+  {
+    "id": 103,
+    "restaurant_id": 2,
+    "name": "Lal Bhuna Full",
+    "description": "Prepared with beef cubes, onion, chili & spices in rich gravy",
+    "price": 260,
+    "image": "Peyari Tehari/Lal bhuna full.webp",
+    "category": "Curry",
+    "vegetarian": false,
+    "spicy_level": 2,
+    "rating": 4.5,
+    "popular": false,
+    "addons": []
+  },
+  {
+    "id": 104,
+    "restaurant_id": 2,
+    "name": "Lal Bhuna Half",
+    "description": "Prepared with beef cubes, onion, chili & spices in rich gravy",
+    "price": 140,
+    "image": "Peyari Tehari/Lal Bhuna half.webp",
+    "category": "Curry",
+    "vegetarian": false,
+    "spicy_level": 2,
+    "rating": 4.5,
+    "popular": false,
+    "addons": []
+  },
+  {
+    "id": 105,
+    "restaurant_id": 2,
+    "name": "Ghee Dim Curry",
+    "description": "1:1 - Spicy, flavorful egg curry with tender boiled egg simmered in a rich gravy",
+    "price": 50,
+    "image": "Peyari Tehari/Ghee Dim Curry.webp",
+    "category": "Curry",
+    "vegetarian": false,
+    "spicy_level": 1,
+    "rating": 4.5,
+    "popular": false,
+    "addons": []
+  },
+  {
+    "id": 106,
+    "restaurant_id": 2,
+    "name": "Pista Kulfi Bomb",
+    "description": "1:1 - Kulfi bombs made from the finest malai & pistachio",
+    "price": 120,
+    "image": "Peyari Tehari/Pista Kulfi Bomb.webp",
+    "category": "Dessert",
+    "vegetarian": true,
+    "spicy_level": 0,
+    "rating": 4.5,
+    "popular": false,
+    "addons": []
+  },
+  {
+    "id": 107,
+    "restaurant_id": 2,
+    "name": "Firni",
+    "description": "1:1 - Delicious bengali dessert prepared with aromatic rice, sugar & milk",
+    "price": 70,
+    "image": "Peyari Tehari/Firni.webp",
+    "category": "Dessert",
+    "vegetarian": true,
+    "spicy_level": 0,
+    "rating": 4.5,
+    "popular": false,
+    "addons": []
+  },
+  {
+    "id": 108,
+    "restaurant_id": 2,
+    "name": "Sheer Khurma",
+    "description": "1:1 - A rich shemai pudding made with vanilla custard, raisins & nuts",
+    "price": 90,
+    "image": "Peyari Tehari/Sheer Khurma.webp",
+    "category": "Dessert",
+    "vegetarian": true,
+    "spicy_level": 0,
+    "rating": 4.5,
+    "popular": false,
+    "addons": []
+  },
+  {
+    "id": 109,
+    "restaurant_id": 2,
+    "name": "Borhani 200 ml",
+    "description": "Thick drink prepared with sour yogurt, green chili, mustard seeds, black salt, coriander & mint leaves",
+    "price": 70,
+    "image": "Peyari Tehari/Borhani 200 ml.webp",
+    "category": "Beverage",
+    "vegetarian": true,
+    "spicy_level": 1,
+    "rating": 4.5,
+    "popular": false,
+    "addons": []
+  },
+  {
+    "id": 110,
+    "restaurant_id": 2,
+    "name": "Dil Bahar Badam Sharbat",
+    "description": "200 ml - Creamy energy-boosting dil bahar badam sharbat prepared with blending almonds with milk, sugar, & aromatic spices like cardamom & saffron, served chilled",
+    "price": 90,
+    "image": "Peyari Tehari/Dil Bahar Badam Sharbat.webp",
+    "category": "Beverage",
+    "vegetarian": true,
+    "spicy_level": 0,
+    "rating": 4.5,
+    "popular": false,
+    "addons": []
+  },
+  {
+    "id": 111,
+    "restaurant_id": 2,
+    "name": "Achari Salad",
+    "description": "Peyari Tehari Special",
+    "price": 30,
+    "image": "Peyari Tehari/Achari Salad.webp",
+    "category": "Sides",
+    "vegetarian": true,
+    "spicy_level": 1,
+    "rating": 4.5,
+    "popular": false,
+    "addons": []
+  }
+]

@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Partner Dashboard Mockup</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    color: #e2e8f0;
+    min-height: 100vh;
+    background:
+      radial-gradient(circle at 10% 15%, rgba(232,92,44,0.16), transparent 36%),
+      radial-gradient(circle at 90% 80%, rgba(232,92,44,0.09), transparent 30%),
+      linear-gradient(135deg, #050607 0%, #0a0d10 52%, #050607 100%);
+  }
+
+  /* Header */
+  .pd-header {
+    background: rgba(8,10,12,0.84);
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+    padding: 0.9rem 1.5rem;
+    backdrop-filter: blur(24px);
+    box-shadow: 0 1px 0 rgba(255,255,255,0.03), 0 8px 24px rgba(0,0,0,0.28);
+  }
+  .pd-header-inner {
+    display: flex; align-items: center; justify-content: space-between;
+    max-width: 1400px; margin: 0 auto;
+  }
+  .pd-header-left { display: flex; align-items: center; gap: 1.5rem; }
+  .pd-logo {
+    display: flex; align-items: center; gap: 0.5rem;
+    font-size: 1.3rem; font-weight: 700; text-decoration: none; color: inherit;
+  }
+  .pd-logo i { color: #ff8558; }
+  .pd-logo .food { color: #fbfcfd; }
+  .pd-logo .express { color: #ff8558; }
+  .pd-title-block {
+    display: flex; flex-direction: column;
+    border-left: 1px solid rgba(255,255,255,0.08); padding-left: 1.5rem;
+  }
+  .pd-title-block h1 { font-size: 1.1rem; color: #f7f9fb; letter-spacing: -0.01em; }
+  .pd-role-badge {
+    display: inline-flex; align-items: center; gap: 0.35rem;
+    font-size: 0.72rem; color: #ff8558; font-weight: 600; margin-top: 0.15rem;
+  }
+  .pd-logout-btn {
+    font-size: 0.875rem; padding: 0.5rem 1rem; border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.12); color: rgba(239,243,247,0.78);
+    background: rgba(255,255,255,0.04); cursor: pointer;
+  }
+
+  /* Layout */
+  .pd-layout {
+    display: flex; max-width: 1400px; margin: 0 auto;
+    width: 100%; padding: 1.5rem; gap: 1.5rem; align-items: flex-start;
+  }
+
+  /* Sidebar */
+  .pd-sidebar {
+    width: 220px; flex-shrink: 0;
+    display: flex; flex-direction: column; gap: 1rem;
+  }
+  .pd-nav {
+    background: linear-gradient(180deg, rgba(16,19,22,0.86), rgba(10,12,15,0.82));
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 18px; overflow: hidden;
+    backdrop-filter: blur(20px);
+    box-shadow: 0 16px 36px rgba(0,0,0,0.28);
+  }
+
+  /* Group label inside nav */
+  .pd-nav-group-label {
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: rgba(239,243,247,0.28);
+    padding: 0.7rem 1.1rem 0.3rem;
+  }
+  .pd-nav-group-label:not(:first-child) {
+    border-top: 1px solid rgba(255,255,255,0.05);
+    margin-top: 0.2rem;
+    padding-top: 0.85rem;
+  }
+
+  .pd-nav-item {
+    display: flex; align-items: center; gap: 0.75rem;
+    width: 100%; padding: 0.8rem 1.1rem;
+    background: none; border: none;
+    color: rgba(239,243,247,0.52);
+    font-size: 0.875rem; font-weight: 500;
+    cursor: pointer; text-align: left;
+    transition: background 0.18s, color 0.18s;
+    font-family: inherit;
+  }
+  .pd-nav-item:hover {
+    background: rgba(255,255,255,0.05);
+    color: rgba(239,243,247,0.9);
+  }
+  .pd-nav-item.active {
+    background: rgba(232,92,44,0.12);
+    color: #ff8558;
+  }
+  .pd-nav-item i { font-size: 0.9rem; width: 18px; text-align: center; }
+  .pd-badge {
+    margin-left: auto;
+    background: #ff8558; color: white;
+    border-radius: 999px; padding: 0.1rem 0.5rem;
+    font-size: 0.7rem; font-weight: 700;
+    box-shadow: 0 4px 10px rgba(232,92,44,0.32);
+  }
+
+  /* Stats sidebar */
+  .pd-stats-sidebar {
+    background: linear-gradient(180deg, rgba(16,19,22,0.86), rgba(10,12,15,0.82));
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 18px; padding: 1.1rem;
+    backdrop-filter: blur(20px);
+    box-shadow: 0 16px 36px rgba(0,0,0,0.28);
+  }
+  .pd-stat-item {
+    display: flex; justify-content: space-between; align-items: center; padding: 0.55rem 0;
+  }
+  .pd-stat-item:not(:last-child) { border-bottom: 1px solid rgba(255,255,255,0.05); }
+  .pd-stat-label { font-size: 0.8rem; color: rgba(239,243,247,0.42); }
+  .pd-stat-value { font-size: 0.9rem; font-weight: 600; color: #f1f5f9; }
+
+  /* Main */
+  .pd-main { flex: 1; min-width: 0; }
+  .pd-tab-header {
+    display: flex; align-items: flex-start; justify-content: space-between;
+    margin-bottom: 1.5rem;
+  }
+  .pd-tab-header h2 { font-size: 1.35rem; font-weight: 700; color: #f7f9fb; }
+  .pd-tab-subtitle { font-size: 0.85rem; color: rgba(239,243,247,0.45); margin-top: 0.25rem; }
+
+  /* Placeholder content blocks */
+  .mock-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 1.5rem;
+  }
+  .mock-card {
+    background: linear-gradient(180deg, rgba(16,19,22,0.86), rgba(10,12,15,0.82));
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px; padding: 1.2rem 1.4rem;
+    backdrop-filter: blur(20px);
+  }
+  .mock-card .val { font-size: 1.6rem; font-weight: 700; color: #f1f5f9; margin-bottom: 0.2rem; }
+  .mock-card .lbl { font-size: 0.78rem; color: rgba(239,243,247,0.42); }
+  .mock-card .val.orange { color: #ff8558; }
+  .mock-placeholder {
+    background: linear-gradient(180deg, rgba(16,19,22,0.86), rgba(10,12,15,0.82));
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px; padding: 2rem;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.85rem; color: rgba(239,243,247,0.25);
+    min-height: 100px; margin-bottom: 1rem;
+  }
+
+  /* Caption */
+  .caption {
+    text-align: center; font-size: 0.82rem;
+    color: rgba(239,243,247,0.35); margin-top: 1.5rem;
+  }
+</style>
+</head>
+<body>
+
+<div class="pd-header">
+  <div class="pd-header-inner">
+    <div class="pd-header-left">
+      <a href="#" class="pd-logo">
+        <i class="fas fa-utensils"></i>
+        <span><span class="food">Food</span><span class="express">Express</span></span>
+      </a>
+      <div class="pd-title-block">
+        <h1>Pizzaburg</h1>
+        <span class="pd-role-badge"><i class="fas fa-store"></i> Restaurant Admin</span>
+      </div>
+    </div>
+    <button class="pd-logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</button>
+  </div>
+</div>
+
+<div class="pd-layout">
+  <aside class="pd-sidebar">
+    <nav class="pd-nav">
+      <div class="pd-nav-group-label">Overview</div>
+      <button class="pd-nav-item active">
+        <i class="fas fa-chart-pie"></i><span>Overview</span>
+      </button>
+
+      <div class="pd-nav-group-label">Restaurant</div>
+      <button class="pd-nav-item">
+        <i class="fas fa-utensils"></i><span>Menu</span>
+      </button>
+      <button class="pd-nav-item">
+        <i class="fas fa-edit"></i><span>Profile</span>
+      </button>
+
+      <div class="pd-nav-group-label">Operations</div>
+      <button class="pd-nav-item">
+        <i class="fas fa-receipt"></i><span>Orders</span>
+        <span class="pd-badge">3</span>
+      </button>
+      <button class="pd-nav-item">
+        <i class="fas fa-motorcycle"></i><span>Deliveries</span>
+      </button>
+
+      <div class="pd-nav-group-label">Business</div>
+      <button class="pd-nav-item">
+        <i class="fas fa-tags"></i><span>Promotions</span>
+      </button>
+      <button class="pd-nav-item">
+        <i class="fas fa-users"></i><span>Customers</span>
+      </button>
+      <button class="pd-nav-item">
+        <i class="fas fa-chart-line"></i><span>Analytics</span>
+      </button>
+      <button class="pd-nav-item">
+        <i class="fas fa-credit-card"></i><span>Payments</span>
+      </button>
+    </nav>
+
+    <div class="pd-stats-sidebar">
+      <div class="pd-stat-item">
+        <span class="pd-stat-label">Menu Items</span>
+        <span class="pd-stat-value">38</span>
+      </div>
+      <div class="pd-stat-item">
+        <span class="pd-stat-label">Total Orders</span>
+        <span class="pd-stat-value">142</span>
+      </div>
+      <div class="pd-stat-item">
+        <span class="pd-stat-label">Revenue</span>
+        <span class="pd-stat-value">Tk 8.4k</span>
+      </div>
+      <div class="pd-stat-item">
+        <span class="pd-stat-label">Active Orders</span>
+        <span class="pd-stat-value" style="color:#ff8558">3</span>
+      </div>
+      <div class="pd-stat-item">
+        <span class="pd-stat-label">Status</span>
+        <span class="pd-stat-value" style="color:#22c55e">Open</span>
+      </div>
+    </div>
+  </aside>
+
+  <main class="pd-main">
+    <div class="pd-tab-header">
+      <div>
+        <h2>Overview</h2>
+        <p class="pd-tab-subtitle">Your restaurant at a glance.</p>
+      </div>
+    </div>
+    <div class="mock-grid">
+      <div class="mock-card"><div class="val">142</div><div class="lbl">Total Orders</div></div>
+      <div class="mock-card"><div class="val">Tk 8.4k</div><div class="lbl">Revenue</div></div>
+      <div class="mock-card"><div class="val orange">3</div><div class="lbl">Active Orders</div></div>
+    </div>
+    <div class="mock-placeholder"><i class="fas fa-receipt" style="margin-right:8px;color:#ff8558"></i> Recent orders feed</div>
+    <div class="mock-placeholder"><i class="fas fa-fire" style="margin-right:8px;color:#ff8558"></i> Popular items this week</div>
+  </main>
+</div>
+
+<p class="caption">Mockup — exact match to current partner-dashboard.html styling. Reply in terminal to confirm or suggest changes.</p>
+
+</body>
+</html>

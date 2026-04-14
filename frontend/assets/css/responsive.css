@@ -1,0 +1,288 @@
+/* Tablet */
+@media (max-width: 1024px) {
+    .container {
+        padding: 0 15px;
+    }
+    
+    .hero h1 {
+        font-size: 2.8rem;
+    }
+    
+    .app-download .container {
+        flex-direction: column;
+        text-align: center;
+        gap: 40px;
+    }
+    
+    .app-buttons {
+        justify-content: center;
+    }
+    
+    .menu-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .menu-sidebar {
+        position: static;
+        margin-bottom: 20px;
+    }
+    
+    .cart-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .order-summary {
+        position: static;
+        margin-top: 30px;
+    }
+}
+
+/* Mobile Large */
+@media (max-width: 768px) {
+    .navbar .nav-links {
+        display: none;
+        position: fixed;
+        top: 70px;
+        left: 0;
+        right: 0;
+        background-color: var(--white);
+        flex-direction: column;
+        padding: 20px;
+        box-shadow: var(--shadow);
+        border-radius: 0 0 var(--radius) var(--radius);
+        z-index: 999;
+    }
+    
+    .navbar .nav-links.show {
+        display: flex;
+    }
+    
+    .menu-toggle {
+        display: block;
+    }
+    
+    .hero .container {
+        flex-direction: column;
+        text-align: center;
+        gap: 40px;
+    }
+    
+    .hero h1 {
+        font-size: 2.2rem;
+    }
+    
+    .search-box {
+        flex-direction: column;
+    }
+    
+    .popular-categories {
+        justify-content: center;
+    }
+    
+    .steps {
+        grid-template-columns: 1fr;
+    }
+    
+    .restaurants-grid,
+    .foods-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .filters {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .search-filter {
+        min-width: 100%;
+    }
+    
+    .filter-group {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .mobile-cart-summary {
+        display: flex;
+    }
+    
+    .restaurant-header {
+        flex-direction: column;
+        text-align: center;
+        gap: 20px;
+    }
+    
+    .restaurant-header-details {
+        justify-content: center;
+    }
+    
+    .auth-container {
+        flex-direction: column;
+    }
+    
+    .auth-left {
+        padding: 30px 20px;
+    }
+    
+    .auth-right {
+        padding: 30px 20px;
+    }
+    
+    .footer-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+    
+    .social-links {
+        justify-content: center;
+    }
+    
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+    
+    .orders-tabs {
+        flex-wrap: wrap;
+    }
+    
+    .order-header {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .order-actions {
+        flex-direction: column;
+    }
+    
+    .tracking-steps {
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+    
+    .tracking-steps::before {
+        display: none;
+    }
+}
+
+/* Mobile Small */
+@media (max-width: 480px) {
+    .hero h1 {
+        font-size: 1.8rem;
+    }
+    
+    .hero p {
+        font-size: 1rem;
+    }
+    
+    .section-title {
+        font-size: 1.5rem;
+    }
+    
+    .btn-large {
+        padding: 12px 24px;
+        font-size: 1rem;
+    }
+    
+    .app-store,
+    .google-play {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .modal-content {
+        width: 95%;
+    }
+    
+    .checkout-steps .step span:last-child {
+        font-size: 0.8rem;
+    }
+    
+    .payment-options {
+        gap: 10px;
+    }
+    
+    .social-login {
+        flex-direction: column;
+    }
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --light-color: #121212;
+        --dark-color: #ffffff;
+        --gray-color: #b0b0b0;
+        --light-gray: #2d2d2d;
+        --white: #1e1e1e;
+        --secondary-color: #2d2d2d;
+    }
+    
+    body {
+        background-color: var(--light-color);
+        color: var(--dark-color);
+    }
+    
+    .navbar,
+    .restaurant-card,
+    .food-card,
+    .order-summary,
+    .cart-items,
+    .menu-sidebar,
+    .modal-content,
+    .filters,
+    .restaurant-header {
+        background-color: var(--white);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+    
+    .hero {
+        background: linear-gradient(135deg, #1e1e1e 0%, #121212 100%);
+    }
+    
+    .app-download {
+        background: linear-gradient(135deg, #e55a2b 0%, #ff6b35 100%);
+    }
+    
+    .search-box input,
+    .search-filter input,
+    .filter-group select,
+    .filter-toggle,
+    .category-item,
+    .tab-btn,
+    .special-instructions textarea,
+    .promo-code input,
+    .form-group input,
+    .payment-option {
+        background-color: var(--light-gray);
+        border-color: #3d3d3d;
+        color: var(--dark-color);
+    }
+    
+    .delivery-info {
+        background-color: var(--light-gray);
+    }
+    
+    .order-summary-confirm {
+        background-color: var(--light-gray);
+    }
+}
+
+/* Print Styles */
+@media print {
+    .navbar,
+    .footer,
+    .mobile-cart-summary,
+    .btn {
+        display: none !important;
+    }
+    
+    body {
+        color: #000;
+        background: #fff;
+    }
+    
+    .container {
+        max-width: 100%;
+        padding: 0;
+    }
+}

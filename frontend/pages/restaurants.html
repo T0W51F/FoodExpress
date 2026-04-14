@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurants - FoodExpress</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/responsive.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/svg+xml" href="../assets/images/favicon.svg">
+</head>
+<body class="site-dark">
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="logo home-logo">
+                <span class="logo-mark" aria-hidden="true">
+                    <i class="fas fa-utensils"></i>
+                </span>
+                <span class="logo-lockup">
+                    <span class="logo-wordmark"><span class="food">Food</span><span class="express">Express</span></span>
+                </span>
+            </a>
+            
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="restaurants.html" class="active">Restaurants</a>
+                <a href="orders.html">My Orders</a>
+                <a href="partner-apply.html" class="partner-nav-link">Partner with us</a>
+                <a href="cart.html" class="cart-icon">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count">0</span>
+                </a>    
+                <div class="user-menu">
+                    <button class="user-btn">
+                        <i class="fas fa-user"></i>
+                        <span id="username">Guest</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="user-dropdown">
+                        <a href="#"><i class="fas fa-cog"></i> Settings</a>
+                        <hr>
+                        <a href="login.html" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </div>
+                </div>
+            </div>
+            
+            <button class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="page-header">
+            <h1>Restaurants Near You</h1>
+            <p>Meet the one house menu we are optimizing end-to-end.</p>
+        </div>
+        
+        <!-- Filters -->
+        <div class="filters">
+            <div class="search-filter">
+                <i class="fas fa-search"></i>
+                <input type="text" id="restaurant-search" placeholder="Search restaurants...">
+            </div>
+            
+            <div class="filter-group">
+                <select id="cuisine-filter">
+                    <option value="">All Cuisines</option>
+                    <option value="Pizza & Burgers">Pizza & Burgers</option>
+                </select>
+                
+                <select id="sort-filter">
+                    <option value="rating">Highest Rated</option>
+                    <option value="delivery_time">Fastest Delivery</option>
+                    <option value="delivery_fee">Lowest Delivery Fee</option>
+                    <option value="name">Name A-Z</option>
+                </select>
+                
+                <button class="filter-toggle">
+                    <i class="fas fa-filter"></i> More Filters
+                </button>
+            </div>
+        </div>
+        
+        <!-- Category Tabs -->
+        <div class="category-tabs" id="category-tabs">
+            <!-- Dynamic categories will be loaded here -->
+        </div>
+        
+        <!-- Restaurants Grid -->
+        <div class="restaurants-list" id="restaurants-list">
+            <!-- Dynamic content will be loaded here -->
+            <div class="loading">Loading restaurants...</div>
+        </div>
+        
+        <!-- No Results -->
+        <div class="no-results" id="no-results" style="display: none;">
+            <i class="fas fa-utensils"></i>
+            <h3>No restaurants found</h3>
+            <p>Try changing your search or filter criteria</p>
+        </div>
+        
+        <!-- Load More Button -->
+        <div class="load-more" id="load-more">
+            <button class="btn btn-outline" id="load-more-btn">
+                <i class="fas fa-sync"></i> Load More Restaurants
+            </button>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2026 FoodExpress. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../assets/js/main.js"></script>
+    <script src="../assets/js/api.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check login status
+            checkLoginStatus();
+            
+            // Load restaurants
+            loadRestaurants();
+            
+            // Update cart count
+            updateCartCount();
+            
+            // Setup filters
+            setupRestaurantFilters();
+        });
+    </script>
+</body>
+</html>
+
+
+
+
+

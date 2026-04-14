@@ -1,0 +1,210 @@
+<style>
+  .mock-dashboard {
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 12px;
+    overflow: hidden;
+    background: #0f1117;
+    margin-bottom: 1rem;
+    font-family: system-ui, sans-serif;
+  }
+  .mock-sidebar {
+    background: #16181f;
+    padding: 1rem 0;
+    border-right: 1px solid rgba(255,255,255,0.08);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 160px;
+    width: 160px;
+  }
+  .mock-sidebar .nav-item {
+    padding: 8px 16px;
+    font-size: 12px;
+    color: #94a3b8;
+    border-radius: 6px;
+    margin: 0 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .mock-sidebar .nav-item.active {
+    background: rgba(99,102,241,0.2);
+    color: #a78bfa;
+  }
+  .mock-sidebar .nav-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #475569;
+    padding: 8px 16px 4px;
+    margin-top: 4px;
+  }
+  .mock-topnav {
+    background: #16181f;
+    padding: 0 16px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+  }
+  .mock-topnav .nav-item {
+    padding: 10px 12px;
+    font-size: 11px;
+    color: #94a3b8;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    white-space: nowrap;
+  }
+  .mock-topnav .nav-item.active {
+    color: #a78bfa;
+    border-bottom-color: #a78bfa;
+  }
+  .mock-body {
+    display: flex;
+    min-height: 160px;
+  }
+  .mock-content {
+    flex: 1;
+    padding: 16px;
+    background: #0f1117;
+  }
+  .mock-stat-row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+  .mock-stat {
+    flex: 1;
+    background: rgba(255,255,255,0.04);
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 10px;
+    color: #64748b;
+  }
+  .mock-stat strong {
+    display: block;
+    font-size: 16px;
+    color: #e2e8f0;
+    margin-bottom: 2px;
+  }
+  .mock-placeholder {
+    background: rgba(255,255,255,0.04);
+    border-radius: 8px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    color: #475569;
+  }
+  .badge {
+    background: #6366f1;
+    color: white;
+    border-radius: 10px;
+    padding: 1px 6px;
+    font-size: 9px;
+    margin-left: auto;
+  }
+</style>
+
+<h2>Navigation layout options</h2>
+<p class="subtitle">Partner dashboard needs 5 new sections: Deliveries, Promotions, Customers, Analytics, Payments. How should the nav grow?</p>
+
+<div class="options">
+
+  <div class="option" data-choice="a" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>Flat sidebar — all tabs visible</h3>
+      <p>Single vertical nav with every section listed. Clean, nothing hidden.</p>
+      <div class="mock-dashboard" style="margin-top:10px">
+        <div class="mock-body">
+          <div class="mock-sidebar">
+            <div class="nav-item active">📊 Overview</div>
+            <div class="nav-item">🍽️ Menu</div>
+            <div class="nav-item">📦 Orders <span class="badge">3</span></div>
+            <div class="nav-item">🚴 Deliveries</div>
+            <div class="nav-item">🎟️ Promotions</div>
+            <div class="nav-item">👥 Customers</div>
+            <div class="nav-item">📈 Analytics</div>
+            <div class="nav-item">💳 Payments</div>
+            <div class="nav-item">⚙️ Profile</div>
+          </div>
+          <div class="mock-content">
+            <div class="mock-stat-row">
+              <div class="mock-stat"><strong>142</strong>Orders</div>
+              <div class="mock-stat"><strong>Tk 8.4k</strong>Revenue</div>
+              <div class="mock-stat"><strong>Open</strong>Status</div>
+            </div>
+            <div class="mock-placeholder">Overview cards / activity</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="b" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>Grouped sidebar — sections with labels</h3>
+      <p>Same sidebar but tabs are grouped under labels (Restaurant / Operations / Business).</p>
+      <div class="mock-dashboard" style="margin-top:10px">
+        <div class="mock-body">
+          <div class="mock-sidebar">
+            <div class="nav-item active">📊 Overview</div>
+            <div class="nav-label">Restaurant</div>
+            <div class="nav-item">🍽️ Menu</div>
+            <div class="nav-item">⚙️ Profile</div>
+            <div class="nav-label">Operations</div>
+            <div class="nav-item">📦 Orders <span class="badge">3</span></div>
+            <div class="nav-item">🚴 Deliveries</div>
+            <div class="nav-label">Business</div>
+            <div class="nav-item">🎟️ Promotions</div>
+            <div class="nav-item">👥 Customers</div>
+            <div class="nav-item">📈 Analytics</div>
+            <div class="nav-item">💳 Payments</div>
+          </div>
+          <div class="mock-content">
+            <div class="mock-stat-row">
+              <div class="mock-stat"><strong>142</strong>Orders</div>
+              <div class="mock-stat"><strong>Tk 8.4k</strong>Revenue</div>
+              <div class="mock-stat"><strong>Open</strong>Status</div>
+            </div>
+            <div class="mock-placeholder">Overview cards / activity</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="c" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>Keep top tabs — same style as current partner-dashboard</h3>
+      <p>Horizontal tabs across the top. All sections in one row (might wrap on small screens).</p>
+      <div class="mock-dashboard" style="margin-top:10px">
+        <div class="mock-topnav">
+          <div class="nav-item active">Overview</div>
+          <div class="nav-item">Menu</div>
+          <div class="nav-item">Orders</div>
+          <div class="nav-item">Deliveries</div>
+          <div class="nav-item">Promotions</div>
+          <div class="nav-item">Customers</div>
+          <div class="nav-item">Analytics</div>
+          <div class="nav-item">Payments</div>
+          <div class="nav-item">Profile</div>
+        </div>
+        <div class="mock-content">
+          <div class="mock-stat-row">
+            <div class="mock-stat"><strong>142</strong>Orders</div>
+            <div class="mock-stat"><strong>Tk 8.4k</strong>Revenue</div>
+            <div class="mock-stat"><strong>Open</strong>Status</div>
+          </div>
+          <div class="mock-placeholder">Overview cards / activity</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
