@@ -25,6 +25,8 @@ function getToken() {
 let currentFoods = [];
 let editingFoodId = null;
 let deletingFoodId = null;
+let editingDriverId = null;
+let editingPromoId = null;
 
 // ---- API helpers ----
 async function apiCall(endpoint, options = {}) {
@@ -54,6 +56,8 @@ document.addEventListener('DOMContentLoaded', function () {
     setupFoodModal();
     setupDeleteModal();
     setupProfileForm();
+    setupDriverModal();
+    setupPromoModal();
     loadDashboard();
 });
 
@@ -749,9 +753,241 @@ function formatDate(dateStr) {
     });
 }
 
-// ---- Stubs for tabs implemented in later tasks ----
-async function loadDrivers() {}
-async function loadPromos() {}
+// ---- Deliveries ----
+async function loadDrivers() {
+    const tbody = document.getElementById('drivers-tbody');
+    const empty = document.getElementById('drivers-empty');
+    const table = document.getElementById('drivers-table');
+
+    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:#64748b;padding:2rem">Loading...</td></tr>';
+    table.closest('.pd-table-wrap').style.display = '';
+    empty.classList.add('hidden');
+
+    try {
+        const data = await apiCall('/restaurant/deliveries');
+        const drivers = data.results || [];
+
+        if (!drivers.length) {
+            table.closest('.pd-table-wrap').style.display = 'none';
+            empty.classList.remove('hidden');
+            return;
+        }
+
+        tbody.innerHTML = drivers.map(d => `
+            <tr>
+                <td style="color:#e2e8f0;font-weight:500">${escHtml(d.name)}</td>
+                <td style="color:#94a3b8">${escHtml(d.phone)}</td>
+                <td style="color:#94a3b8">${escHtml(d.zone || '—')}</td>
+                <td><span class="status-badge ${d.status}">${d.status}</span></td>
+                <td style="color:#f1f5f9">${Number(d.rating || 0).toFixed(1)} ⭐</td>
+                <td>
+                    <button class="btn btn-outline btn-sm driver-edit-btn" data-id="${d.delivery_person_id}" style="font-size:0.75rem;padding:0.3rem 0.6rem;margin-right:4px">Edit</button>
+                    <button class="btn btn-danger btn-sm driver-delete-btn" data-id="${d.delivery_person_id}" data-name="${escHtml(d.name)}" style="font-size:0.75rem;padding:0.3rem 0.6rem">Delete</button>
+                </td>
+            </tr>
+        `).join('');
+
+        tbody.querySelectorAll('.driver-edit-btn').forEach(btn => {
+            btn.addEventListener('click', () => openDriverModal(Number(btn.dataset.id), drivers));
+        });
+        tbody.querySelectorAll('.driver-delete-btn').forEach(btn => {
+            btn.addEventListener('click', () => deleteDriver(Number(btn.dataset.id), btn.dataset.name));
+        });
+    } catch (err) {
+        tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;color:#fc8181;padding:2rem">${err.message}</td></tr>`;
+    }
+}
+
+function setupDriverModal() {
+    document.getElementById('add-driver-btn').addEventListener('click', () => openDriverModal(null, []));
+    document.getElementById('driver-modal-close').addEventListener('click', () => closeModal('driver-modal-overlay'));
+    document.getElementById('driver-modal-cancel').addEventListener('click', () => closeModal('driver-modal-overlay'));
+    document.getElementById('driver-modal-save').addEventListener('click', saveDriver);
+}
+
+function openDriverModal(driverId, drivers) {
+    editingDriverId = driverId;
+    const driver = driverId ? drivers.find(d => d.delivery_person_id === driverId) : null;
+    document.getElementById('driver-modal-title').textContent = driver ? 'Edit Driver' : 'Add Driver';
+    document.getElementById('driver-id').value = driverId || '';
+    document.getElementById('driver-name').value = driver?.name || '';
+    document.getElementById('driver-phone').value = driver?.phone || '';
+    document.getElementById('driver-email').value = driver?.email || '';
+    document.getElementById('driver-zone').value = driver?.zone || '';
+    document.getElementById('driver-status').value = driver?.status || 'available';
+    document.getElementById('driver-rating').value = driver?.rating || '';
+    document.getElementById('driver-form-error').classList.add('hidden');
+    openModal('driver-modal-overlay');
+}
+
+async function saveDriver() {
+    const errorDiv = document.getElementById('driver-form-error');
+    errorDiv.classList.add('hidden');
+    const name = document.getElementById('driver-name').value.trim();
+    const phone = document.getElementById('driver-phone').value.trim();
+    if (!name || !phone) {
+        showModalError(errorDiv, 'Name and phone are required.');
+        return;
+    }
+
+    const body = {
+        name,
+        phone,
+        email: document.getElementById('driver-email').value.trim(),
+        zone: document.getElementById('driver-zone').value.trim(),
+        status: document.getElementById('driver-status').value,
+        rating: parseFloat(document.getElementById('driver-rating').value) || 4.8
+    };
+
+    const saveBtn = document.getElementById('driver-modal-save');
+    saveBtn.disabled = true;
+    saveBtn.textContent = 'Saving...';
+
+    try {
+        if (editingDriverId) {
+            await apiCall(`/restaurant/deliveries/${editingDriverId}`, { method: 'PUT', body: JSON.stringify(body) });
+        } else {
+            await apiCall('/restaurant/deliveries', { method: 'POST', body: JSON.stringify(body) });
+        }
+        closeModal('driver-modal-overlay');
+        await loadDrivers();
+    } catch (err) {
+        showModalError(errorDiv, err.message);
+    } finally {
+        saveBtn.disabled = false;
+        saveBtn.innerHTML = '<i class="fas fa-save"></i> Save';
+    }
+}
+
+async function deleteDriver(driverId, driverName) {
+    if (!confirm(`Delete driver "${driverName}"?`)) return;
+    try {
+        await apiCall(`/restaurant/deliveries/${driverId}`, { method: 'DELETE' });
+        await loadDrivers();
+    } catch (err) {
+        alert('Failed to delete: ' + err.message);
+    }
+}
+
+// ---- Promotions ----
+async function loadPromos() {
+    const tbody = document.getElementById('promos-tbody');
+    const empty = document.getElementById('promos-empty');
+    const table = document.getElementById('promos-table');
+
+    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:#64748b;padding:2rem">Loading...</td></tr>';
+    table.closest('.pd-table-wrap').style.display = '';
+    empty.classList.add('hidden');
+
+    try {
+        const data = await apiCall('/restaurant/promotions');
+        const promos = data.results || [];
+
+        if (!promos.length) {
+            table.closest('.pd-table-wrap').style.display = 'none';
+            empty.classList.remove('hidden');
+            return;
+        }
+
+        tbody.innerHTML = promos.map(p => `
+            <tr>
+                <td style="font-family:monospace;font-weight:600;color:#ff8558">${escHtml(p.code)}</td>
+                <td style="color:#e2e8f0">${escHtml(p.title)}</td>
+                <td style="color:#94a3b8;text-transform:capitalize">${p.discount_type}</td>
+                <td style="color:#f1f5f9">${p.discount_type === 'percentage' ? p.discount_value + '%' : Number(p.discount_value).toFixed(2) + 'Tk'}</td>
+                <td><span class="status-badge ${p.active ? 'active' : 'inactive'}">${p.active ? 'Active' : 'Inactive'}</span></td>
+                <td>
+                    <button class="btn btn-outline btn-sm promo-edit-btn" data-id="${p.promotion_id}" style="font-size:0.75rem;padding:0.3rem 0.6rem;margin-right:4px">Edit</button>
+                    <button class="btn btn-danger btn-sm promo-delete-btn" data-id="${p.promotion_id}" data-name="${escHtml(p.code)}" style="font-size:0.75rem;padding:0.3rem 0.6rem">Delete</button>
+                </td>
+            </tr>
+        `).join('');
+
+        // Store promos data for edit modal
+        tbody.dataset.promos = JSON.stringify(promos);
+
+        tbody.querySelectorAll('.promo-edit-btn').forEach(btn => {
+            btn.addEventListener('click', () => openPromoModal(Number(btn.dataset.id), promos));
+        });
+        tbody.querySelectorAll('.promo-delete-btn').forEach(btn => {
+            btn.addEventListener('click', () => deletePromo(Number(btn.dataset.id), btn.dataset.name));
+        });
+    } catch (err) {
+        tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;color:#fc8181;padding:2rem">${err.message}</td></tr>`;
+    }
+}
+
+function setupPromoModal() {
+    document.getElementById('add-promo-btn').addEventListener('click', () => openPromoModal(null, []));
+    document.getElementById('promo-modal-close').addEventListener('click', () => closeModal('promo-modal-overlay'));
+    document.getElementById('promo-modal-cancel').addEventListener('click', () => closeModal('promo-modal-overlay'));
+    document.getElementById('promo-modal-save').addEventListener('click', savePromo);
+}
+
+function openPromoModal(promoId, promos) {
+    editingPromoId = promoId;
+    const promo = promoId ? promos.find(p => p.promotion_id === promoId) : null;
+    document.getElementById('promo-modal-title').textContent = promo ? 'Edit Promotion' : 'Add Promotion';
+    document.getElementById('promo-id').value = promoId || '';
+    document.getElementById('promo-code').value = promo?.code || '';
+    document.getElementById('promo-title').value = promo?.title || '';
+    document.getElementById('promo-description').value = promo?.description || '';
+    document.getElementById('promo-type').value = promo?.discount_type || 'percentage';
+    document.getElementById('promo-value').value = promo?.discount_value ?? '';
+    document.getElementById('promo-active').checked = promo ? Boolean(promo.active) : true;
+    document.getElementById('promo-form-error').classList.add('hidden');
+    openModal('promo-modal-overlay');
+}
+
+async function savePromo() {
+    const errorDiv = document.getElementById('promo-form-error');
+    errorDiv.classList.add('hidden');
+    const code = document.getElementById('promo-code').value.trim().toUpperCase();
+    const title = document.getElementById('promo-title').value.trim();
+    const value = document.getElementById('promo-value').value;
+    if (!code || !title || value === '') {
+        showModalError(errorDiv, 'Code, title, and discount value are required.');
+        return;
+    }
+
+    const body = {
+        code,
+        title,
+        description: document.getElementById('promo-description').value.trim(),
+        discount_type: document.getElementById('promo-type').value,
+        discount_value: Number(value),
+        active: document.getElementById('promo-active').checked
+    };
+
+    const saveBtn = document.getElementById('promo-modal-save');
+    saveBtn.disabled = true;
+    saveBtn.textContent = 'Saving...';
+
+    try {
+        if (editingPromoId) {
+            await apiCall(`/restaurant/promotions/${editingPromoId}`, { method: 'PUT', body: JSON.stringify(body) });
+        } else {
+            await apiCall('/restaurant/promotions', { method: 'POST', body: JSON.stringify(body) });
+        }
+        closeModal('promo-modal-overlay');
+        await loadPromos();
+    } catch (err) {
+        showModalError(errorDiv, err.message);
+    } finally {
+        saveBtn.disabled = false;
+        saveBtn.innerHTML = '<i class="fas fa-save"></i> Save';
+    }
+}
+
+async function deletePromo(promoId, code) {
+    if (!confirm(`Delete promotion "${code}"?`)) return;
+    try {
+        await apiCall(`/restaurant/promotions/${promoId}`, { method: 'DELETE' });
+        await loadPromos();
+    } catch (err) {
+        alert('Failed to delete: ' + err.message);
+    }
+}
 async function loadCustomers() {}
 async function loadAnalytics() {}
 async function loadPayments() {}

@@ -562,6 +562,114 @@
         </div>
     </div>
 
+    <!-- ===== Driver Modal ===== -->
+    <div class="pd-modal-overlay hidden" id="driver-modal-overlay">
+        <div class="pd-modal">
+            <div class="pd-modal-header">
+                <h3 id="driver-modal-title">Add Driver</h3>
+                <button class="pd-modal-close" id="driver-modal-close"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="pd-modal-body">
+                <form id="driver-form" novalidate>
+                    <input type="hidden" id="driver-id">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="driver-name">Name <span class="required">*</span></label>
+                            <input type="text" id="driver-name" placeholder="e.g. Rahim Hossain" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="driver-phone">Phone <span class="required">*</span></label>
+                            <input type="tel" id="driver-phone" placeholder="+8801711111111" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="driver-email">Email</label>
+                            <input type="email" id="driver-email" placeholder="driver@example.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="driver-zone">Zone</label>
+                            <input type="text" id="driver-zone" placeholder="e.g. Gulshan">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="driver-status">Status</label>
+                            <select id="driver-status">
+                                <option value="available">Available</option>
+                                <option value="busy">Busy</option>
+                                <option value="offline">Offline</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="driver-rating">Rating (0–5)</label>
+                            <input type="number" id="driver-rating" placeholder="4.8" min="0" max="5" step="0.1">
+                        </div>
+                    </div>
+                    <div id="driver-form-error" class="pd-form-error hidden"></div>
+                </form>
+            </div>
+            <div class="pd-modal-footer">
+                <button class="btn btn-outline" id="driver-modal-cancel">Cancel</button>
+                <button class="btn btn-primary" id="driver-modal-save"><i class="fas fa-save"></i> Save</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== Promo Modal ===== -->
+    <div class="pd-modal-overlay hidden" id="promo-modal-overlay">
+        <div class="pd-modal">
+            <div class="pd-modal-header">
+                <h3 id="promo-modal-title">Add Promotion</h3>
+                <button class="pd-modal-close" id="promo-modal-close"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="pd-modal-body">
+                <form id="promo-form" novalidate>
+                    <input type="hidden" id="promo-id">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="promo-code">Code <span class="required">*</span></label>
+                            <input type="text" id="promo-code" placeholder="e.g. SAVE20" required style="text-transform:uppercase">
+                        </div>
+                        <div class="form-group">
+                            <label for="promo-title">Title <span class="required">*</span></label>
+                            <input type="text" id="promo-title" placeholder="e.g. 20% off all orders" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="promo-description">Description</label>
+                        <textarea id="promo-description" rows="2" placeholder="Optional description..."></textarea>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="promo-type">Discount Type</label>
+                            <select id="promo-type">
+                                <option value="percentage">Percentage (%)</option>
+                                <option value="flat">Flat (Tk)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="promo-value">Discount Value <span class="required">*</span></label>
+                            <input type="number" id="promo-value" placeholder="0" min="0" step="0.01" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="toggle-label">
+                            <input type="checkbox" id="promo-active" checked>
+                            <span class="toggle-track"><span class="toggle-thumb"></span></span>
+                            Active
+                        </label>
+                    </div>
+                    <div id="promo-form-error" class="pd-form-error hidden"></div>
+                </form>
+            </div>
+            <div class="pd-modal-footer">
+                <button class="btn btn-outline" id="promo-modal-cancel">Cancel</button>
+                <button class="btn btn-primary" id="promo-modal-save"><i class="fas fa-save"></i> Save</button>
+            </div>
+        </div>
+    </div>
+
     <script src="../assets/js/api.js"></script>
     <script src="../assets/js/partner-dashboard.js"></script>
 </body>
