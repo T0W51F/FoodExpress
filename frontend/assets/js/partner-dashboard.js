@@ -988,9 +988,118 @@ async function deletePromo(promoId, code) {
         alert('Failed to delete: ' + err.message);
     }
 }
-async function loadCustomers() {}
-async function loadAnalytics() {}
-async function loadPayments() {}
+async function loadCustomers() {
+    const tbody = document.getElementById('customers-tbody');
+    const empty = document.getElementById('customers-empty');
+    const table = document.getElementById('customers-table');
+
+    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:#64748b;padding:2rem">Loading...</td></tr>';
+    table.closest('.pd-table-wrap').style.display = '';
+    empty.classList.add('hidden');
+
+    try {
+        const data = await apiCall('/restaurant/customers');
+        const customers = data.results || [];
+
+        if (!customers.length) {
+            table.closest('.pd-table-wrap').style.display = 'none';
+            empty.classList.remove('hidden');
+            return;
+        }
+
+        tbody.innerHTML = customers.map(c => `
+            <tr>
+                <td style="color:#e2e8f0;font-weight:500">${escHtml(c.name)}</td>
+                <td style="color:#94a3b8">${escHtml(c.email || '—')}</td>
+                <td style="color:#f1f5f9">${c.order_count}</td>
+                <td style="color:#f1f5f9;font-weight:600">${Number(c.total_spent).toFixed(2)}Tk</td>
+                <td style="color:#64748b;font-size:0.8rem">${c.joined_at ? formatDate(c.joined_at) : '—'}</td>
+            </tr>
+        `).join('');
+    } catch (err) {
+        tbody.innerHTML = `<tr><td colspan="5" style="text-align:center;color:#fc8181;padding:2rem">${err.message}</td></tr>`;
+    }
+}
+async function loadAnalytics() {
+    const grid = document.getElementById('analytics-grid');
+    const tbody = document.getElementById('analytics-items-tbody');
+
+    grid.innerHTML = '<p style="color:#64748b;font-size:0.85rem">Loading...</p>';
+    tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;color:#64748b;padding:2rem">Loading...</td></tr>';
+
+    try {
+        const data = await apiCall('/restaurant/analytics');
+
+        grid.innerHTML = `
+            <div class="overview-stat-card">
+                <div class="osc-value">${data.total_orders}</div>
+                <div class="osc-label">Total Orders</div>
+            </div>
+            <div class="overview-stat-card">
+                <div class="osc-value">${Number(data.total_revenue).toFixed(2)}Tk</div>
+                <div class="osc-label">Total Revenue</div>
+            </div>
+            <div class="overview-stat-card">
+                <div class="osc-value">${Number(data.avg_order_value).toFixed(2)}Tk</div>
+                <div class="osc-label">Avg Order Value</div>
+            </div>
+            <div class="overview-stat-card">
+                <div class="osc-value" style="font-size:1.1rem">${escHtml(data.top_category)}</div>
+                <div class="osc-label">Top Category</div>
+            </div>
+        `;
+
+        const items = data.popular_items || [];
+        if (!items.length) {
+            tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;color:#64748b;padding:2rem">No data yet</td></tr>';
+            return;
+        }
+
+        tbody.innerHTML = items.map(item => `
+            <tr>
+                <td style="color:#e2e8f0;font-weight:500">${escHtml(item.name)}</td>
+                <td style="color:#94a3b8">${escHtml(item.category || '—')}</td>
+                <td style="color:#f1f5f9">${item.qty}</td>
+                <td style="color:#f1f5f9;font-weight:600">${Number(item.revenue).toFixed(2)}Tk</td>
+            </tr>
+        `).join('');
+    } catch (err) {
+        grid.innerHTML = `<p style="color:#fc8181">${err.message}</p>`;
+        tbody.innerHTML = '';
+    }
+}
+async function loadPayments() {
+    const tbody = document.getElementById('payments-tbody');
+    const empty = document.getElementById('payments-empty');
+    const table = document.getElementById('payments-table');
+
+    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:#64748b;padding:2rem">Loading...</td></tr>';
+    table.closest('.pd-table-wrap').style.display = '';
+    empty.classList.add('hidden');
+
+    try {
+        const data = await apiCall('/restaurant/payments');
+        const payments = data.results || [];
+
+        if (!payments.length) {
+            table.closest('.pd-table-wrap').style.display = 'none';
+            empty.classList.remove('hidden');
+            return;
+        }
+
+        tbody.innerHTML = payments.map(p => `
+            <tr>
+                <td style="font-family:monospace;font-size:0.8rem;color:#94a3b8">#${p.order_id}</td>
+                <td style="font-weight:600;color:#f1f5f9">${Number(p.amount).toFixed(2)}Tk</td>
+                <td style="color:#94a3b8;text-transform:capitalize">${p.method}</td>
+                <td><span class="status-badge ${p.status === 'paid' ? 'active' : 'offline'}">${p.status}</span></td>
+                <td style="color:#64748b;font-size:0.8rem">${formatDate(p.created_at)}</td>
+            </tr>
+        `).join('');
+    } catch (err) {
+        tbody.innerHTML = `<tr><td colspan="5" style="text-align:center;color:#fc8181;padding:2rem">${err.message}</td></tr>`;
+    }
+}
 
 // Close modals on overlay click
 document.addEventListener('click', function (e) {
