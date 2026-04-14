@@ -749,6 +749,13 @@ function formatDate(dateStr) {
     });
 }
 
+// ---- Stubs for tabs implemented in later tasks ----
+async function loadDrivers() {}
+async function loadPromos() {}
+async function loadCustomers() {}
+async function loadAnalytics() {}
+async function loadPayments() {}
+
 // Close modals on overlay click
 document.addEventListener('click', function (e) {
     if (e.target.classList.contains('pd-modal-overlay')) {
