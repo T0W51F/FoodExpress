@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant Dashboard - FoodExpress Partner</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/partner-dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/svg+xml" href="../assets/images/favicon.svg">
+</head>
+<body class="site-dark partner-dashboard-page">
+
+    <!-- Header -->
+    <header class="pd-header">
+        <div class="pd-header-inner">
+            <div class="pd-header-left">
+                <a href="index.html" class="pd-logo">
+                    <i class="fas fa-utensils"></i>
+                    <span><span class="food">Food</span><span class="express">Express</span></span>
+                </a>
+                <div class="pd-title-block">
+                    <h1 id="pd-restaurant-name">My Restaurant</h1>
+                    <span class="pd-role-badge"><i class="fas fa-store"></i> Restaurant Admin</span>
+                </div>
+            </div>
+            <div class="pd-header-right">
+                <button class="btn btn-outline pd-logout-btn" id="pd-logout">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="pd-layout">
+        <!-- Sidebar -->
+        <aside class="pd-sidebar">
+            <nav class="pd-nav">
+                <!-- Overview -->
+                <button class="pd-nav-item active" data-tab="overview">
+                    <i class="fas fa-chart-pie"></i>
+                    <span>Overview</span>
+                </button>
+
+                <!-- Restaurant group -->
+                <div class="pd-nav-group-label">Restaurant</div>
+                <button class="pd-nav-item" data-tab="menu">
+                    <i class="fas fa-utensils"></i>
+                    <span>Menu</span>
+                </button>
+                <button class="pd-nav-item" data-tab="profile">
+                    <i class="fas fa-edit"></i>
+                    <span>Profile</span>
+                </button>
+
+                <!-- Operations group -->
+                <div class="pd-nav-group-label">Operations</div>
+                <button class="pd-nav-item" data-tab="orders">
+                    <i class="fas fa-receipt"></i>
+                    <span>Orders</span>
+                    <span class="pd-badge" id="active-orders-badge" style="display:none"></span>
+                </button>
+                <button class="pd-nav-item" data-tab="deliveries">
+                    <i class="fas fa-motorcycle"></i>
+                    <span>Deliveries</span>
+                </button>
+
+                <!-- Business group -->
+                <div class="pd-nav-group-label">Business</div>
+                <button class="pd-nav-item" data-tab="promotions">
+                    <i class="fas fa-tags"></i>
+                    <span>Promotions</span>
+                </button>
+                <button class="pd-nav-item" data-tab="customers">
+                    <i class="fas fa-users"></i>
+                    <span>Customers</span>
+                </button>
+                <button class="pd-nav-item" data-tab="analytics">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Analytics</span>
+                </button>
+                <button class="pd-nav-item" data-tab="payments">
+                    <i class="fas fa-credit-card"></i>
+                    <span>Payments</span>
+                </button>
+            </nav>
+
+            <!-- Stats sidebar card -->
+            <div class="pd-stats-sidebar">
+                <div class="pd-stat-item">
+                    <span class="pd-stat-label">Menu Items</span>
+                    <span class="pd-stat-value" id="stat-foods">—</span>
+                </div>
+                <div class="pd-stat-item">
+                    <span class="pd-stat-label">Total Orders</span>
+                    <span class="pd-stat-value" id="stat-orders">—</span>
+                </div>
+                <div class="pd-stat-item">
+                    <span class="pd-stat-label">Revenue</span>
+                    <span class="pd-stat-value" id="stat-revenue">—</span>
+                </div>
+                <div class="pd-stat-item">
+                    <span class="pd-stat-label">Status</span>
+                    <span class="pd-stat-value" id="stat-status">—</span>
+                </div>
+                <div class="pd-stat-item">
+                    <span class="pd-stat-label">Active Orders</span>
+                    <span class="pd-stat-value" id="stat-active-orders" style="color:#ff8558">—</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="pd-main">
+
+            <!-- Loading State -->
+            <div id="pd-loading" class="pd-loading">
+                <div class="pd-spinner"></div>
+                <p>Loading your dashboard...</p>
+            </div>
+
+            <!-- Error State -->
+            <div id="pd-error" class="pd-error hidden">
+                <i class="fas fa-exclamation-triangle"></i>
+                <p id="pd-error-msg">Something went wrong.</p>
+                <button class="btn btn-outline" onclick="loadDashboard()">Retry</button>
+            </div>
+
+            <!-- ===== Menu Tab ===== -->
+            <div id="tab-menu" class="pd-tab hidden">
+                <div class="pd-tab-header">
+                    <div>
+                        <h2>Menu Management</h2>
+                        <p class="pd-tab-subtitle">Add, edit, or remove food items from your menu.</p>
+                    </div>
+                    <button class="btn btn-primary" id="add-food-btn">
+                        <i class="fas fa-plus"></i> Add Food Item
+                    </button>
+                </div>
+
+                <div id="foods-grid" class="foods-grid">
+                    <!-- Food cards rendered here -->
+                </div>
+
+                <div id="foods-empty" class="pd-empty hidden">
+                    <i class="fas fa-utensils"></i>
+                    <h3>No menu items yet</h3>
+                    <p>Add your first food item to get started.</p>
+                    <button class="btn btn-primary" onclick="openAddFoodModal()">
+                        <i class="fas fa-plus"></i> Add Food Item
+                    </button>
+                </div>
+            </div>
+
+            <!-- ===== Orders Tab ===== -->
+            <div id="tab-orders" class="pd-tab hidden">
+                <div class="pd-tab-header">
+                    <div>
+                        <h2>Incoming Orders</h2>
+                        <p class="pd-tab-subtitle">Orders placed at your restaurant.</p>
+                    </div>
+                    <button class="btn btn-outline" onclick="loadOrders()">
+                        <i class="fas fa-sync-alt"></i> Refresh
+                    </button>
+                </div>
+
+                <div class="pd-orders-table-wrap">
+                    <table class="pd-orders-table" id="orders-table">
+                        <thead>
+                            <tr>
+                                <th>Order ID</th>
+                                <th>Items</th>
+                                <th>Total</th>
+                                <th>Payment</th>
+                                <th>Status</th>
+                                <th>Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="orders-tbody">
+                            <!-- Rows rendered here -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <div id="orders-empty" class="pd-empty hidden">
+                    <i class="fas fa-receipt"></i>
+                    <h3>No orders yet</h3>
+                    <p>Orders will appear here once customers start placing them.</p>
+                </div>
+            </div>
+
+            <!-- ===== Profile Tab ===== -->
+            <div id="tab-profile" class="pd-tab hidden">
+                <div class="pd-tab-header">
+                    <div>
+                        <h2>Restaurant Profile</h2>
+                        <p class="pd-tab-subtitle">Update your restaurant's public information.</p>
+                    </div>
+                </div>
+
+                <div class="pd-profile-form-wrap">
+                    <form id="profile-form" novalidate>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="prof-name">Restaurant Name</label>
+                                <input type="text" id="prof-name" placeholder="e.g. Mama's Kitchen">
+                            </div>
+                            <div class="form-group">
+                                <label for="prof-cuisine">Cuisine Type</label>
+                                <input type="text" id="prof-cuisine" placeholder="e.g. Italian, Bengali, Mixed">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="prof-delivery-time">Delivery Time</label>
+                                <input type="text" id="prof-delivery-time" placeholder="e.g. 30-45 min">
+                            </div>
+                            <div class="form-group">
+                                <label for="prof-operating-hours">Operating Hours</label>
+                                <input type="text" id="prof-operating-hours" placeholder="e.g. 10:00 AM - 11:00 PM">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="prof-delivery-fee">Delivery Fee ($)</label>
+                                <input type="number" id="prof-delivery-fee" placeholder="0.00" min="0" step="0.01">
+                            </div>
+                            <div class="form-group">
+                                <label for="prof-min-order">Minimum Order ($)</label>
+                                <input type="number" id="prof-min-order" placeholder="0.00" min="0" step="0.01">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="prof-address">Service Area / Address</label>
+                            <input type="text" id="prof-address" placeholder="e.g. Gulshan, Dhaka">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="prof-description">Description</label>
+                            <textarea id="prof-description" rows="3" placeholder="Describe your restaurant..."></textarea>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="prof-phone">Contact Phone</label>
+                                <input type="tel" id="prof-phone" placeholder="+8801XXXXXXXXX">
+                            </div>
+                            <div class="form-group">
+                                <label for="prof-email">Contact Email</label>
+                                <input type="email" id="prof-email" placeholder="contact@restaurant.com">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="prof-image">Image Filename</label>
+                            <input type="text" id="prof-image" placeholder="restaurant-image.jpg">
+                            <small class="field-hint">Filename of the image in /assets/images/foods/</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="toggle-label">
+                                <input type="checkbox" id="prof-is-open">
+                                <span class="toggle-track"><span class="toggle-thumb"></span></span>
+                                Restaurant is currently open
+                            </label>
+                        </div>
+
+                        <div id="profile-error" class="pd-form-error hidden"></div>
+                        <div id="profile-success" class="pd-form-success hidden">Profile updated successfully.</div>
+
+                        <button type="submit" class="btn btn-primary" id="profile-save-btn">
+                            <i class="fas fa-save"></i> Save Changes
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- ===== Overview Tab ===== -->
+            <div id="tab-overview" class="pd-tab hidden">
+                <div class="pd-tab-header">
+                    <div>
+                        <h2>Overview</h2>
+                        <p class="pd-tab-subtitle">Your restaurant at a glance.</p>
+                    </div>
+                </div>
+                <div class="overview-grid" id="overview-grid"></div>
+                <div class="overview-sections">
+                    <div class="pd-panel">
+                        <h3 class="pd-panel-title">Recent Orders</h3>
+                        <div id="overview-recent-orders"></div>
+                    </div>
+                    <div class="pd-panel">
+                        <h3 class="pd-panel-title">Popular Items This Week</h3>
+                        <div id="overview-popular-items"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== Deliveries Tab ===== -->
+            <div id="tab-deliveries" class="pd-tab hidden">
+                <div class="pd-tab-header">
+                    <div>
+                        <h2>Delivery Personnel</h2>
+                        <p class="pd-tab-subtitle">Manage your shared driver pool.</p>
+                    </div>
+                    <button class="btn btn-primary" id="add-driver-btn">
+                        <i class="fas fa-plus"></i> Add Driver
+                    </button>
+                </div>
+                <div class="pd-table-wrap">
+                    <table class="pd-orders-table" id="drivers-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Phone</th>
+                                <th>Zone</th>
+                                <th>Status</th>
+                                <th>Rating</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="drivers-tbody"></tbody>
+                    </table>
+                </div>
+                <div id="drivers-empty" class="pd-empty hidden">
+                    <i class="fas fa-motorcycle"></i>
+                    <h3>No drivers yet</h3>
+                    <p>Add your first driver to get started.</p>
+                </div>
+            </div>
+
+            <!-- ===== Promotions Tab ===== -->
+            <div id="tab-promotions" class="pd-tab hidden">
+                <div class="pd-tab-header">
+                    <div>
+                        <h2>Promotions</h2>
+                        <p class="pd-tab-subtitle">Manage discount codes and campaigns.</p>
+                    </div>
+                    <button class="btn btn-primary" id="add-promo-btn">
+                        <i class="fas fa-plus"></i> Add Promotion
+                    </button>
+                </div>
+                <div class="pd-table-wrap">
+                    <table class="pd-orders-table" id="promos-table">
+                        <thead>
+                            <tr>
+                                <th>Code</th>
+                                <th>Title</th>
+                                <th>Type</th>
+                                <th>Value</th>
+                                <th>Active</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="promos-tbody"></tbody>
+                    </table>
+                </div>
+                <div id="promos-empty" class="pd-empty hidden">
+                    <i class="fas fa-tags"></i>
+                    <h3>No promotions yet</h3>
+                    <p>Create your first discount code.</p>
+                </div>
+            </div>
+
+            <!-- ===== Customers Tab ===== -->
+            <div id="tab-customers" class="pd-tab hidden">
+                <div class="pd-tab-header">
+                    <div>
+                        <h2>Customers</h2>
+                        <p class="pd-tab-subtitle">Customers who have ordered from your restaurant.</p>
+                    </div>
+                </div>
+                <div class="pd-table-wrap">
+                    <table class="pd-orders-table" id="customers-table">
+                        <thead>
+                            <tr>
+                                <th>Customer</th>
+                                <th>Email</th>
+                                <th>Orders</th>
+                                <th>Total Spent</th>
+                                <th>Joined</th>
+                            </tr>
+                        </thead>
+                        <tbody id="customers-tbody"></tbody>
+                    </table>
+                </div>
+                <div id="customers-empty" class="pd-empty hidden">
+                    <i class="fas fa-users"></i>
+                    <h3>No customers yet</h3>
+                    <p>Customers will appear here once orders are placed.</p>
+                </div>
+            </div>
+
+            <!-- ===== Analytics Tab ===== -->
+            <div id="tab-analytics" class="pd-tab hidden">
+                <div class="pd-tab-header">
+                    <div>
+                        <h2>Analytics</h2>
+                        <p class="pd-tab-subtitle">Sales and popularity snapshot.</p>
+                    </div>
+                    <button class="btn btn-outline" onclick="loadAnalytics()">
+                        <i class="fas fa-sync-alt"></i> Refresh
+                    </button>
+                </div>
+                <div class="overview-grid" id="analytics-grid"></div>
+                <div class="pd-panel" style="margin-top:1.5rem">
+                    <h3 class="pd-panel-title">Popular Items</h3>
+                    <div class="pd-table-wrap">
+                        <table class="pd-orders-table" id="analytics-items-table">
+                            <thead>
+                                <tr>
+                                    <th>Item</th>
+                                    <th>Category</th>
+                                    <th>Qty Sold</th>
+                                    <th>Revenue</th>
+                                </tr>
+                            </thead>
+                            <tbody id="analytics-items-tbody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== Payments Tab ===== -->
+            <div id="tab-payments" class="pd-tab hidden">
+                <div class="pd-tab-header">
+                    <div>
+                        <h2>Payments</h2>
+                        <p class="pd-tab-subtitle">Transaction history for your restaurant.</p>
+                    </div>
+                    <button class="btn btn-outline" onclick="loadPayments()">
+                        <i class="fas fa-sync-alt"></i> Refresh
+                    </button>
+                </div>
+                <div class="pd-table-wrap">
+                    <table class="pd-orders-table" id="payments-table">
+                        <thead>
+                            <tr>
+                                <th>Order ID</th>
+                                <th>Amount</th>
+                                <th>Method</th>
+                                <th>Status</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody id="payments-tbody"></tbody>
+                    </table>
+                </div>
+                <div id="payments-empty" class="pd-empty hidden">
+                    <i class="fas fa-credit-card"></i>
+                    <h3>No transactions yet</h3>
+                    <p>Payments will appear here once orders are completed.</p>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- ===== Add/Edit Food Modal ===== -->
+    <div class="pd-modal-overlay hidden" id="food-modal-overlay">
+        <div class="pd-modal">
+            <div class="pd-modal-header">
+                <h3 id="food-modal-title">Add Food Item</h3>
+                <button class="pd-modal-close" id="food-modal-close"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="pd-modal-body">
+                <form id="food-form" novalidate>
+                    <input type="hidden" id="food-id">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="food-name">Name <span class="required">*</span></label>
+                            <input type="text" id="food-name" placeholder="e.g. Margherita Pizza" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="food-category">Category</label>
+                            <select id="food-category">
+                                <option value="">-- Select a category --</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="food-description">Description</label>
+                        <textarea id="food-description" rows="2" placeholder="Describe the dish..."></textarea>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="food-price">Price ($) <span class="required">*</span></label>
+                            <input type="number" id="food-price" placeholder="0.00" min="0" step="0.01" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="food-spicy">Spicy Level (0-3)</label>
+                            <input type="number" id="food-spicy" placeholder="0" min="0" max="3">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Image</label>
+                        <div class="image-upload-row">
+                            <label class="btn btn-outline btn-sm image-pick-btn" for="food-image-file">
+                                <i class="fas fa-folder-open"></i> Choose File
+                            </label>
+                            <input type="file" id="food-image-file" accept="image/*" style="display:none">
+                            <input type="text" id="food-image" placeholder="food-image.jpg" style="flex:1">
+                        </div>
+                        <div id="food-image-preview-wrap" class="image-preview-wrap hidden">
+                            <img id="food-image-preview" src="" alt="preview">
+                        </div>
+                        <small class="field-hint">Pick a file or type a filename already in /assets/images/foods/</small>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="toggle-label">
+                                <input type="checkbox" id="food-vegetarian">
+                                <span class="toggle-track"><span class="toggle-thumb"></span></span>
+                                Vegetarian
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label class="toggle-label">
+                                <input type="checkbox" id="food-popular">
+                                <span class="toggle-track"><span class="toggle-thumb"></span></span>
+                                Mark as Popular
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group full-width">
+                        <label>Add-ons <span style="font-size:0.75rem;color:rgba(239,243,247,0.42);font-weight:400;">(optional extras with separate prices)</span></label>
+                        <div id="addons-list" class="addons-list"></div>
+                        <button type="button" class="btn btn-outline btn-sm" id="add-addon-btn" style="margin-top:0.5rem">
+                            <i class="fas fa-plus"></i> Add Add-on
+                        </button>
+                    </div>
+                    <div id="food-form-error" class="pd-form-error hidden"></div>
+                </form>
+            </div>
+            <div class="pd-modal-footer">
+                <button class="btn btn-outline" id="food-modal-cancel">Cancel</button>
+                <button class="btn btn-primary" id="food-modal-save">
+                    <i class="fas fa-save"></i> Save
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== Delete Confirm Modal ===== -->
+    <div class="pd-modal-overlay hidden" id="delete-modal-overlay">
+        <div class="pd-modal pd-modal-sm">
+            <div class="pd-modal-header">
+                <h3>Delete Food Item</h3>
+                <button class="pd-modal-close" id="delete-modal-close"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="pd-modal-body">
+                <p>Are you sure you want to delete <strong id="delete-food-name"></strong>? This cannot be undone.</p>
+            </div>
+            <div class="pd-modal-footer">
+                <button class="btn btn-outline" id="delete-cancel">Cancel</button>
+                <button class="btn btn-danger" id="delete-confirm"><i class="fas fa-trash"></i> Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../assets/js/api.js"></script>
+    <script src="../assets/js/partner-dashboard.js"></script>
+</body>
+</html>
