@@ -493,6 +493,11 @@ function initHeroSearch() {
         });
 
         DOM.heroSearchForm.appendChild(suggestionsEl);
+        // Position fixed dropdown to match the search box width/location
+        const rect = DOM.heroSearchForm.getBoundingClientRect();
+        suggestionsEl.style.top = `${rect.bottom + 4}px`;
+        suggestionsEl.style.left = `${rect.left}px`;
+        suggestionsEl.style.width = `${rect.width}px`;
         activeIndex = -1;
     }
 
