@@ -674,6 +674,24 @@ async function loadRestaurants() {
             DOM.restaurantSearch.value = initialSearch;
         }
 
+        const params = new URLSearchParams(window.location.search);
+        const initialCuisine = params.get('cuisine') || '';
+        if (DOM.cuisineFilter && initialCuisine) {
+            // Try to select matching option; if not present, add it temporarily
+            const existing = Array.from(DOM.cuisineFilter.options).find(
+                o => o.value.toLowerCase() === initialCuisine.toLowerCase()
+            );
+            if (existing) {
+                DOM.cuisineFilter.value = existing.value;
+            } else {
+                const opt = document.createElement('option');
+                opt.value = initialCuisine;
+                opt.textContent = initialCuisine;
+                DOM.cuisineFilter.appendChild(opt);
+                DOM.cuisineFilter.value = initialCuisine;
+            }
+        }
+
         filterRestaurants();
     } catch (error) {
         console.error('Error loading restaurants:', error);
