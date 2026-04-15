@@ -604,9 +604,16 @@ function filterRestaurants() {
     
     let filtered = [...window.allRestaurants];
     
-    const searchTerm = (DOM.restaurantSearch?.value || getRestaurantSearchTermFromUrl() || '').trim().toLowerCase();
+    const searchTerm = (DOM.restaurantSearch?.value || getRestaurantSearchTermFromUrl() || '').trim();
     if (searchTerm) {
-        filtered = filtered.filter(restaurant => restaurantMatchesSearch(restaurant, searchTerm));
+        filtered = filtered
+            .map(restaurant => ({
+                restaurant,
+                score: scoreRestaurantMatch(restaurant, searchTerm, window.allFoods || [])
+            }))
+            .filter(({ score }) => score > 0)
+            .sort((a, b) => b.score - a.score || b.restaurant.rating - a.restaurant.rating)
+            .map(({ restaurant }) => restaurant);
     }
 
     syncRestaurantSearchUrl(searchTerm);
