@@ -321,6 +321,59 @@ function restaurantMatchesSearch(restaurant, searchTerm) {
     );
 }
 
+// Returns true if all chars of query appear in target in order (case-insensitive)
+function fuzzyMatch(query, target) {
+    if (!query || !target) return false;
+    const q = query.toLowerCase();
+    const t = target.toLowerCase();
+    let qi = 0;
+    for (let i = 0; i < t.length && qi < q.length; i++) {
+        if (t[i] === q[qi]) qi++;
+    }
+    return qi === q.length;
+}
+
+// Returns a numeric relevance score for a restaurant against a query.
+// Higher = better match. 0 = no match.
+function scoreRestaurantMatch(restaurant, query, foods) {
+    const q = query.toLowerCase().trim();
+    if (!q) return 0;
+
+    const name = (restaurant.name || '').toLowerCase();
+    const cuisine = (restaurant.cuisine || '').toLowerCase();
+    const serviceArea = (restaurant.service_area || '').toLowerCase();
+    const categories = (restaurant.categories || []).map(c => c.toLowerCase());
+    const restaurantFoods = (foods || []).filter(f => String(f.restaurant_id) === String(restaurant.id));
+
+    let score = 0;
+
+    // Name matches
+    if (name === q) score += 100;
+    else if (name.includes(q)) score += 80;
+    else if (fuzzyMatch(q, name)) score += 20;
+
+    // Cuisine / category matches
+    if (cuisine === q || categories.includes(q)) score += 60;
+    else if (cuisine.includes(q) || categories.some(c => c.includes(q))) score += 40;
+    else if (fuzzyMatch(q, cuisine) || categories.some(c => fuzzyMatch(q, c))) score += 20;
+
+    // Service area match
+    if (serviceArea.includes(q)) score += 15;
+
+    // Food item matches
+    for (const food of restaurantFoods) {
+        const fname = (food.name || '').toLowerCase();
+        const fdesc = (food.description || '').toLowerCase();
+        const fcat  = (food.category || '').toLowerCase();
+        if (fname.includes(q)) { score += 40; break; }
+        if (fcat.includes(q))  { score += 30; break; }
+        if (fdesc.includes(q)) { score += 10; break; }
+        if (fuzzyMatch(q, fname)) { score += 20; break; }
+    }
+
+    return score;
+}
+
 function syncRestaurantSearchUrl(searchTerm = '') {
     if (!DOM.restaurantSearch) return;
     const nextUrl = new URL(window.location.href);
