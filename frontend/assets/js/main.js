@@ -301,25 +301,6 @@ function getRestaurantFoods(restaurantId) {
     return (window.allFoods || []).filter(food => String(food.restaurant_id) === String(restaurantId));
 }
 
-function restaurantMatchesSearch(restaurant, searchTerm) {
-    const normalized = searchTerm.toLowerCase();
-    const directMatches = [
-        restaurant.name,
-        restaurant.cuisine,
-        restaurant.service_area,
-        ...(restaurant.categories || [])
-    ].filter(Boolean).some(value => String(value).toLowerCase().includes(normalized));
-
-    if (directMatches) {
-        return true;
-    }
-
-    return getRestaurantFoods(restaurant.id).some(food =>
-        [food.name, food.description, food.category]
-            .filter(Boolean)
-            .some(value => String(value).toLowerCase().includes(normalized))
-    );
-}
 
 // Returns true if all chars of query appear in target in order (case-insensitive)
 function fuzzyMatch(query, target) {
