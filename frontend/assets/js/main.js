@@ -389,14 +389,186 @@ function syncRestaurantSearchUrl(searchTerm = '') {
 
 function initHeroSearch() {
     if (!DOM.heroSearchForm || !DOM.heroSearchInput) return;
+
+    let suggestionsEl = null;
+    let activeIndex = -1;
+    let suggestionItems = [];
+
+    // --- data cache ---
+    async function getSearchCache() {
+        if (window.searchCache) return window.searchCache;
+        const [rRes, fRes] = await Promise.all([
+            apiCall('/restaurants/restaurants/'),
+            apiCall('/restaurants/foods/')
+        ]);
+        const [rData, fData] = await Promise.all([rRes.json(), fRes.json()]);
+        const restaurants = rData.results || [];
+        const foods = fData.results || fData || [];
+        // Collect unique categories from all restaurants
+        const categorySet = new Set();
+        restaurants.forEach(r => {
+            if (r.cuisine) categorySet.add(r.cuisine);
+            (r.categories || []).forEach(c => categorySet.add(c));
+        });
+        window.searchCache = { restaurants, foods, categories: [...categorySet] };
+        return window.searchCache;
+    }
+
+    // --- build suggestions ---
+    function buildSuggestions(restaurants, foods, categories, query) {
+        const q = query.toLowerCase();
+        const matchStr = s => s && (s.toLowerCase().includes(q) || fuzzyMatch(q, s));
+
+        const matchedRestaurants = restaurants
+            .filter(r => matchStr(r.name) || matchStr(r.cuisine) || (r.categories || []).some(matchStr))
+            .slice(0, 3);
+
+        const matchedCategories = categories
+            .filter(c => matchStr(c))
+            .slice(0, 3);
+
+        const matchedFoods = foods
+            .filter(f => matchStr(f.name))
+            .slice(0, 2);
+
+        return { matchedRestaurants, matchedCategories, matchedFoods };
+    }
+
+    // --- render dropdown ---
+    function renderDropdown(matchedRestaurants, matchedCategories, matchedFoods) {
+        closeSuggestions();
+        const total = matchedRestaurants.length + matchedCategories.length + matchedFoods.length;
+        if (total === 0) return;
+
+        suggestionsEl = document.createElement('div');
+        suggestionsEl.className = 'search-suggestions';
+        suggestionItems = [];
+
+        function addSection(label, items, renderItem) {
+            if (!items.length) return;
+            const section = document.createElement('div');
+            section.className = 'search-suggestions-section';
+            const labelEl = document.createElement('div');
+            labelEl.className = 'search-suggestions-label';
+            labelEl.textContent = label;
+            section.appendChild(labelEl);
+            items.forEach(item => {
+                const el = renderItem(item);
+                el.classList.add('search-suggestion-item');
+                el.setAttribute('role', 'option');
+                section.appendChild(el);
+                suggestionItems.push(el);
+            });
+            suggestionsEl.appendChild(section);
+        }
+
+        addSection('Restaurants', matchedRestaurants, r => {
+            const el = document.createElement('div');
+            el.innerHTML = `<i class="fas fa-utensils"></i><span>${r.name}</span><span class="search-suggestion-sub">${r.cuisine}</span>`;
+            el.addEventListener('mousedown', e => {
+                e.preventDefault();
+                window.location.href = `menu.html?restaurant_id=${r.id}`;
+            });
+            return el;
+        });
+
+        addSection('Categories', matchedCategories, cat => {
+            const el = document.createElement('div');
+            el.innerHTML = `<i class="fas fa-tag"></i><span>${cat}</span>`;
+            el.addEventListener('mousedown', e => {
+                e.preventDefault();
+                const url = new URL('restaurants.html', window.location.href);
+                url.searchParams.set('cuisine', cat);
+                window.location.href = url.toString();
+            });
+            return el;
+        });
+
+        addSection('Foods', matchedFoods, food => {
+            const el = document.createElement('div');
+            el.innerHTML = `<i class="fas fa-hamburger"></i><span>${food.name}</span>`;
+            el.addEventListener('mousedown', e => {
+                e.preventDefault();
+                const url = new URL('restaurants.html', window.location.href);
+                url.searchParams.set('search', food.name);
+                window.location.href = url.toString();
+            });
+            return el;
+        });
+
+        DOM.heroSearchForm.appendChild(suggestionsEl);
+        activeIndex = -1;
+    }
+
+    function closeSuggestions() {
+        if (suggestionsEl) {
+            suggestionsEl.remove();
+            suggestionsEl = null;
+        }
+        activeIndex = -1;
+        suggestionItems = [];
+    }
+
+    function setActiveItem(index) {
+        suggestionItems.forEach((el, i) => el.classList.toggle('active', i === index));
+        activeIndex = index;
+    }
+
+    // --- debounce helper ---
+    let debounceTimer;
+    function debounceInput(fn, delay) {
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(fn, delay);
+    }
+
+    // --- events ---
+    DOM.heroSearchInput.addEventListener('input', () => {
+        const query = DOM.heroSearchInput.value.trim();
+        if (query.length < 2) { closeSuggestions(); return; }
+        debounceInput(async () => {
+            try {
+                const { restaurants, foods, categories } = await getSearchCache();
+                const { matchedRestaurants, matchedCategories, matchedFoods } =
+                    buildSuggestions(restaurants, foods, categories, query);
+                renderDropdown(matchedRestaurants, matchedCategories, matchedFoods);
+            } catch (e) {
+                console.error('Autocomplete error:', e);
+            }
+        }, 200);
+    });
+
+    DOM.heroSearchInput.addEventListener('keydown', e => {
+        if (!suggestionsEl) return;
+        if (e.key === 'ArrowDown') {
+            e.preventDefault();
+            setActiveItem(Math.min(activeIndex + 1, suggestionItems.length - 1));
+        } else if (e.key === 'ArrowUp') {
+            e.preventDefault();
+            setActiveItem(Math.max(activeIndex - 1, 0));
+        } else if (e.key === 'Escape') {
+            closeSuggestions();
+        } else if (e.key === 'Enter' && activeIndex >= 0) {
+            e.preventDefault();
+            suggestionItems[activeIndex].dispatchEvent(new MouseEvent('mousedown'));
+        }
+    });
+
+    DOM.heroSearchInput.addEventListener('blur', () => {
+        // Small delay so mousedown on item fires first
+        setTimeout(closeSuggestions, 150);
+    });
+
     DOM.heroSearchForm.addEventListener('submit', event => {
         event.preventDefault();
+        closeSuggestions();
         const query = DOM.heroSearchInput.value.trim();
         const nextUrl = new URL('restaurants.html', window.location.href);
-        if (query) {
-            nextUrl.searchParams.set('search', query);
-        }
+        if (query) nextUrl.searchParams.set('search', query);
         window.location.href = nextUrl.toString();
+    });
+
+    document.addEventListener('click', e => {
+        if (!DOM.heroSearchForm.contains(e.target)) closeSuggestions();
     });
 }
 
