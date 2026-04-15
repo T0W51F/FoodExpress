@@ -464,7 +464,14 @@ function initHeroSearch() {
 
         addSection('Restaurants', matchedRestaurants, r => {
             const el = document.createElement('div');
-            el.innerHTML = `<i class="fas fa-utensils"></i><span>${r.name}</span><span class="search-suggestion-sub">${r.cuisine}</span>`;
+            const icon = document.createElement('i');
+            icon.className = 'fas fa-utensils';
+            const nameSpan = document.createElement('span');
+            nameSpan.textContent = r.name;
+            const subSpan = document.createElement('span');
+            subSpan.className = 'search-suggestion-sub';
+            subSpan.textContent = r.cuisine || '';
+            el.append(icon, nameSpan, subSpan);
             el.addEventListener('mousedown', e => {
                 e.preventDefault();
                 window.location.href = `menu.html?restaurant_id=${r.id}`;
@@ -474,7 +481,11 @@ function initHeroSearch() {
 
         addSection('Categories', matchedCategories, cat => {
             const el = document.createElement('div');
-            el.innerHTML = `<i class="fas fa-tag"></i><span>${cat}</span>`;
+            const icon = document.createElement('i');
+            icon.className = 'fas fa-tag';
+            const nameSpan = document.createElement('span');
+            nameSpan.textContent = cat;
+            el.append(icon, nameSpan);
             el.addEventListener('mousedown', e => {
                 e.preventDefault();
                 const url = new URL('restaurants.html', window.location.href);
@@ -486,7 +497,11 @@ function initHeroSearch() {
 
         addSection('Foods', matchedFoods, food => {
             const el = document.createElement('div');
-            el.innerHTML = `<i class="fas fa-hamburger"></i><span>${food.name}</span>`;
+            const icon = document.createElement('i');
+            icon.className = 'fas fa-hamburger';
+            const nameSpan = document.createElement('span');
+            nameSpan.textContent = food.name;
+            el.append(icon, nameSpan);
             el.addEventListener('mousedown', e => {
                 e.preventDefault();
                 const url = new URL('restaurants.html', window.location.href);
@@ -544,7 +559,7 @@ function initHeroSearch() {
             setActiveItem(Math.min(activeIndex + 1, suggestionItems.length - 1));
         } else if (e.key === 'ArrowUp') {
             e.preventDefault();
-            setActiveItem(Math.max(activeIndex - 1, 0));
+            setActiveItem(activeIndex <= 0 ? -1 : activeIndex - 1);
         } else if (e.key === 'Escape') {
             closeSuggestions();
         } else if (e.key === 'Enter' && activeIndex >= 0) {
@@ -567,9 +582,10 @@ function initHeroSearch() {
         window.location.href = nextUrl.toString();
     });
 
-    document.addEventListener('click', e => {
+    const _outsideClickHandler = e => {
         if (!DOM.heroSearchForm.contains(e.target)) closeSuggestions();
-    });
+    };
+    document.addEventListener('click', _outsideClickHandler);
 }
 
 // Load Featured Restaurants
