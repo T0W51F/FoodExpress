@@ -492,11 +492,11 @@ function initHeroSearch() {
             return el;
         });
 
-        DOM.heroSearchForm.appendChild(suggestionsEl);
-        // Position fixed dropdown to match the search box width/location
+        // Append to body so backdrop-filter/overflow:hidden on hero container can't clip it
+        document.body.appendChild(suggestionsEl);
         const rect = DOM.heroSearchForm.getBoundingClientRect();
-        suggestionsEl.style.top = `${rect.bottom + 4}px`;
-        suggestionsEl.style.left = `${rect.left}px`;
+        suggestionsEl.style.top = `${rect.bottom + window.scrollY + 4}px`;
+        suggestionsEl.style.left = `${rect.left + window.scrollX}px`;
         suggestionsEl.style.width = `${rect.width}px`;
         activeIndex = -1;
     }
@@ -569,7 +569,7 @@ function initHeroSearch() {
     });
 
     const _outsideClickHandler = e => {
-        if (!DOM.heroSearchForm.contains(e.target)) closeSuggestions();
+        if (!DOM.heroSearchForm.contains(e.target) && e.target !== suggestionsEl && !suggestionsEl?.contains(e.target)) closeSuggestions();
     };
     document.addEventListener('click', _outsideClickHandler);
 }
