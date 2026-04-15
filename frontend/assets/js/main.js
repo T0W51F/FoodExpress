@@ -343,6 +343,7 @@ function scoreRestaurantMatch(restaurant, query, foods) {
     const cuisine = (restaurant.cuisine || '').toLowerCase();
     const serviceArea = (restaurant.service_area || '').toLowerCase();
     const categories = (restaurant.categories || []).map(c => c.toLowerCase());
+    // foods param may differ from window.allFoods (e.g. autocomplete uses searchCache.foods)
     const restaurantFoods = (foods || []).filter(f => String(f.restaurant_id) === String(restaurant.id));
 
     let score = 0;
