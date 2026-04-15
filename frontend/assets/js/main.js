@@ -612,7 +612,11 @@ function filterRestaurants() {
                 score: scoreRestaurantMatch(restaurant, searchTerm, window.allFoods || [])
             }))
             .filter(({ score }) => score > 0)
-            .sort((a, b) => b.score - a.score || b.restaurant.rating - a.restaurant.rating)
+            .sort((a, b) =>
+                b.score - a.score ||
+                b.restaurant.rating - a.restaurant.rating ||
+                a.restaurant.name.localeCompare(b.restaurant.name)
+            )
             .map(({ restaurant }) => restaurant);
     }
 
@@ -624,22 +628,24 @@ function filterRestaurants() {
     }
     
     const sortBy = DOM.sortFilter?.value || 'rating';
-    filtered.sort((a, b) => {
-        switch (sortBy) {
-            case 'rating':
-                return b.rating - a.rating;
-            case 'delivery_time':
-                const aTime = parseInt(a.delivery_time.split('-')[0]);
-                const bTime = parseInt(b.delivery_time.split('-')[0]);
-                return aTime - bTime;
-            case 'delivery_fee':
-                return a.delivery_fee - b.delivery_fee;
-            case 'name':
-                return a.name.localeCompare(b.name);
-            default:
-                return 0;
-        }
-    });
+    if (!searchTerm || sortBy !== 'rating') {
+        filtered.sort((a, b) => {
+            switch (sortBy) {
+                case 'rating':
+                    return b.rating - a.rating;
+                case 'delivery_time':
+                    const aTime = parseInt(a.delivery_time.split('-')[0]);
+                    const bTime = parseInt(b.delivery_time.split('-')[0]);
+                    return aTime - bTime;
+                case 'delivery_fee':
+                    return a.delivery_fee - b.delivery_fee;
+                case 'name':
+                    return a.name.localeCompare(b.name);
+                default:
+                    return 0;
+            }
+        });
+    }
     
     displayRestaurants(filtered);
 }
