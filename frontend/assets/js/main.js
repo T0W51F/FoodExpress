@@ -676,23 +676,27 @@ async function loadRestaurants() {
 
         const params = new URLSearchParams(window.location.search);
         const initialCuisine = params.get('cuisine') || '';
+        let tempCuisineOpt = null;
         if (DOM.cuisineFilter && initialCuisine) {
-            // Try to select matching option; if not present, add it temporarily
             const existing = Array.from(DOM.cuisineFilter.options).find(
                 o => o.value.toLowerCase() === initialCuisine.toLowerCase()
             );
             if (existing) {
                 DOM.cuisineFilter.value = existing.value;
             } else {
-                const opt = document.createElement('option');
-                opt.value = initialCuisine;
-                opt.textContent = initialCuisine;
-                DOM.cuisineFilter.appendChild(opt);
+                tempCuisineOpt = document.createElement('option');
+                tempCuisineOpt.value = initialCuisine;
+                tempCuisineOpt.textContent = initialCuisine;
+                DOM.cuisineFilter.appendChild(tempCuisineOpt);
                 DOM.cuisineFilter.value = initialCuisine;
             }
         }
 
         filterRestaurants();
+        if (tempCuisineOpt) {
+            DOM.cuisineFilter.value = '';
+            tempCuisineOpt.remove();
+        }
     } catch (error) {
         console.error('Error loading restaurants:', error);
         if (DOM.restaurantsList) {
@@ -830,7 +834,9 @@ function filterRestaurants() {
     
     const cuisine = DOM.cuisineFilter?.value || '';
     if (cuisine) {
-        filtered = filtered.filter(restaurant => restaurant.cuisine === cuisine);
+        filtered = filtered.filter(restaurant =>
+            restaurant.cuisine.toLowerCase() === cuisine.toLowerCase()
+        );
     }
     
     const sortBy = DOM.sortFilter?.value || 'rating';
