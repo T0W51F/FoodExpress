@@ -261,20 +261,7 @@
         loadFeaturedRestaurants();
         loadPopularFoods();
         updateCartCount();
-
-        const heroSearchForm = document.getElementById('hero-search-form');
-        const heroSearchInput = document.getElementById('address-input');
-        if (heroSearchForm && heroSearchInput) {
-            heroSearchForm.addEventListener('submit', function(event) {
-                event.preventDefault();
-                const query = heroSearchInput.value.trim();
-                const nextUrl = new URL('restaurants.html', window.location.href);
-                if (query) {
-                    nextUrl.searchParams.set('search', query);
-                }
-                window.location.href = nextUrl.toString();
-            });
-        }
+        initHeroSearch();
     });
 </script>
 </body>
