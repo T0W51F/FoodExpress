@@ -495,9 +495,11 @@ function initHeroSearch() {
         // Append to body so backdrop-filter/overflow:hidden on hero container can't clip it
         document.body.appendChild(suggestionsEl);
         const rect = DOM.heroSearchForm.getBoundingClientRect();
+        suggestionsEl.style.position = 'fixed';
         suggestionsEl.style.top = `${rect.bottom + 4}px`;
         suggestionsEl.style.left = `${rect.left}px`;
         suggestionsEl.style.width = `${rect.width}px`;
+        suggestionsEl.style.zIndex = '9999';
         activeIndex = -1;
     }
 
