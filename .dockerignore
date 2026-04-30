@@ -1,0 +1,7 @@
+node_modules
+.git
+.claude
+.superpowers
+backend/.env
+backend/.env.local
+npm-debug.log*
