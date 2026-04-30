@@ -250,7 +250,7 @@ async function registerUser(firstName, lastName, email, phone, password) {
         showNotification(data.message || 'Account created successfully!', 'success');
 
         setTimeout(() => {
-            window.location.href = '../index.html';
+            window.location.href = 'index.html';
         }, 1000);
     } catch (error) {
         showNotification(error.message || 'Registration failed', 'error');
