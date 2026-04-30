@@ -3,40 +3,135 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Orders - FoodExpress</title>
-    <link rel="stylesheet" href="../assets/css/style.css">
-    <link rel="stylesheet" href="../assets/css/responsive.css">
+    <title>My Orders — FoodExpress</title>
     <link rel="stylesheet" href="../assets/css/orders.css?v=20260401-0015">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="icon" type="image/svg+xml" href="../assets/images/favicon.svg">
+    <style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+    --bg:#06070a;--surface:#0d1014;--surface2:#131820;
+    --border:rgba(255,255,255,0.07);--bmed:rgba(255,255,255,0.12);
+    --primary:#e85c2c;--pdk:#cf4d1d;--plt:#ff7a4d;
+    --text:#ede8e3;--text2:rgba(237,232,227,0.62);--text3:rgba(237,232,227,0.36);
+    --success:#00b894;--danger:#d63031;--warn:#fdcb6e;
+    --r:16px;--rsm:10px;--rxs:6px;
+    --tr:all 0.25s cubic-bezier(0.4,0,0.2,1);
+    --sh:0 8px 32px rgba(0,0,0,0.45);--shlg:0 20px 60px rgba(0,0,0,0.55);
+}
+html{scroll-behavior:smooth}
+body{
+    font-family:'Inter',-apple-system,sans-serif;
+    background:var(--bg);color:var(--text);
+    line-height:1.6;min-height:100vh;overflow-x:hidden;
+    background-image:
+        radial-gradient(circle at 8% 6%,rgba(232,92,44,0.07) 0%,transparent 28%),
+        radial-gradient(circle at 88% 82%,rgba(232,92,44,0.04) 0%,transparent 26%);
+    background-attachment:fixed;
+}
+.container{max-width:1200px;margin:0 auto;padding-left:24px;padding-right:24px;position:relative}
+a{text-decoration:none;color:inherit;transition:var(--tr)}
+img{max-width:100%;display:block}
+button{font-family:inherit;cursor:pointer}
+h1,h2,h3,h4,h5{font-family:'Space Grotesk',sans-serif;font-weight:700;line-height:1.2;color:var(--text)}
+h1{font-size:clamp(1.8rem,4vw,2.6rem)}
+h2{font-size:clamp(1.4rem,3vw,2rem)}
+h3{font-size:1.2rem}h4{font-size:1rem}
+
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:10px 22px;border-radius:999px;font-size:0.9rem;font-weight:600;border:none;cursor:pointer;transition:var(--tr);white-space:nowrap;text-decoration:none}
+.btn-primary{background:linear-gradient(135deg,var(--primary),var(--pdk));color:#fff;box-shadow:0 4px 18px rgba(232,92,44,0.28)}
+.btn-primary:hover{background:linear-gradient(135deg,var(--plt),var(--primary));box-shadow:0 6px 26px rgba(232,92,44,0.44);transform:translateY(-2px);color:#fff}
+.btn-outline{background:rgba(255,255,255,0.04);color:var(--text2);border:1.5px solid var(--bmed)}
+.btn-outline:hover{background:rgba(255,255,255,0.08);border-color:rgba(232,92,44,0.38);color:var(--plt)}
+.btn:disabled{opacity:0.5;cursor:not-allowed;transform:none}
+
+/* NAVBAR */
+.navbar{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(6,7,10,0.78);backdrop-filter:blur(24px) saturate(180%);-webkit-backdrop-filter:blur(24px) saturate(180%);border-bottom:1px solid var(--border)}
+.navbar .container{display:flex;align-items:center;justify-content:space-between;height:68px}
+.logo{display:flex;align-items:center;gap:10px}
+.home-logo{gap:10px}
+.home-logo .logo-mark{width:40px;height:40px;border-radius:12px;display:inline-flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#1e2830,#111820);border:1px solid rgba(232,92,44,0.22);transition:var(--tr);flex-shrink:0}
+.home-logo .logo-mark i{color:var(--primary);font-size:1rem}
+.home-logo:hover .logo-mark{background:linear-gradient(135deg,var(--primary),var(--pdk));border-color:var(--primary);box-shadow:0 0 22px rgba(232,92,44,0.35)}
+.home-logo:hover .logo-mark i{color:#fff}
+.home-logo .logo-lockup{display:flex;flex-direction:column}
+.home-logo .logo-wordmark{display:inline-flex;align-items:baseline;gap:1px;font-family:'Space Grotesk',sans-serif;font-size:1.3rem;font-weight:800;letter-spacing:-0.03em;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:999px;padding:4px 12px;transition:var(--tr)}
+.home-logo .food{color:#ede8e3}
+.home-logo .express{color:var(--primary)}
+.home-logo:hover .logo-wordmark{background:linear-gradient(135deg,var(--primary),var(--pdk));border-color:var(--primary)}
+.home-logo:hover .food,.home-logo:hover .express{color:#fff}
+.nav-links{display:flex;align-items:center;gap:4px;visibility:hidden}
+.nav-links.nav-ready{visibility:visible}
+.nav-links>a:not(.btn):not(.cart-icon){padding:7px 14px;border-radius:999px;font-size:0.88rem;font-weight:500;color:var(--text2);position:relative}
+.nav-links>a:not(.btn):not(.cart-icon):hover{color:var(--text);background:rgba(255,255,255,0.06)}
+.nav-links>a.active{color:var(--plt)!important}
+.nav-links a:not(.btn):not(.cart-icon)::after{content:'';position:absolute;bottom:-2px;left:50%;width:100%;height:2px;background:var(--primary);border-radius:1px;transform:translateX(-50%) scaleX(0);transform-origin:center;transition:transform 0.3s cubic-bezier(0.34,1.56,0.64,1);pointer-events:none}
+.nav-links a:not(.btn):not(.cart-icon):hover::after,.nav-links a.active::after{transform:translateX(-50%) scaleX(1)}
+.cart-icon{position:relative;padding:8px;border-radius:10px;color:var(--text2);transition:var(--tr)}
+.cart-icon:hover{color:var(--text);background:rgba(255,255,255,0.06)}
+.cart-icon i{font-size:1.1rem}
+.cart-count{position:absolute;top:2px;right:2px;background:var(--primary);color:#fff;font-size:0.62rem;font-weight:700;width:17px;height:17px;border-radius:50%;display:flex;align-items:center;justify-content:center;border:2px solid var(--bg)}
+.auth-buttons{display:flex;align-items:center;gap:8px;visibility:hidden}
+.auth-buttons.auth-ready{visibility:visible}
+.user-menu{position:relative}
+.user-btn{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:999px;color:var(--text);padding:6px 14px 6px 6px;transition:var(--tr)}
+.user-btn:hover{background:rgba(255,255,255,0.09)}
+.user-avatar{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--pdk));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:0.75rem}
+.user-name{font-size:0.88rem;font-weight:600}
+.user-dropdown{position:absolute;top:calc(100% + 8px);right:0;background:var(--surface2);border:1px solid var(--bmed);border-radius:var(--rsm);box-shadow:var(--shlg);padding:8px;min-width:200px;display:none;z-index:1000}
+.user-dropdown.show{display:block}
+.user-dropdown a{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:var(--rxs);color:var(--text2);font-size:0.88rem}
+.user-dropdown a:hover{background:rgba(255,255,255,0.06);color:var(--text)}
+.user-dropdown hr{margin:6px 0;border:none;border-top:1px solid var(--border)}
+.menu-toggle{display:none;background:none;border:none;color:var(--text);font-size:1.4rem}
+
+/* FOOTER */
+.footer{margin-top:40px}
+.footer-minimal{background:transparent;border-top:1px solid var(--border);padding:22px 0}
+.footer-bottom{text-align:center;color:var(--text3);font-size:0.8rem}
+
+/* SCROLL ANIMATIONS */
+[data-animate]{opacity:0;transform:translateY(24px);transition:opacity 0.55s ease,transform 0.55s ease}
+[data-animate].visible{opacity:1;transform:translateY(0)}
+@media(prefers-reduced-motion:reduce){[data-animate]{opacity:1;transform:none;transition:none}}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+    .navbar .container{height:62px}
+    .nav-links,.nav-links.nav-ready{display:none}
+    .auth-buttons,.auth-buttons.auth-ready{display:none}
+    .menu-toggle{display:block}
+}
+    </style>
 </head>
-<body class="site-dark orders-page">
+<body class="orders-page">
     <nav class="navbar">
         <div class="container">
             <a href="index.html" class="logo home-logo">
                 <span class="logo-mark" aria-hidden="true"><i class="fas fa-utensils"></i></span>
-                <span class="logo-lockup"><span class="logo-wordmark"><span class="food">Food</span><span class="express">Express</span></span></span>
+                <span class="logo-lockup">
+                    <span class="logo-wordmark"><span class="food">Food</span><span class="express">Express</span></span>
+                </span>
             </a>
             <div class="nav-links">
                 <a href="index.html">Home</a>
                 <a href="restaurants.html">Restaurants</a>
                 <a href="orders.html" class="active">My Orders</a>
-                <a href="cart.html" class="cart-icon"><i class="fas fa-shopping-cart"></i><span class="cart-count">0</span></a>
-                <div class="user-menu">
-                    <button class="user-btn">
-                        <i class="fas fa-user"></i>
-                        <span id="username">Guest</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </button>
-                    <div class="user-dropdown">
-                        <a href="orders.html"><i class="fas fa-history"></i> Order History</a>
-                        <a href="settings.html"><i class="fas fa-cog"></i> Settings</a>
-                        <hr>
-                        <a href="login.html" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
-                    </div>
+                <a href="partner-apply.html" class="partner-nav-link">Partner with us</a>
+                <a href="cart.html" class="cart-icon">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count">0</span>
+                </a>
+                <div class="auth-buttons">
+                    <a href="login.html" class="btn btn-outline">Login</a>
+                    <a href="register.html" class="btn btn-primary">Sign Up</a>
                 </div>
             </div>
-            <button class="menu-toggle"><i class="fas fa-bars"></i></button>
+            <button class="menu-toggle" aria-label="Toggle menu"><i class="fas fa-bars"></i></button>
         </div>
     </nav>
 
@@ -64,7 +159,7 @@
         <section class="orders-list-section">
             <div class="orders-list" id="orders-list"></div>
 
-            <div class="no-orders" id="no-orders" style="display: none;">
+            <div class="no-orders" id="no-orders" style="display:none">
                 <i class="fas fa-shopping-bag"></i>
                 <h3>No Orders Yet</h3>
                 <p>Your orders will appear here after checkout.</p>
@@ -90,14 +185,12 @@
     <script src="../assets/js/main.js"></script>
     <script src="../assets/js/api.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            checkLoginStatus();
-            loadOrders();
-            updateCartCount();
-            setupOrderTabs();
-        });
+    document.addEventListener('DOMContentLoaded', function() {
+        checkLoginStatus();
+        loadOrders();
+        updateCartCount();
+        setupOrderTabs();
+    });
     </script>
 </body>
 </html>
-
-

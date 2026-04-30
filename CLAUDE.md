@@ -188,6 +188,27 @@ All routes are under `/api/restaurant/*` and require `requireRestaurantAdmin`.
 3. Temp password returned once in API response — superadmin shares it with partner
 4. Partner logs in → redirected to `partner-dashboard.html`
 
+## UI Effects & Animations (index.html)
+
+**Scroll animations** (`initScrollAnimations` in `main.js`):
+- `IntersectionObserver` watches elements with `[data-animate]` attribute
+- On intersect: adds `.visible` class → CSS opacity + translateY transition
+- `data-delay="1|2|3"` staggers transition-delay (0.12s steps) — used on "How It Works" steps
+- `observeNewAnimations(container)` re-registers async-rendered cards after load
+- Respects `prefers-reduced-motion` — animations are no-ops when reduced motion is on
+
+**Card glow wrapper** (`.card-glow` in `style.css`):
+- Thin `@property --angle` rotating conic-gradient border on hover (Effect 3)
+- Wrapper handles `translateY(-5px)` lift; inner `.restaurant-card`/`.food-card` hover overridden to `transform: none`
+- Applied to featured restaurants, popular foods, and browse restaurant list
+
+**Nav underline** (`style.css`):
+- Replaced static active underline with animated scaleX expand from center
+- Uses `cubic-bezier(0.34,1.56,0.64,1)` (slight overshoot spring) on hover and `.active`
+- Gradient underline with orange glow shadow
+
+> **Status**: these changes are uncommitted as of 2026-04-28. Run `git diff` to see full scope.
+
 ## Superadmin Features
 
 ### Built

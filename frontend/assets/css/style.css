@@ -298,15 +298,34 @@ a:hover {
     color: var(--white);
 }
 
-.nav-links a.active::after {
+.nav-links a:not(.btn):not(.cart-icon)::after {
     content: '';
     position: absolute;
     bottom: -8px;
-    left: 0;
+    left: 50%;
     width: 100%;
-    height: 3px;
-    background-color: var(--primary-color);
-    border-radius: 3px;
+    height: 2px;
+    background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(232,92,44,0.55) 15%,
+        var(--primary-color) 50%,
+        rgba(232,92,44,0.55) 85%,
+        transparent 100%
+    );
+    box-shadow:
+        0 0   3px 0  rgba(232,92,44,0.45),
+        0 3px 8px 0  rgba(232,92,44,0.22),
+        0 6px 16px 0 rgba(232,92,44,0.09);
+    border-radius: 1px;
+    transform: translateX(-50%) scaleX(0);
+    transform-origin: center;
+    transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
+    pointer-events: none;
+}
+
+.nav-links a:not(.btn):not(.cart-icon):hover::after,
+.nav-links a.active::after {
+    transform: translateX(-50%) scaleX(1);
 }
 
 .cart-icon {
@@ -2955,4 +2974,146 @@ body.site-dark .auth-right .auth-footer {
         max-width: none;
     }
 }
+
+/* ── Scroll Fade-in Animations ───────────────────────────── */
+[data-animate] {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.55s ease, transform 0.55s ease;
+}
+
+[data-animate].visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+[data-animate][data-delay="1"] { transition-delay: 0.12s; }
+[data-animate][data-delay="2"] { transition-delay: 0.24s; }
+[data-animate][data-delay="3"] { transition-delay: 0.36s; }
+
+@media (prefers-reduced-motion: reduce) {
+    [data-animate] {
+        opacity: 1;
+        transform: none;
+        transition: none;
+    }
+}
+
+/* ── Card Glow Wrapper (Effect 3) ────────────────────────── */
+@property --angle {
+    syntax: '<angle>';
+    initial-value: -90deg;
+    inherits: false;
+}
+
+.card-glow {
+    position: relative;
+    border-radius: var(--radius);
+    transition: transform 0.3s ease, box-shadow 0.35s ease;
+}
+
+.card-glow:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 0 1.5px rgba(232,92,44,0.28),
+                0 0 14px 0   rgba(232,92,44,0.08);
+}
+
+/* Neutralize inner card hover when wrapper handles transform */
+.card-glow .restaurant-card:hover,
+.card-glow .food-card:hover {
+    transform: none;
+    box-shadow: var(--shadow);
+}
+
+.card-glow::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: calc(var(--radius) + 3px);
+    background: conic-gradient(
+        from var(--angle),
+        transparent        0deg,
+        rgba(232,92,44,0.04) 18deg,
+        rgba(232,92,44,0.65) 36deg,
+        rgba(232,92,44,0.04) 54deg,
+        transparent        72deg,
+        transparent        360deg
+    );
+    /* Punch out interior — only the 2px border ring stays visible */
+    padding: 2px;
+    -webkit-mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.15s;
+    pointer-events: none;
+}
+
+.card-glow:hover::before {
+    opacity: 1;
+    animation: arc-trace 1.4s linear forwards;
+}
+
+@keyframes arc-trace {
+    0%  { --angle: -90deg; opacity: 1; }
+    88% { --angle: 252deg; opacity: 1; }
+    100%{ --angle: 270deg; opacity: 0; }
+}
+
+/* Shimmer streak on inner card */
+.card-glow .restaurant-card::after,
+.card-glow .food-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        115deg,
+        transparent 30%,
+        rgba(255,255,255,0.05) 50%,
+        transparent 70%
+    );
+    transform: translateX(-100%);
+    pointer-events: none;
+}
+
+.card-glow:hover .restaurant-card::after,
+.card-glow:hover .food-card::after {
+    transform: translateX(100%);
+    transition: transform 0.55s ease;
+}
+
+/* ── Step Icon Pulse Ring (Effect 5) ─────────────────────── */
+.step-icon {
+    position: relative;
+}
+
+.step-icon::before,
+.step-icon::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 2px solid var(--primary-color);
+    opacity: 0;
+    pointer-events: none;
+}
+
+.step:hover .step-icon::before {
+    animation: step-pulse 0.9s cubic-bezier(0.21,1,0.36,1) 1 forwards;
+}
+
+.step:hover .step-icon::after {
+    animation: step-pulse 0.9s cubic-bezier(0.21,1,0.36,1) 0.22s 1 forwards;
+}
+
+@keyframes step-pulse {
+    0%   { transform: scale(1);    opacity: 0.7; }
+    100% { transform: scale(1.85); opacity: 0;   }
+}
+
 

@@ -3,70 +3,163 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Cart - FoodExpress</title>
+    <title>Your Cart — FoodExpress</title>
     <link rel="stylesheet" href="../assets/css/style.css">
-    <link rel="stylesheet" href="../assets/css/responsive.css">
     <link rel="stylesheet" href="../assets/css/cart.css?v=20260331-2230">
     <link rel="stylesheet" href="../assets/css/checkout-modal.css?v=20260408">
-    <style>
-        body.cart-page .cart-shell { padding-top: 40px; padding-bottom: 56px; }
-        body.cart-page .cart-page-header { margin-bottom: 28px; }
-        body.cart-page .cart-kicker {
-            display: inline-flex;
-            align-items: center;
-            padding: 8px 14px;
-            border-radius: 999px;
-            background: rgba(232, 92, 44, 0.12);
-            border: 1px solid rgba(232, 92, 44, 0.22);
-            color: #ffb89d;
-            font-size: 0.82rem;
-            font-weight: 700;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-        }
-        body.cart-page .cart-items,
-        body.cart-page .order-summary { border-radius: 28px; overflow: hidden; }
-    </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="icon" type="image/svg+xml" href="../assets/images/favicon.svg">
+    <style>
+/* ── Override base variables for dark theme ── */
+:root{
+    --light-color:#090b0d;--dark-color:#f4f7f9;
+    --gray-color:#a8b0b7;--light-gray:#22272d;
+    --white:#11161b;--shadow:0 12px 28px rgba(0,0,0,0.24);
+    --shadow-lg:0 18px 46px rgba(0,0,0,0.3);
+    --radius:12px;--radius-sm:8px;--transition:all 0.3s ease;
+}
+
+/* ── FONT + BODY OVERRIDE ── */
+*,*::before,*::after{box-sizing:border-box}
+body,html{font-family:'Inter',-apple-system,sans-serif!important}
+h1,h2,h3,h4,h5{font-family:'Space Grotesk',sans-serif!important;font-weight:700!important}
+
+body.cart-page{
+    background:#06070a
+        radial-gradient(circle at 8% 6%,rgba(232,92,44,0.09) 0%,transparent 30%),
+        radial-gradient(circle at 90% 82%,rgba(232,92,44,0.04) 0%,transparent 26%)!important;
+    background-attachment:fixed!important;
+    color:#ede8e3!important;
+}
+
+/* ── NAVBAR OVERRIDE ── */
+.navbar{
+    background:rgba(6,7,10,0.78)!important;
+    backdrop-filter:blur(24px) saturate(180%)!important;
+    -webkit-backdrop-filter:blur(24px) saturate(180%)!important;
+    border-bottom:1px solid rgba(255,255,255,0.07)!important;
+    box-shadow:none!important;
+    padding:0!important;
+}
+.navbar .container{
+    display:flex!important;align-items:center!important;
+    justify-content:space-between!important;height:68px!important;
+}
+
+/* Logo */
+.home-logo .logo-mark{
+    width:40px!important;height:40px!important;border-radius:12px!important;
+    background:linear-gradient(135deg,#1e2830,#111820)!important;
+    border:1px solid rgba(232,92,44,0.22)!important;
+}
+.home-logo .logo-wordmark{
+    font-family:'Space Grotesk',sans-serif!important;
+    font-size:1.3rem!important;font-weight:800!important;letter-spacing:-0.03em!important;
+    background:rgba(255,255,255,0.04)!important;
+    border:1px solid rgba(255,255,255,0.08)!important;
+    border-radius:999px!important;padding:4px 12px!important;
+}
+.home-logo .food{color:#ede8e3!important}
+.home-logo .express{color:#e85c2c!important}
+.home-logo:hover .logo-mark{background:linear-gradient(135deg,#e85c2c,#cf4d1d)!important;border-color:#e85c2c!important;box-shadow:0 0 22px rgba(232,92,44,0.35)!important}
+.home-logo:hover .logo-mark i{color:#fff!important}
+.home-logo:hover .logo-wordmark{background:linear-gradient(135deg,#e85c2c,#cf4d1d)!important;border-color:#e85c2c!important}
+.home-logo:hover .food,.home-logo:hover .express{color:#fff!important}
+
+/* Nav links */
+.nav-links{display:flex!important;align-items:center!important;gap:4px!important;visibility:hidden!important}
+.nav-links.nav-ready{visibility:visible!important}
+.nav-links>a:not(.btn):not(.cart-icon){padding:7px 14px!important;border-radius:999px!important;font-size:0.88rem!important;font-weight:500!important;color:rgba(237,232,227,0.62)!important;position:relative!important}
+.nav-links>a:not(.btn):not(.cart-icon):hover{color:#ede8e3!important;background:rgba(255,255,255,0.06)!important}
+.nav-links>a.active,.nav-links>a.cart-icon.active{color:#ff7a4d!important}
+
+/* Underline compat */
+.nav-links a:not(.btn):not(.cart-icon)::after{content:'';position:absolute;bottom:-2px;left:50%;width:100%;height:2px;background:#e85c2c;border-radius:1px;transform:translateX(-50%) scaleX(0);transform-origin:center;transition:transform 0.3s cubic-bezier(0.34,1.56,0.64,1);pointer-events:none}
+.nav-links a:not(.btn):not(.cart-icon):hover::after,.nav-links a.active::after{transform:translateX(-50%) scaleX(1)}
+
+/* Cart icon */
+.cart-icon{position:relative!important;padding:8px!important;border-radius:10px!important;color:rgba(237,232,227,0.62)!important;transition:all 0.25s ease!important}
+.cart-icon:hover{color:#ede8e3!important;background:rgba(255,255,255,0.06)!important}
+.cart-count{position:absolute!important;top:2px!important;right:2px!important;background:#e85c2c!important;color:#fff!important;font-size:0.62rem!important;width:17px!important;height:17px!important;border-radius:50%!important;display:flex!important;align-items:center!important;justify-content:center!important;border:2px solid #06070a!important}
+
+/* Auth buttons */
+.auth-buttons{display:flex!important;align-items:center!important;gap:8px!important;visibility:hidden!important}
+.auth-buttons.auth-ready{visibility:visible!important}
+
+/* Buttons override */
+.btn{border-radius:999px!important;font-family:'Inter',sans-serif!important;font-weight:600!important}
+.btn-primary{background:linear-gradient(135deg,#e85c2c,#cf4d1d)!important;color:#fff!important;box-shadow:0 4px 18px rgba(232,92,44,0.28)!important;border-color:transparent!important}
+.btn-primary:hover{background:linear-gradient(135deg,#ff7a4d,#e85c2c)!important;transform:translateY(-2px)!important;color:#fff!important}
+.btn-outline{background:rgba(255,255,255,0.04)!important;color:rgba(237,232,227,0.7)!important;border:1.5px solid rgba(255,255,255,0.12)!important}
+.btn-outline:hover{background:rgba(255,255,255,0.08)!important;border-color:rgba(232,92,44,0.38)!important;color:#ff7a4d!important}
+
+/* User menu */
+.user-menu{position:relative!important}
+.user-btn{display:flex!important;align-items:center!important;gap:8px!important;background:rgba(255,255,255,0.05)!important;border:1px solid rgba(255,255,255,0.07)!important;border-radius:999px!important;color:#ede8e3!important;padding:6px 14px 6px 6px!important}
+.user-btn:hover{background:rgba(255,255,255,0.09)!important}
+.user-avatar{width:30px!important;height:30px!important;border-radius:50%!important;background:linear-gradient(135deg,#e85c2c,#cf4d1d)!important;display:flex!important;align-items:center!important;justify-content:center!important;color:#fff!important;font-weight:800!important;font-size:0.75rem!important}
+.user-name{font-size:0.88rem!important;font-weight:600!important}
+.user-dropdown{position:absolute!important;top:calc(100% + 8px)!important;right:0!important;background:#131820!important;border:1px solid rgba(255,255,255,0.12)!important;border-radius:10px!important;box-shadow:0 20px 60px rgba(0,0,0,0.55)!important;padding:8px!important;min-width:200px!important;display:none!important;z-index:1000!important}
+.user-dropdown.show{display:block!important}
+.user-dropdown a{display:flex!important;align-items:center!important;gap:10px!important;padding:10px 12px!important;border-radius:6px!important;color:rgba(237,232,227,0.62)!important;font-size:0.88rem!important}
+.user-dropdown a:hover{background:rgba(255,255,255,0.06)!important;color:#ede8e3!important}
+.user-dropdown hr{margin:6px 0!important;border:none!important;border-top:1px solid rgba(255,255,255,0.07)!important}
+
+/* Mobile toggle */
+.menu-toggle{display:none;background:none;border:none;color:#ede8e3;font-size:1.4rem;cursor:pointer}
+
+/* Cart page padding */
+body.cart-page .cart-shell{padding-top:104px!important;padding-bottom:64px!important}
+
+/* Footer */
+.footer{background:rgba(13,16,20,0.5)!important;border-top:1px solid rgba(255,255,255,0.07)!important;margin-top:20px}
+.footer-bottom{text-align:center;color:rgba(237,232,227,0.36);font-size:0.8rem}
+
+/* Modal overlay */
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.65);z-index:2000;align-items:center;justify-content:center;padding:20px}
+.modal.show{display:flex}
+
+/* Scroll animations */
+[data-animate]{opacity:0;transform:translateY(24px);transition:opacity 0.55s ease,transform 0.55s ease}
+[data-animate].visible{opacity:1;transform:translateY(0)}
+@media(prefers-reduced-motion:reduce){[data-animate]{opacity:1;transform:none;transition:none}}
+
+/* Responsive */
+@media(max-width:768px){
+    .navbar .container{height:62px!important}
+    .nav-links,.nav-links.nav-ready{display:none!important}
+    .auth-buttons,.auth-buttons.auth-ready{display:none!important}
+    .menu-toggle{display:block!important}
+}
+    </style>
 </head>
 <body class="site-dark cart-page">
     <nav class="navbar">
         <div class="container">
             <a href="index.html" class="logo home-logo">
-                <span class="logo-mark" aria-hidden="true">
-                    <i class="fas fa-utensils"></i>
-                </span>
+                <span class="logo-mark" aria-hidden="true"><i class="fas fa-utensils"></i></span>
                 <span class="logo-lockup">
                     <span class="logo-wordmark"><span class="food">Food</span><span class="express">Express</span></span>
                 </span>
             </a>
-            
             <div class="nav-links">
                 <a href="index.html">Home</a>
                 <a href="restaurants.html">Restaurants</a>
                 <a href="orders.html">My Orders</a>
+                <a href="partner-apply.html" class="partner-nav-link">Partner with us</a>
                 <a href="cart.html" class="cart-icon active">
                     <i class="fas fa-shopping-cart"></i>
                     <span class="cart-count">0</span>
                 </a>
-                <div class="user-menu">
-                    <button class="user-btn">
-                        <i class="fas fa-user"></i>
-                        <span id="username">Guest</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </button>
-                    <div class="user-dropdown">
-                        <a href="settings.html"><i class="fas fa-cog"></i> Settings</a>
-                        <hr>
-                        <a href="login.html" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
-                    </div>
+                <div class="auth-buttons">
+                    <a href="login.html" class="btn btn-outline">Login</a>
+                    <a href="register.html" class="btn btn-primary">Sign Up</a>
                 </div>
             </div>
-            
-            <button class="menu-toggle">
-                <i class="fas fa-bars"></i>
-            </button>
+            <button class="menu-toggle" aria-label="Toggle menu"><i class="fas fa-bars"></i></button>
         </div>
     </nav>
 
@@ -76,7 +169,7 @@
             <h1>Your Shopping Cart</h1>
             <p>Adjust quantities, confirm delivery details, and keep the order clean before checkout.</p>
         </div>
-        
+
         <div class="cart-container">
             <div class="cart-items" id="cart-items">
                 <div class="cart-empty" id="cart-empty">
@@ -86,7 +179,7 @@
                     <a href="restaurants.html" class="btn btn-primary">Browse Restaurants</a>
                 </div>
             </div>
-            
+
             <div class="order-summary checkout-card">
                 <div class="checkout-card-head">
                     <span class="checkout-kicker">Checkout</span>
@@ -97,14 +190,14 @@
                 <div class="checkout-stat-strip">
                     <div>
                         <span>Delivery</span>
-                        <strong id="delivery-time">25-35 minutes</strong>
+                        <strong id="delivery-time">25–35 minutes</strong>
                     </div>
                     <div>
                         <span>Payment</span>
                         <strong>Secure</strong>
                     </div>
                 </div>
-                
+
                 <div class="summary-details checkout-summary-details">
                     <div class="summary-row">
                         <span>Subtotal</span>
@@ -123,26 +216,24 @@
                         <span id="total">Tk 0.00</span>
                     </div>
                 </div>
-                
+
                 <div class="delivery-info checkout-delivery-note">
                     <h4><i class="fas fa-clock"></i> Timing Window</h4>
                     <p>Freshly prepared and routed as fast as possible.</p>
                 </div>
-                
+
                 <div class="promo-code checkout-promo">
                     <input type="text" id="promo-code" placeholder="Promo Code">
                     <button class="btn btn-outline" id="apply-promo">Apply</button>
                 </div>
-                
+
                 <div class="checkout-buttons">
                     <button class="btn btn-primary btn-large" id="checkout-btn">
                         <i class="fas fa-lock"></i> Proceed to Checkout
                     </button>
-                    <a href="restaurants.html" class="btn btn-outline btn-large">
-                        Continue Shopping
-                    </a>
+                    <a href="restaurants.html" class="btn btn-outline btn-large">Continue Shopping</a>
                 </div>
-                
+
                 <div class="payment-methods checkout-payment-shell">
                     <p><i class="fas fa-shield-alt"></i> Secure payment methods</p>
                     <div class="payment-icons">
@@ -157,16 +248,13 @@
         </div>
     </div>
 
+    <!-- Checkout Modal -->
     <div class="modal" id="checkout-modal">
         <div class="co-shell">
-
-            <!-- Header -->
             <div class="co-header">
                 <span class="co-title">Checkout</span>
                 <button class="co-close modal-close">&times;</button>
             </div>
-
-            <!-- Step bar -->
             <div class="co-stepbar checkout-steps">
                 <div class="co-stepitem step active" data-step="1">
                     <div class="co-stepnum"><span>1</span></div>
@@ -183,12 +271,8 @@
                     <span class="co-steplabel">Confirm</span>
                 </div>
             </div>
-
-            <!-- Body -->
             <div class="co-body">
                 <form id="checkout-form">
-
-                    <!-- Step 1: Delivery -->
                     <div class="checkout-step active" id="step-1">
                         <div class="co-row">
                             <div class="co-field">
@@ -202,15 +286,13 @@
                         </div>
                         <div class="co-field">
                             <label for="delivery-address">Delivery Address</label>
-                            <input type="text" id="delivery-address" placeholder="Street, area, apt / floor..." required>
+                            <input type="text" id="delivery-address" placeholder="Street, area, apt / floor…" required>
                         </div>
                         <div class="co-field">
                             <label for="delivery-instructions">Notes <span class="co-opt">optional</span></label>
-                            <textarea id="delivery-instructions" rows="2" placeholder="Landmark, gate code, any instructions..."></textarea>
+                            <textarea id="delivery-instructions" rows="2" placeholder="Landmark, gate code, any instructions…"></textarea>
                         </div>
                     </div>
-
-                    <!-- Step 2: Payment -->
                     <div class="checkout-step" id="step-2">
                         <p class="co-hint">Select a payment method</p>
                         <div class="co-paylist">
@@ -251,8 +333,6 @@
                             </div>
                         </div>
                     </div>
-
-                    <!-- Step 3: Confirmation -->
                     <div class="checkout-step" id="step-3">
                         <div class="co-confirmed">
                             <div class="co-checkicon confirmation-icon">
@@ -271,11 +351,8 @@
                             </div>
                         </div>
                     </div>
-
                 </form>
             </div>
-
-            <!-- Footer -->
             <div class="co-footer">
                 <button class="co-btn-ghost" id="prev-step">Previous</button>
                 <div class="co-footer-right">
@@ -284,7 +361,6 @@
                     <a href="index.html" class="co-btn-primary" id="back-to-home" style="display:none">Back to Home</a>
                 </div>
             </div>
-
         </div>
     </div>
 
@@ -300,19 +376,12 @@
     <script src="../assets/js/cart.js"></script>
     <script src="../assets/js/api.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            checkLoginStatus();
-            loadCartItems();
-            updateCartCount();
-            setupCheckoutModal();
-        });
+    document.addEventListener('DOMContentLoaded', function() {
+        checkLoginStatus();
+        loadCartItems();
+        updateCartCount();
+        setupCheckoutModal();
+    });
     </script>
 </body>
 </html>
-
-
-
-
-
-
-

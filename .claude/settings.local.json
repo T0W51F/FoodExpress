@@ -9,7 +9,9 @@
       "WebFetch(domain:pathao.com)",
       "WebFetch(domain:hungrynaki.com)",
       "WebFetch(domain:www.chaldal.com)",
-      "WebFetch(domain:www.khaabo.com)"
+      "WebFetch(domain:www.khaabo.com)",
+      "Bash(python \"X:\\\\FDP\\\\.claude\\\\skills\\\\ui-ux-pro-max\\\\scripts\\\\search.py\" \"sidebar navigation tabs dashboard admin\" --domain ux)",
+      "Bash(python \"X:\\\\FDP\\\\.claude\\\\skills\\\\ui-ux-pro-max\\\\scripts\\\\search.py\" \"dashboard admin panel\" --stack html-tailwind)"
     ]
   }
 }

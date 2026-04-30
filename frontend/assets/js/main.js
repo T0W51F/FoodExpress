@@ -584,6 +584,26 @@ function initHeroSearch() {
     window.addEventListener('resize', positionDropdown, { passive: true });
 }
 
+let _animObserver = null;
+
+function initScrollAnimations() {
+    _animObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                _animObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('[data-animate]').forEach(el => _animObserver.observe(el));
+}
+
+function observeNewAnimations(container) {
+    if (!_animObserver) return;
+    container.querySelectorAll('[data-animate]').forEach(el => _animObserver.observe(el));
+}
+
 // Load Featured Restaurants
 async function loadFeaturedRestaurants() {
     try {
@@ -592,25 +612,27 @@ async function loadFeaturedRestaurants() {
         const featured = (data.results || []).filter(r => r.featured).slice(0, 3);
 
         DOM.featuredRestaurants.innerHTML = featured.map(restaurant => `
-            <div class="restaurant-card" data-id="${restaurant.id}">
-                <div class="restaurant-image">
-                    <img src="../assets/images/foods/${restaurant.image}" alt="${restaurant.name}">
-                    ${restaurant.featured ? '<div class="restaurant-badge">Featured</div>' : ''}
-                    ${!restaurant.is_open ? '<div class="restaurant-closed">Closed</div>' : ''}
-                </div>
-                <div class="restaurant-info">
-                    <div class="restaurant-header">
-                        <div class="restaurant-copy">
-                            <div class="restaurant-meta">${restaurant.cuisine}</div>
-                            <h3 class="restaurant-name">${restaurant.name}</h3>
-                            <p class="restaurant-summary">Fast comfort food with polished delivery details and a focused first menu.</p>
-                        </div>
-                        <div class="restaurant-rating"><i class="fas fa-star"></i><span>${restaurant.rating}</span></div>
+            <div class="card-glow" data-animate>
+                <div class="restaurant-card" data-id="${restaurant.id}">
+                    <div class="restaurant-image">
+                        <img src="../assets/images/foods/${restaurant.image}" alt="${restaurant.name}">
+                        ${restaurant.featured ? '<div class="restaurant-badge">Featured</div>' : ''}
+                        ${!restaurant.is_open ? '<div class="restaurant-closed">Closed</div>' : ''}
                     </div>
-                    <div class="restaurant-details">
-                        <div class="restaurant-detail"><i class="fas fa-clock"></i><span>${restaurant.delivery_time}</span></div>
-                        <div class="restaurant-detail"><i class="fas fa-truck"></i><span>Tk ${restaurant.delivery_fee} delivery</span></div>
-                        <div class="restaurant-detail"><i class="fas fa-shopping-bag"></i><span>Tk ${restaurant.min_order} min. order</span></div>
+                    <div class="restaurant-info">
+                        <div class="restaurant-header">
+                            <div class="restaurant-copy">
+                                <div class="restaurant-meta">${restaurant.cuisine}</div>
+                                <h3 class="restaurant-name">${restaurant.name}</h3>
+                                <p class="restaurant-summary">Fast comfort food with polished delivery details and a focused first menu.</p>
+                            </div>
+                            <div class="restaurant-rating"><i class="fas fa-star"></i><span>${restaurant.rating}</span></div>
+                        </div>
+                        <div class="restaurant-details">
+                            <div class="restaurant-detail"><i class="fas fa-clock"></i><span>${restaurant.delivery_time}</span></div>
+                            <div class="restaurant-detail"><i class="fas fa-truck"></i><span>Tk ${restaurant.delivery_fee} delivery</span></div>
+                            <div class="restaurant-detail"><i class="fas fa-shopping-bag"></i><span>Tk ${restaurant.min_order} min. order</span></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -622,6 +644,7 @@ async function loadFeaturedRestaurants() {
                 window.location.href = `menu.html?restaurant_id=${card.dataset.id}`;
             });
         });
+        observeNewAnimations(DOM.featuredRestaurants);
     } catch (error) {
         console.error('Error loading featured restaurants:', error);
     }
@@ -635,17 +658,20 @@ async function loadPopularFoods() {
         const popular = (data.results || []).slice(0, 6);
 
         DOM.popularFoods.innerHTML = popular.map(food => `
-            <div class="food-card" data-id="${food.id}">
-                <div class="food-image"><img src="../assets/images/foods/${food.image}" alt="${food.name}"></div>
-                <div class="food-info">
-                    <div class="food-header"><h3 class="food-name">${food.name}</h3><div class="food-price">Tk ${food.price}</div></div>
-                    <p class="food-description">${food.description}</p>
-                    <div class="food-tags">${food.vegetarian ? '<span class="food-tag vegetarian">Vegetarian</span>' : ''}</div>
-                    <div class="food-rating"><i class="fas fa-star"></i><span>${food.rating}</span></div>
-                    <button class="btn btn-primary add-to-cart-btn" data-id="${food.id}"><i class="fas fa-plus"></i> Add to Cart</button>
+            <div class="card-glow" data-animate>
+                <div class="food-card" data-id="${food.id}">
+                    <div class="food-image"><img src="../assets/images/foods/${food.image}" alt="${food.name}"></div>
+                    <div class="food-info">
+                        <div class="food-header"><h3 class="food-name">${food.name}</h3><div class="food-price">Tk ${food.price}</div></div>
+                        <p class="food-description">${food.description}</p>
+                        <div class="food-tags">${food.vegetarian ? '<span class="food-tag vegetarian">Vegetarian</span>' : ''}</div>
+                        <div class="food-rating"><i class="fas fa-star"></i><span>${food.rating}</span></div>
+                        <button class="btn btn-primary add-to-cart-btn" data-id="${food.id}"><i class="fas fa-plus"></i> Add to Cart</button>
+                    </div>
                 </div>
             </div>
         `).join('');
+        observeNewAnimations(DOM.popularFoods);
     } catch (error) {
         console.error('Error loading popular foods:', error);
     }
@@ -711,6 +737,7 @@ function displayRestaurants(restaurants) {
 
     if (DOM.noResults) DOM.noResults.style.display = 'none';
     DOM.restaurantsList.innerHTML = restaurants.map(restaurant => `
+        <div class="card-glow">
         <article class="restaurant-card" data-id="${restaurant.id}">
             <div class="restaurant-image">
                 <img src="../assets/images/foods/${restaurant.image}" alt="${restaurant.name}">
@@ -739,6 +766,7 @@ function displayRestaurants(restaurants) {
                 </div>
             </div>
         </article>
+        </div>
     `).join('');
 
     document.querySelectorAll('.restaurant-card').forEach(card => {
