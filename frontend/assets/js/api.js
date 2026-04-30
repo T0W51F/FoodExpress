@@ -1,6 +1,7 @@
 // API Configuration
+const isLocal = location.hostname === 'localhost' || location.hostname === '127.0.0.1';
 const API_CONFIG = {
-    BASE_URL: 'http://localhost:5000/api',
+    BASE_URL: isLocal ? 'http://localhost:5000/api' : 'https://foodexpress-f7j4.onrender.com/api',
     TIMEOUT: 10000,
     HEADERS: {
         'Content-Type': 'application/json',
