@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu - FoodExpress</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/responsive.css">
+    <link rel="stylesheet" href="../assets/css/add-to-cart.css?v=20260331-2235">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/svg+xml" href="../assets/images/favicon.svg">
+    <style>
+        body { font-family: 'Inter', -apple-system, sans-serif; }
+        h1, h2, h3, h4, h5, h6 { font-family: 'Space Grotesk', sans-serif; }
+    </style>
+</head>
+<body class="site-dark">
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="logo home-logo">
+                <span class="logo-mark" aria-hidden="true">
+                    <i class="fas fa-utensils"></i>
+                </span>
+                <span class="logo-lockup">
+                    <span class="logo-wordmark"><span class="food">Food</span><span class="express">Express</span></span>
+                </span>
+            </a>
+            
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="restaurants.html">Restaurants</a>
+                <a href="orders.html">My Orders</a>
+                <a href="partner-apply.html" class="partner-nav-link">Partner with us</a>
+                <a href="cart.html" class="cart-icon">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count">0</span>
+                </a>
+                <div class="auth-buttons">
+                    <a href="login.html" class="btn btn-outline">Login</a>
+                    <a href="register.html" class="btn btn-primary">Sign Up</a>
+                </div>
+            </div>
+            <button class="menu-toggle" aria-label="Toggle menu"><i class="fas fa-bars"></i></button>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="restaurant-header" id="restaurant-header">
+            <div class="loading">Loading restaurant info...</div>
+        </div>
+        
+        <div class="menu-container">
+            <div class="menu-sidebar" id="menu-categories">
+                <div class="category-item active" data-category="all">All Items</div>
+            </div>
+            
+            <div class="menu-items" id="menu-items">
+                <div class="loading">Loading menu...</div>
+            </div>
+        </div>
+        
+        <div class="mobile-cart-summary">
+            <div class="cart-total">
+                <span>Cart Total:</span>
+                <strong id="mobile-cart-total">Tk 0.00</strong>
+            </div>
+            <a href="cart.html" class="btn btn-primary">
+                View Cart (<span id="mobile-cart-count">0</span>)
+            </a>
+        </div>
+    </div>
+
+    <div class="modal add-to-cart-modal" id="add-to-cart-modal">
+        <div class="modal-content add-to-cart-dialog">
+            <div class="modal-header add-to-cart-header">
+                <div>
+                    <span class="add-to-cart-kicker">Customize Item</span>
+                    <h3 id="modal-item-name">Item Name</h3>
+                </div>
+                <button class="modal-close">&times;</button>
+            </div>
+            
+            <div class="modal-body add-to-cart-body">
+                <div class="modal-item-info add-to-cart-item-info">
+                    <p id="modal-item-description">Item description...</p>
+                    <div class="modal-price" id="modal-item-price">Tk 0.00</div>
+                </div>
+                
+                <div class="addons-section add-to-cart-section">
+                    <div class="add-to-cart-section-head">
+                        <h4>Add-ons</h4>
+                        <span>Optional</span>
+                    </div>
+                    <div id="addons-list" class="addons-list">
+                    </div>
+                </div>
+                
+                <div class="special-instructions add-to-cart-section">
+                    <div class="add-to-cart-section-head">
+                        <h4>Special Instructions</h4>
+                        <span>Kitchen note</span>
+                    </div>
+                    <label for="instructions" class="sr-only">Special Instructions</label>
+                    <textarea id="instructions" placeholder="Less spice, no onions, extra sauce, doorstep drop-off..."></textarea>
+                </div>
+                
+                <div class="quantity-row">
+                    <div>
+                        <span class="quantity-label">Quantity</span>
+                        <p>Adjust how many servings you want.</p>
+                    </div>
+                    <div class="quantity-selector">
+                        <button class="quantity-btn" id="decrease-qty" type="button">-</button>
+                        <input type="number" id="item-quantity" value="1" min="1" max="10">
+                        <button class="quantity-btn" id="increase-qty" type="button">+</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal-footer add-to-cart-footer">
+                <div class="modal-total">
+                    <span>Total</span>
+                    <strong id="modal-total-price">Tk 0.00</strong>
+                </div>
+                <button class="btn btn-primary" id="add-to-cart-btn">Add to Cart</button>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2026 FoodExpress. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../assets/js/main.js"></script>
+    <script src="../assets/js/api.js"></script>
+    <script src="../assets/js/cart.js"></script>
+    <script>
+        let currentRestaurantId = null;
+        let currentItem = null;
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            checkLoginStatus();
+            const urlParams = new URLSearchParams(window.location.search);
+            currentRestaurantId = urlParams.get('restaurant_id') || 1;
+            loadRestaurantInfo(currentRestaurantId);
+            loadMenuItems(currentRestaurantId);
+            updateCartCount();
+        });
+    </script>
+</body>
+</html>
+
+
+
+
+

@@ -3,13 +3,824 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Super Admin Dashboard - FoodExpress</title>
-    <link rel="stylesheet" href="../assets/css/style.css">
-    <link rel="stylesheet" href="../assets/css/superadmin.css">
+    <title>Super Admin — FoodExpress</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="icon" type="image/svg+xml" href="../assets/images/favicon.svg">
+    <style>
+/* =============================================
+   RESET + VARIABLES
+   ============================================= */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+    --bg:      #04050a;
+    --s1:      #0c0f15;
+    --s2:      #111620;
+    --b0:      rgba(255,255,255,0.05);
+    --b1:      rgba(255,255,255,0.09);
+    --b2:      rgba(255,255,255,0.14);
+    --b3:      rgba(255,255,255,0.20);
+    --px:      #e85c2c;
+    --pd:      #c94d20;
+    --pl:      #ff7a4d;
+    --pg:      rgba(232,92,44,0.12);
+    --t0:      #f0ebe6;
+    --t1:      rgba(240,235,230,0.66);
+    --t2:      rgba(240,235,230,0.38);
+    --t3:      rgba(240,235,230,0.22);
+    --ok:      #22c55e;
+    --warn:    #f59e0b;
+    --err:     #ef4444;
+    --info:    #60a5fa;
+    --gold:    #fdcb6e;
+    --r:       16px;
+    --rsm:     12px;
+    --rxs:     8px;
+    --hh:      66px;
+    --tr:      all 0.22s cubic-bezier(0.4,0,0.2,1);
+    --sh:      0 8px 28px rgba(0,0,0,0.36);
+    --shd:     0 20px 56px rgba(0,0,0,0.52);
+}
+html{scroll-behavior:smooth;font-size:16px}
+body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var(--t0);line-height:1.6;min-height:100vh;-webkit-font-smoothing:antialiased}
+a{text-decoration:none;color:inherit}
+img{max-width:100%;display:block}
+button{font-family:inherit;cursor:pointer;border:none;background:none}
+h1,h2,h3,h4,h5,h6{font-family:'Space Grotesk',sans-serif;font-weight:700;line-height:1.25;letter-spacing:-0.015em}
+h1{font-size:1.55rem}h2{font-size:1.25rem}h3{font-size:1.05rem}h4{font-size:0.9rem}
+.hidden{display:none !important}
+ul{list-style:none;padding:0;margin:0}
+
+/* =============================================
+   PAGE
+   ============================================= */
+.superadmin-page{
+    min-height:100vh;
+    overflow-x:hidden;
+    background:var(--bg);
+    background-image:
+        radial-gradient(ellipse at 12% 8%, rgba(232,92,44,0.08) 0%, transparent 36%),
+        radial-gradient(ellipse at 88% 85%, rgba(232,92,44,0.05) 0%, transparent 28%),
+        radial-gradient(ellipse at 55% 50%, rgba(96,165,250,0.03) 0%, transparent 40%);
+}
+
+/* =============================================
+   HEADER
+   ============================================= */
+.sa-header{
+    position:sticky;top:0;z-index:200;
+    height:var(--hh);
+    background:rgba(6,8,14,0.86);
+    backdrop-filter:blur(28px) saturate(180%);
+    -webkit-backdrop-filter:blur(28px) saturate(180%);
+    border-bottom:1px solid var(--b1);
+    box-shadow:0 1px 0 rgba(255,255,255,0.03),0 4px 24px rgba(0,0,0,0.28);
+}
+.sa-header-inner{
+    display:flex;align-items:center;justify-content:space-between;
+    height:100%;padding:0 1.75rem;
+    max-width:1440px;margin:0 auto;
+    gap:1rem;
+}
+.sa-header-left{display:flex;align-items:center;gap:1rem;min-width:0}
+.sa-logo{
+    display:inline-flex;align-items:center;gap:8px;
+    font-family:'Space Grotesk',sans-serif;font-size:1.1rem;font-weight:800;letter-spacing:-0.025em;
+    flex-shrink:0;padding:5px 12px 5px 8px;
+    border-radius:999px;border:1px solid var(--b1);
+    background:rgba(255,255,255,0.03);transition:var(--tr);
+}
+.sa-logo:hover{background:rgba(255,255,255,0.07);border-color:var(--b2)}
+.sa-logo i{color:var(--px);font-size:0.9rem;width:28px;height:28px;display:inline-flex;align-items:center;justify-content:center;background:var(--pg);border-radius:8px}
+.sa-logo .food{color:var(--t0)}.sa-logo .express{color:var(--px)}
+.sa-header-sep{width:1px;height:28px;background:var(--b2);flex-shrink:0}
+.sa-title-block{display:flex;align-items:center;gap:10px;min-width:0}
+.sa-title-block h1{font-size:1rem;font-weight:700;color:var(--t0);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sa-role-badge{
+    display:inline-flex;align-items:center;gap:5px;
+    font-size:0.68rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;
+    color:var(--gold);background:rgba(253,203,110,0.12);
+    border:1px solid rgba(253,203,110,0.22);
+    padding:3px 9px;border-radius:999px;white-space:nowrap;
+}
+.sa-header-right{display:flex;align-items:center;gap:8px;flex-shrink:0}
+
+/* =============================================
+   BUTTONS
+   ============================================= */
+.btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:7px;
+    padding:9px 20px;border-radius:999px;
+    font-size:0.875rem;font-weight:600;cursor:pointer;
+    transition:var(--tr);white-space:nowrap;border:none;
+    font-family:inherit;line-height:1;
+}
+.btn-primary{background:linear-gradient(135deg,var(--px),var(--pd));color:#fff;box-shadow:0 3px 14px rgba(232,92,44,0.28)}
+.btn-primary:hover{background:linear-gradient(135deg,var(--pl),var(--px));box-shadow:0 5px 22px rgba(232,92,44,0.42);transform:translateY(-1px)}
+.btn-outline{background:rgba(255,255,255,0.04);color:var(--t1);border:1.5px solid var(--b2)}
+.btn-outline:hover{background:rgba(255,255,255,0.08);border-color:rgba(232,92,44,0.32);color:var(--pl)}
+.btn-success{background:rgba(34,197,94,0.12);color:#86efac;border:1.5px solid rgba(34,197,94,0.24)}
+.btn-success:hover{background:rgba(34,197,94,0.24);border-color:rgba(34,197,94,0.44)}
+.btn-danger{background:rgba(239,68,68,0.12);color:#fca5a5;border:1.5px solid rgba(239,68,68,0.24)}
+.btn-danger:hover{background:rgba(239,68,68,0.24);border-color:rgba(239,68,68,0.44)}
+.btn-warning{background:rgba(245,158,11,0.12);color:#fcd34d;border:1.5px solid rgba(245,158,11,0.24)}
+.btn-warning:hover{background:rgba(245,158,11,0.24);border-color:rgba(245,158,11,0.44)}
+.btn-sm{padding:5px 13px;font-size:0.78rem;gap:5px}
+.btn:disabled{opacity:0.45;cursor:not-allowed;transform:none !important;pointer-events:none}
+.sa-logout-btn{}
+
+/* =============================================
+   LAYOUT
+   ============================================= */
+.sa-layout{
+    max-width:1440px;margin:0 auto;
+    padding:2rem 1.75rem;
+}
+
+/* =============================================
+   STAT CARDS
+   ============================================= */
+.sa-stats-row{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:1.125rem;
+    margin-bottom:2rem;
+}
+.sa-stat-card{
+    background:linear-gradient(145deg,rgba(14,18,25,0.94),rgba(8,11,16,0.88));
+    border:1px solid var(--b1);border-radius:var(--r);
+    padding:1.25rem 1.5rem;
+    display:flex;align-items:center;gap:1rem;
+    box-shadow:var(--sh);
+    backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+    transition:border-color 0.22s,transform 0.22s;
+    position:relative;overflow:hidden;cursor:default;
+}
+.sa-stat-card:hover{border-color:var(--b2);transform:translateY(-2px)}
+.sa-stat-icon{
+    width:46px;height:46px;border-radius:12px;flex-shrink:0;
+    display:flex;align-items:center;justify-content:center;
+    background:var(--pg);
+}
+.sa-stat-icon i{font-size:1.1rem;color:var(--px)}
+.pending-icon{background:rgba(253,203,110,0.12)}.pending-icon i{color:var(--gold)}
+.restricted-icon{background:rgba(239,68,68,0.12)}.restricted-icon i{color:#fca5a5}
+.approved-icon{background:rgba(34,197,94,0.12)}.approved-icon i{color:#86efac}
+.sa-stat-info{display:flex;flex-direction:column}
+.sa-stat-num{font-size:1.75rem;font-weight:800;color:var(--t0);line-height:1;font-family:'Space Grotesk',sans-serif}
+.sa-stat-label{font-size:0.76rem;color:var(--t2);margin-top:0.28rem;font-weight:500;text-transform:uppercase;letter-spacing:0.04em}
+
+/* =============================================
+   TABS
+   ============================================= */
+.sa-tabs{
+    display:flex;gap:2px;
+    margin-bottom:1.75rem;
+    border-bottom:1px solid var(--b1);
+    overflow-x:auto;
+    scrollbar-width:none;
+}
+.sa-tabs::-webkit-scrollbar{display:none}
+.sa-tab-btn{
+    padding:10px 18px;
+    background:none;border:none;
+    color:var(--t2);font-size:0.875rem;font-weight:500;cursor:pointer;
+    border-bottom:2px solid transparent;
+    margin-bottom:-1px;
+    transition:color 0.18s,border-color 0.18s;
+    display:flex;align-items:center;gap:7px;
+    white-space:nowrap;flex-shrink:0;
+}
+.sa-tab-btn i{font-size:0.82rem}
+.sa-tab-btn:hover{color:var(--t1)}
+.sa-tab-btn.active{color:var(--pl);border-bottom-color:var(--px);font-weight:600}
+
+/* =============================================
+   TOOLBAR
+   ============================================= */
+.sa-tab-toolbar{
+    display:flex;align-items:center;justify-content:space-between;
+    margin-bottom:1.5rem;gap:1rem;flex-wrap:wrap;
+}
+.sa-filter-btns{display:flex;gap:6px;flex-wrap:wrap}
+.sa-filter-btn{
+    padding:5px 14px;
+    background:rgba(255,255,255,0.04);
+    border:1px solid var(--b1);border-radius:999px;
+    color:var(--t2);font-size:0.835rem;font-weight:500;cursor:pointer;
+    transition:var(--tr);
+}
+.sa-filter-btn:hover{border-color:var(--px);color:var(--pl)}
+.sa-filter-btn.active{background:var(--pg);border-color:rgba(232,92,44,0.32);color:var(--pl);font-weight:600}
+.sa-toolbar-note{font-size:0.855rem;color:var(--t2);margin:0}
+
+/* =============================================
+   LOADING / EMPTY / STATES
+   ============================================= */
+.sa-loading{
+    display:flex;align-items:center;justify-content:center;gap:0.75rem;
+    padding:4rem 2rem;color:var(--t2);font-size:0.875rem;
+}
+.sa-spinner{
+    width:26px;height:26px;
+    border:2.5px solid var(--b2);border-top-color:var(--px);
+    border-radius:50%;animation:spin 0.7s linear infinite;flex-shrink:0;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+.sa-empty{
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    padding:4.5rem 2rem;text-align:center;color:var(--t2);gap:0.75rem;
+}
+.sa-empty i{font-size:2.8rem;color:var(--t3)}
+.sa-empty h3{color:var(--t1);font-size:1.05rem}
+.sa-empty p{font-size:0.855rem;color:var(--t2)}
+
+/* Tab animation */
+.sa-tab{animation:fadeUp 0.22s cubic-bezier(0.4,0,0.2,1)}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@media(prefers-reduced-motion:reduce){.sa-tab{animation:none}}
+
+/* =============================================
+   APPLICATION CARDS (JS-rendered)
+   ============================================= */
+.sa-applications-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(380px,1fr));
+    gap:1.25rem;
+}
+.sa-app-card{
+    background:linear-gradient(160deg,rgba(14,18,25,0.94),rgba(8,11,16,0.88));
+    border:1px solid var(--b1);border-radius:var(--r);
+    padding:1.5rem;
+    box-shadow:var(--sh);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+    transition:border-color 0.22s,transform 0.22s,box-shadow 0.22s;
+}
+.sa-app-card:hover{border-color:var(--b2);transform:translateY(-2px);box-shadow:var(--shd)}
+.sa-app-card-header{
+    display:flex;align-items:flex-start;justify-content:space-between;
+    margin-bottom:1rem;gap:0.75rem;
+}
+.sa-app-business-name{font-size:1.05rem;font-weight:700;color:var(--t0);font-family:'Space Grotesk',sans-serif}
+.sa-app-contact{font-size:0.79rem;color:var(--t2);margin-top:3px}
+.sa-status-badge{
+    display:inline-flex;align-items:center;
+    padding:3px 10px;border-radius:999px;
+    font-size:0.7rem;font-weight:700;text-transform:capitalize;
+    white-space:nowrap;flex-shrink:0;
+}
+.badge-pending {background:rgba(245,158,11,0.14);color:#fcd34d;border:1px solid rgba(245,158,11,0.24)}
+.badge-approved{background:rgba(34,197,94,0.14);color:#86efac;border:1px solid rgba(34,197,94,0.24)}
+.badge-rejected{background:rgba(239,68,68,0.14);color:#fca5a5;border:1px solid rgba(239,68,68,0.24)}
+.sa-app-details{display:grid;gap:5px;margin-bottom:1rem}
+.sa-app-detail{display:flex;align-items:flex-start;gap:7px;font-size:0.835rem;color:var(--t1)}
+.sa-app-detail i{color:var(--t3);font-size:0.78rem;width:14px;margin-top:2px;flex-shrink:0}
+.sa-app-description{
+    font-size:0.82rem;color:var(--t2);
+    margin-bottom:1rem;padding:0.75rem;
+    background:rgba(0,0,0,0.22);border-radius:10px;
+    border-left:2px solid var(--b1);
+    display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;
+}
+.sa-app-rejection-reason{
+    background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.18);
+    border-radius:10px;padding:0.65rem 0.9rem;
+    font-size:0.79rem;color:#fca5a5;
+    margin-bottom:1rem;display:flex;align-items:flex-start;gap:7px;
+}
+.sa-app-date{font-size:0.74rem;color:var(--t3);margin-bottom:1rem}
+.sa-app-actions{display:flex;gap:7px}
+.sa-app-actions .btn{flex:1;padding:8px 12px;font-size:0.82rem;gap:5px;border-radius:10px}
+
+/* =============================================
+   RESTAURANT CARDS (JS-rendered)
+   ============================================= */
+.sa-restaurants-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
+    gap:1.25rem;
+}
+.sa-rest-card{
+    background:linear-gradient(160deg,rgba(14,18,25,0.94),rgba(8,11,16,0.88));
+    border:1px solid var(--b1);border-radius:var(--r);
+    overflow:hidden;
+    box-shadow:var(--sh);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+    transition:border-color 0.22s,transform 0.22s,box-shadow 0.22s;
+}
+.sa-rest-card:hover{border-color:var(--b2);transform:translateY(-2px);box-shadow:var(--shd)}
+.sa-rest-card.restricted{border-color:rgba(239,68,68,0.28);opacity:0.88}
+.sa-rest-card-image{
+    height:120px;background:rgba(0,0,0,0.3);
+    display:flex;align-items:center;justify-content:center;
+    overflow:hidden;position:relative;
+}
+.sa-rest-card-image img{width:100%;height:100%;object-fit:cover;transition:transform 0.36s}
+.sa-rest-card:hover .sa-rest-card-image img{transform:scale(1.04)}
+.sa-rest-card-image .no-image{font-size:2.5rem;color:var(--b2)}
+.sa-rest-restricted-overlay{
+    position:absolute;inset:0;
+    background:rgba(239,68,68,0.26);backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);
+    display:flex;align-items:center;justify-content:center;
+    font-size:0.82rem;font-weight:700;color:#fca5a5;gap:6px;
+}
+.sa-rest-card-body{padding:1.25rem}
+.sa-rest-card-header{
+    display:flex;align-items:flex-start;justify-content:space-between;
+    margin-bottom:0.75rem;gap:0.5rem;
+}
+.sa-rest-name{font-size:1rem;font-weight:700;color:var(--t0);font-family:'Space Grotesk',sans-serif}
+.sa-rest-info{display:grid;gap:5px;margin-bottom:1rem}
+.sa-rest-info-item{display:flex;align-items:center;gap:7px;font-size:0.79rem;color:var(--t2)}
+.sa-rest-info-item i{width:14px;color:var(--t3);text-align:center;font-size:0.76rem}
+.sa-rest-actions{display:flex;gap:6px}
+.sa-rest-actions .btn{flex:1;padding:7px;font-size:0.79rem;gap:4px;border-radius:10px}
+
+/* =============================================
+   USER CARDS (JS-rendered)
+   ============================================= */
+.sa-user-search{display:flex;align-items:center;gap:7px;flex:1}
+.sa-search-wrap{position:relative;flex:1;max-width:420px}
+.sa-search-wrap i{
+    position:absolute;left:12px;top:50%;transform:translateY(-50%);
+    color:var(--t3);font-size:0.82rem;pointer-events:none;
+}
+.sa-search-wrap input{
+    width:100%;
+    padding:9px 14px 9px 36px;
+    background:rgba(255,255,255,0.05);
+    border:1px solid var(--b1);border-radius:var(--rxs);
+    color:var(--t0);font-size:0.875rem;font-family:inherit;
+    outline:none;transition:border-color 0.2s;
+}
+.sa-search-wrap input:focus{border-color:rgba(232,92,44,0.45);box-shadow:0 0 0 3px rgba(232,92,44,0.1)}
+.sa-search-wrap input::placeholder{color:var(--t3)}
+.sa-users-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(360px,1fr));
+    gap:1.25rem;
+}
+.sa-user-card{
+    background:linear-gradient(160deg,rgba(14,18,25,0.94),rgba(8,11,16,0.88));
+    border:1px solid var(--b1);border-radius:var(--r);
+    padding:1.25rem 1.5rem;
+    box-shadow:var(--sh);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+    transition:border-color 0.22s,transform 0.22s;
+}
+.sa-user-card:hover{border-color:var(--b2);transform:translateY(-2px)}
+.sa-user-card.banned{border-color:rgba(239,68,68,0.28);opacity:0.9}
+.sa-user-card-header{display:flex;align-items:center;gap:12px;margin-bottom:0.85rem}
+.sa-user-avatar{
+    width:42px;height:42px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    font-size:1.05rem;font-weight:800;color:#fff;flex-shrink:0;text-transform:uppercase;
+    font-family:'Space Grotesk',sans-serif;
+}
+.sa-avatar-customer        {background:rgba(37,99,235,0.7)}
+.sa-avatar-admin           {background:rgba(217,119,6,0.7)}
+.sa-avatar-restaurant_admin{background:rgba(5,150,105,0.7)}
+.sa-avatar-superadmin      {background:rgba(124,58,237,0.7)}
+.sa-user-meta{flex:1;min-width:0}
+.sa-user-name{font-size:1rem;font-weight:600;color:var(--t0);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-family:'Space Grotesk',sans-serif}
+.sa-user-email{font-size:0.79rem;color:var(--t2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px}
+.sa-user-badges{display:flex;align-items:center;gap:5px;flex-shrink:0}
+.sa-role-badge-pill{
+    display:inline-flex;padding:2px 9px;border-radius:999px;
+    font-size:0.68rem;font-weight:700;text-transform:capitalize;white-space:nowrap;
+}
+.role-customer         {background:rgba(37,99,235,0.14);color:#93c5fd;border:1px solid rgba(37,99,235,0.24)}
+.role-admin            {background:rgba(217,119,6,0.14);color:#fcd34d;border:1px solid rgba(217,119,6,0.24)}
+.role-restaurant_admin {background:rgba(5,150,105,0.14);color:#6ee7b7;border:1px solid rgba(5,150,105,0.24)}
+.role-superadmin       {background:rgba(124,58,237,0.14);color:#c4b5fd;border:1px solid rgba(124,58,237,0.24)}
+.sa-user-info{display:flex;gap:1rem;margin-bottom:0.85rem;flex-wrap:wrap}
+.sa-user-info-item{display:flex;align-items:center;gap:5px;font-size:0.79rem;color:var(--t2)}
+.sa-user-info-item i{color:var(--t3);font-size:0.74rem;width:12px;text-align:center}
+.sa-user-ban-reason{
+    background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.18);
+    border-radius:10px;padding:8px 12px;
+    font-size:0.79rem;color:#fca5a5;
+    margin-bottom:0.85rem;display:flex;align-items:flex-start;gap:7px;
+}
+.sa-user-ban-reason i{flex-shrink:0;margin-top:2px}
+.sa-user-actions{display:flex;gap:6px;flex-wrap:wrap}
+.sa-user-actions .btn{flex:1;padding:7px 12px;font-size:0.79rem;gap:4px;min-width:88px;border-radius:10px}
+
+/* =============================================
+   ANALYTICS (JS-rendered)
+   ============================================= */
+.an-summary-row{
+    display:grid;grid-template-columns:repeat(3,1fr);
+    gap:1.125rem;margin-bottom:1.75rem;
+}
+.an-summary-card{
+    background:linear-gradient(145deg,rgba(14,18,25,0.94),rgba(8,11,16,0.88));
+    border:1px solid var(--b1);border-radius:var(--r);
+    padding:1.5rem;display:flex;align-items:center;gap:1.25rem;
+    box-shadow:var(--sh);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+    transition:transform 0.22s,border-color 0.22s;position:relative;overflow:hidden;
+}
+.an-summary-card:hover{transform:translateY(-2px);border-color:var(--b2)}
+.an-summary-icon{
+    width:52px;height:52px;border-radius:14px;
+    display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1.25rem;
+}
+.an-summary-icon.orders-icon {background:var(--pg);color:var(--px)}
+.an-summary-icon.revenue-icon{background:rgba(34,197,94,0.12);color:#86efac}
+.an-summary-icon.users-icon  {background:rgba(96,165,250,0.12);color:#93c5fd}
+.an-summary-info{display:flex;flex-direction:column}
+.an-summary-num{font-size:2rem;font-weight:800;color:var(--t0);line-height:1;font-family:'Space Grotesk',sans-serif}
+.an-summary-label{font-size:0.76rem;color:var(--t2);margin-top:0.35rem;text-transform:uppercase;letter-spacing:0.04em;font-weight:500}
+
+.an-panels-row{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+.an-panel{
+    background:linear-gradient(160deg,rgba(14,18,25,0.94),rgba(8,11,16,0.88));
+    border:1px solid var(--b1);border-radius:var(--r);
+    padding:1.5rem;
+    box-shadow:var(--sh);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+}
+.an-panel-header{
+    display:flex;flex-direction:column;gap:3px;
+    margin-bottom:1.5rem;padding-bottom:1rem;
+    border-bottom:1px solid var(--b0);
+}
+.an-panel-header h3{
+    font-size:1rem;font-weight:700;color:var(--t0);margin:0;
+    display:flex;align-items:center;gap:7px;
+}
+.an-panel-header h3 i{color:var(--px);font-size:0.85rem}
+.an-panel-subtitle{font-size:0.76rem;color:var(--t2)}
+
+/* Bar chart */
+.an-bar-chart{display:flex;flex-direction:column;gap:0.85rem}
+.an-bar-row{display:grid;grid-template-columns:5.5rem 1fr 3.5rem;align-items:center;gap:10px}
+.an-bar-label{font-size:0.79rem;color:var(--t1);text-align:right;white-space:nowrap}
+.an-bar-track{background:rgba(0,0,0,0.3);border-radius:999px;height:9px;overflow:hidden}
+.an-bar-fill{height:100%;background:linear-gradient(90deg,var(--px),var(--pl));border-radius:999px;transition:width 0.4s ease;min-width:4px}
+.an-bar-value{font-size:0.79rem;font-weight:700;color:var(--t1);text-align:right}
+
+/* Rank list */
+.an-rank-list{display:flex;flex-direction:column;gap:1rem}
+.an-rank-row{display:grid;grid-template-columns:2rem 1fr 5.5rem;align-items:center;gap:10px}
+.an-rank-position{
+    width:32px;height:32px;border-radius:50%;
+    background:rgba(255,255,255,0.07);color:var(--t2);
+    font-size:0.79rem;font-weight:800;
+    display:flex;align-items:center;justify-content:center;flex-shrink:0;
+    font-family:'Space Grotesk',sans-serif;
+}
+.an-rank-gold  {background:rgba(253,203,110,0.18);color:var(--gold)}
+.an-rank-silver{background:rgba(189,195,199,0.16);color:#c0c7cc}
+.an-rank-bronze{background:rgba(205,127,50,0.16);color:#cd7f32}
+.an-rank-info{display:flex;flex-direction:column;gap:5px;min-width:0}
+.an-rank-name{font-size:0.875rem;font-weight:500;color:var(--t0);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.an-rank-bar-track{background:rgba(0,0,0,0.3);border-radius:999px;height:5px;overflow:hidden}
+.an-rank-bar-fill{height:100%;background:linear-gradient(90deg,var(--ok),#86efac);border-radius:999px;transition:width 0.4s ease;min-width:4px}
+.an-rank-count{font-size:0.79rem;font-weight:700;color:var(--t2);text-align:right;white-space:nowrap}
+.an-empty-note{color:var(--t2);font-size:0.875rem;text-align:center;padding:2rem 0}
+
+/* =============================================
+   AUDIT LOG (JS-rendered)
+   ============================================= */
+.al-table-wrap{
+    width:100%;overflow-x:auto;
+    border-radius:var(--r);border:1px solid var(--b1);
+    background:rgba(255,255,255,0.015);
+    backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+    box-shadow:var(--sh);
+}
+.al-table{width:100%;border-collapse:collapse;font-size:0.875rem}
+.al-table thead th{
+    padding:11px 14px;text-align:left;
+    font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;
+    color:var(--t2);background:rgba(255,255,255,0.025);
+    border-bottom:1px solid var(--b1);white-space:nowrap;
+}
+.al-table tbody tr{border-bottom:1px solid var(--b0);transition:background 0.15s}
+.al-table tbody tr:last-child{border-bottom:none}
+.al-table tbody tr:hover{background:rgba(255,255,255,0.028)}
+.al-table td{padding:11px 14px;vertical-align:middle;color:var(--t1)}
+.al-cell-date{white-space:nowrap;color:var(--t2);font-size:0.79rem}
+.al-actor-name{font-weight:600;color:var(--t0);font-size:0.875rem}
+.al-actor-email{font-size:0.76rem;color:var(--t2);margin-top:2px}
+.al-cell-target{color:var(--t1);font-size:0.81rem;white-space:nowrap}
+.al-cell-note{color:var(--t2);font-size:0.81rem;max-width:260px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.al-action-badge{
+    display:inline-flex;align-items:center;
+    padding:3px 10px;border-radius:999px;
+    font-size:0.72rem;font-weight:700;white-space:nowrap;
+}
+.al-badge-danger {background:rgba(239,68,68,0.14);color:#fca5a5;border:1px solid rgba(239,68,68,0.22)}
+.al-badge-success{background:rgba(34,197,94,0.14);color:#86efac;border:1px solid rgba(34,197,94,0.22)}
+.al-badge-warning{background:rgba(245,158,11,0.14);color:#fcd34d;border:1px solid rgba(245,158,11,0.22)}
+.al-badge-neutral{background:rgba(100,116,139,0.14);color:#94a3b8;border:1px solid rgba(100,116,139,0.22)}
+
+/* =============================================
+   GLOBAL PROMOTIONS (JS-rendered)
+   ============================================= */
+.gp-create-card,.cat-create-card{
+    background:linear-gradient(160deg,rgba(14,18,25,0.92),rgba(8,11,16,0.86));
+    border:1px solid var(--b1);border-radius:var(--r);
+    padding:1.5rem;margin-bottom:0.5rem;
+    box-shadow:var(--sh);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+}
+.gp-create-header,.cat-create-header{margin-bottom:1.25rem}
+.gp-create-header h3,.cat-create-header h3{
+    font-size:1rem;font-weight:700;color:var(--t0);margin:0 0 5px;
+}
+.gp-create-header h3 i,.cat-create-header h3 i{color:var(--px);margin-right:5px}
+.gp-create-header p,.cat-create-header p{font-size:0.82rem;color:var(--t2);margin:0}
+
+.gp-form-grid{
+    display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));
+    gap:1rem;align-items:end;
+}
+.gp-field,.cat-field{display:flex;flex-direction:column;gap:5px}
+.gp-field label,.cat-field label{
+    font-size:0.72rem;font-weight:700;color:var(--t2);
+    text-transform:uppercase;letter-spacing:0.05em;
+}
+.gp-req{color:#fca5a5}
+.gp-opt{color:var(--t3);font-weight:400;text-transform:none;font-size:0.7rem}
+.gp-field input,.gp-field select{
+    background:rgba(255,255,255,0.06);border:1px solid var(--b2);
+    border-radius:var(--rxs);color:var(--t0);
+    padding:8px 11px;font-size:0.875rem;
+    outline:none;transition:border-color 0.18s;width:100%;
+    font-family:inherit;
+}
+.gp-field input:focus,.gp-field select:focus{
+    border-color:rgba(232,92,44,0.5);box-shadow:0 0 0 3px rgba(232,92,44,0.1);
+}
+.gp-field select option{background:#111620;color:var(--t0)}
+.gp-field-submit{justify-content:flex-end}
+
+.gp-table-wrap{
+    overflow-x:auto;border-radius:var(--r);
+    border:1px solid var(--b1);margin-top:0.5rem;
+    background:rgba(255,255,255,0.015);
+    backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+    box-shadow:var(--sh);
+}
+.gp-table{width:100%;border-collapse:collapse;font-size:0.875rem}
+.gp-table thead th{
+    padding:11px 14px;text-align:left;
+    font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;
+    color:var(--t2);background:rgba(255,255,255,0.025);
+    border-bottom:1px solid var(--b1);white-space:nowrap;
+}
+.gp-table tbody tr{border-bottom:1px solid var(--b0);transition:background 0.15s}
+.gp-table tbody tr:last-child{border-bottom:none}
+.gp-table tbody tr:hover{background:rgba(255,255,255,0.028)}
+.gp-table td{padding:11px 14px;color:var(--t1);vertical-align:middle}
+.gp-code-chip{
+    display:inline-block;
+    background:var(--pg);border:1px solid rgba(232,92,44,0.24);
+    color:var(--pl);border-radius:6px;
+    padding:2px 8px;font-family:monospace;
+    font-size:0.84rem;font-weight:700;letter-spacing:0.06em;
+}
+.gp-badge{
+    display:inline-flex;align-items:center;
+    padding:3px 10px;border-radius:999px;
+    font-size:0.68rem;font-weight:700;text-transform:uppercase;
+    letter-spacing:0.05em;white-space:nowrap;
+}
+.gp-badge-active  {background:rgba(34,197,94,0.14);color:#86efac;border:1px solid rgba(34,197,94,0.24)}
+.gp-badge-inactive{background:rgba(100,116,139,0.14);color:#94a3b8;border:1px solid rgba(100,116,139,0.22)}
+.gp-badge-expired {background:rgba(239,68,68,0.12);color:#fca5a5;border:1px solid rgba(239,68,68,0.22)}
+.gp-badge-capped  {background:rgba(245,158,11,0.12);color:#fcd34d;border:1px solid rgba(245,158,11,0.22)}
+.gp-actions{display:flex;gap:6px;align-items:center}
+
+/* =============================================
+   CATEGORIES (JS-rendered)
+   ============================================= */
+.cat-form-row{display:flex;gap:1rem;align-items:flex-end;flex-wrap:wrap}
+.cat-field input{
+    background:rgba(255,255,255,0.06);border:1px solid var(--b2);
+    border-radius:var(--rxs);color:var(--t0);
+    padding:8px 11px;font-size:0.875rem;min-width:260px;
+    outline:none;transition:border-color 0.18s,box-shadow 0.18s;
+    font-family:inherit;
+}
+.cat-field input:focus{border-color:rgba(232,92,44,0.5);box-shadow:0 0 0 3px rgba(232,92,44,0.1)}
+.cat-field-submit{padding-bottom:0}
+
+.cat-table-wrap{
+    overflow-x:auto;border-radius:var(--r);
+    border:1px solid var(--b1);
+    background:rgba(255,255,255,0.015);
+    backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+    box-shadow:var(--sh);
+}
+.cat-table{width:100%;border-collapse:collapse;font-size:0.875rem}
+.cat-table thead th{
+    padding:11px 14px;text-align:left;
+    font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;
+    color:var(--t2);background:rgba(255,255,255,0.025);
+    border-bottom:1px solid var(--b1);white-space:nowrap;
+}
+.cat-table tbody tr{border-bottom:1px solid var(--b0);transition:background 0.15s}
+.cat-table tbody tr:last-child{border-bottom:none}
+.cat-table tbody tr:hover{background:rgba(255,255,255,0.028)}
+.cat-table td{padding:11px 14px;color:var(--t1);vertical-align:middle}
+.cat-cell-name{font-weight:700;color:var(--t0);font-family:'Space Grotesk',sans-serif}
+.cat-cell-count{color:var(--t2);font-size:0.82rem}
+.cat-slug-chip{
+    background:rgba(255,255,255,0.06);border:1px solid var(--b1);
+    border-radius:5px;padding:2px 8px;
+    font-size:0.76rem;color:var(--t2);
+    font-family:'Courier New',monospace;letter-spacing:0.02em;
+}
+.cat-badge{
+    display:inline-flex;align-items:center;
+    padding:3px 10px;border-radius:999px;
+    font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:0.04em;
+}
+.cat-badge-active  {background:rgba(34,197,94,0.14);color:#86efac;border:1px solid rgba(34,197,94,0.24)}
+.cat-badge-inactive{background:rgba(100,116,139,0.14);color:#94a3b8;border:1px solid rgba(100,116,139,0.22)}
+.cat-actions{display:flex;gap:5px;flex-wrap:wrap}
+
+/* =============================================
+   MODALS
+   ============================================= */
+.sa-modal-overlay{
+    position:fixed;inset:0;z-index:500;
+    background:rgba(0,0,0,0.72);
+    backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+    display:flex;align-items:center;justify-content:center;padding:1.5rem;
+}
+.sa-modal{
+    background:linear-gradient(160deg,#0f1318,#0a0d12);
+    border:1px solid var(--b2);border-radius:22px;
+    width:100%;max-width:520px;max-height:90vh;
+    display:flex;flex-direction:column;
+    box-shadow:0 32px 72px rgba(0,0,0,0.65),0 0 0 1px rgba(255,255,255,0.04) inset;
+    overflow:hidden;position:relative;
+}
+.sa-modal-sm{max-width:400px}
+.sa-modal-header{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:1.1rem 1.5rem;border-bottom:1px solid var(--b1);
+    background:rgba(255,255,255,0.02);flex-shrink:0;
+}
+.sa-modal-header h3{font-size:1.05rem;color:var(--t0)}
+.sa-modal-close{
+    width:30px;height:30px;border-radius:8px;
+    background:rgba(255,255,255,0.06);
+    color:var(--t2);cursor:pointer;
+    display:flex;align-items:center;justify-content:center;
+    transition:var(--tr);font-size:0.82rem;
+    border:1px solid var(--b1);
+}
+.sa-modal-close:hover{background:rgba(255,255,255,0.12);color:var(--t0);border-color:var(--b2)}
+.sa-modal-body{
+    padding:1.5rem;overflow-y:auto;flex:1;
+    scrollbar-width:thin;scrollbar-color:var(--b2) transparent;
+}
+.sa-modal-body p{color:var(--t1);font-size:0.9rem}
+.sa-modal-body p strong{color:var(--t0)}
+.sa-modal-body label{display:block;font-size:0.82rem;font-weight:600;color:var(--t1)}
+.sa-modal-body textarea{
+    width:100%;padding:9px 12px;
+    background:rgba(255,255,255,0.06);border:1px solid var(--b2);
+    border-radius:var(--rsm);color:var(--t0);
+    font-size:0.875rem;font-family:inherit;resize:vertical;
+    outline:none;transition:border-color 0.2s;
+    min-height:80px;
+}
+.sa-modal-body textarea:focus{border-color:rgba(232,92,44,0.5);box-shadow:0 0 0 3px rgba(232,92,44,0.1)}
+.sa-modal-body textarea::placeholder{color:var(--t3)}
+.sa-modal-footer{
+    display:flex;align-items:center;justify-content:flex-end;gap:10px;
+    padding:1rem 1.5rem;border-top:1px solid var(--b1);
+    background:rgba(255,255,255,0.02);flex-shrink:0;
+}
+.sa-modal-error{
+    background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.22);
+    color:#fca5a5;padding:9px 13px;border-radius:var(--rsm);
+    font-size:0.82rem;margin-top:0.75rem;
+}
+
+/* Confirm list */
+.sa-confirm-list{padding:0;margin:0.75rem 0 0;display:flex;flex-direction:column;gap:5px}
+.sa-confirm-list li{display:flex;align-items:center;gap:8px;font-size:0.875rem;color:var(--t1)}
+.sa-confirm-list li i{width:14px}
+.sa-confirm-list li .fa-check{color:var(--ok)}
+.sa-confirm-list li .fa-key{color:var(--gold)}
+
+/* Approval result */
+.sa-result-success{text-align:center;margin-bottom:1.25rem}
+.sa-result-success i{font-size:2.5rem;color:var(--ok);margin-bottom:7px;display:block}
+.sa-result-success h4{color:var(--t0);font-size:1rem}
+.sa-credentials-box{
+    background:rgba(0,0,0,0.3);border:1px solid var(--b1);
+    border-radius:var(--rsm);padding:1rem 1.25rem;margin-bottom:1rem;
+}
+.sa-cred-label{
+    font-size:0.72rem;color:var(--t2);
+    text-transform:uppercase;letter-spacing:0.06em;
+    margin-bottom:0.75rem !important;display:block;
+}
+.sa-cred-row{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:7px 0;border-bottom:1px solid var(--b0);
+}
+.sa-cred-row:last-child{border-bottom:none}
+.sa-cred-key{font-size:0.79rem;color:var(--t2)}
+.sa-cred-val{font-size:0.875rem;color:var(--t0);font-family:monospace}
+.sa-password{color:var(--gold);font-weight:700;letter-spacing:0.05em}
+.sa-cred-warning{
+    font-size:0.79rem !important;color:var(--gold) !important;
+    display:flex;align-items:center;gap:6px;
+}
+
+/* Password input */
+.sa-pw-input-wrap{position:relative;margin-top:8px}
+#reset-pw-input{
+    width:100%;padding:9px 38px 9px 12px;
+    background:rgba(255,255,255,0.06);border:1px solid var(--b2);
+    border-radius:var(--rsm);color:var(--t0);
+    font-size:0.875rem;font-family:inherit;
+    outline:none;transition:border-color 0.2s;box-sizing:border-box;
+}
+#reset-pw-input:focus{border-color:rgba(232,92,44,0.5);box-shadow:0 0 0 3px rgba(232,92,44,0.1)}
+#reset-pw-toggle{
+    position:absolute;right:10px;top:50%;transform:translateY(-50%);
+    background:none;border:none;color:var(--t2);cursor:pointer;font-size:0.875rem;
+    transition:color 0.18s;
+}
+#reset-pw-toggle:hover{color:var(--t0)}
+
+/* Form group (modals) */
+.form-group{margin-top:1rem}
+.form-group label{display:block;font-size:0.82rem;font-weight:600;color:var(--t1);margin-bottom:6px}
+.form-group textarea{
+    width:100%;padding:9px 12px;
+    background:rgba(255,255,255,0.06);border:1px solid var(--b2);
+    border-radius:var(--rsm);color:var(--t0);
+    font-size:0.875rem;font-family:inherit;resize:vertical;
+    outline:none;transition:border-color 0.2s;min-height:80px;
+}
+.form-group textarea:focus{border-color:rgba(232,92,44,0.5);box-shadow:0 0 0 3px rgba(232,92,44,0.1)}
+.form-group textarea::placeholder{color:var(--t3)}
+
+/* =============================================
+   TOAST (JS-rendered)
+   ============================================= */
+.sa-toast{
+    position:fixed;bottom:1.5rem;right:1.5rem;
+    background:rgba(12,15,22,0.92);
+    backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+    border:1px solid var(--b2);border-radius:var(--rsm);
+    padding:12px 18px;color:var(--t0);font-size:0.875rem;
+    display:flex;align-items:center;gap:9px;
+    z-index:2000;box-shadow:0 12px 40px rgba(0,0,0,0.55);
+    transform:translateY(0);opacity:1;
+    transition:opacity 0.3s,transform 0.3s;
+}
+.sa-toast.toast-success{border-color:rgba(34,197,94,0.32)}.sa-toast.toast-success i{color:var(--ok)}
+.sa-toast.toast-error{border-color:rgba(239,68,68,0.32)}.sa-toast.toast-error i{color:#fca5a5}
+.sa-toast.fade-out{opacity:0;transform:translateY(6px)}
+
+/* =============================================
+   RESPONSIVE
+   ============================================= */
+@media(max-width:1024px){
+    .sa-stats-row{grid-template-columns:repeat(2,1fr)}
+    .sa-applications-grid{grid-template-columns:1fr}
+    .sa-restaurants-grid{grid-template-columns:1fr 1fr}
+    .an-panels-row{grid-template-columns:1fr}
+    .an-summary-row{grid-template-columns:repeat(3,1fr)}
+    .sa-layout{padding:1.5rem 1.25rem}
+}
+@media(max-width:768px){
+    :root{--hh:62px}
+    .sa-stats-row{grid-template-columns:1fr 1fr}
+    .sa-restaurants-grid{grid-template-columns:1fr}
+    .sa-title-block h1{font-size:0.875rem}
+    .sa-header-sep{display:none}
+    .an-summary-row{grid-template-columns:1fr}
+    .sa-tabs{gap:0}
+    .sa-tab-btn{padding:9px 13px;font-size:0.82rem}
+    .al-cell-note{display:none}
+    .gp-form-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:480px){
+    .sa-stats-row{grid-template-columns:1fr}
+    .sa-users-grid{grid-template-columns:1fr}
+    .sa-applications-grid{grid-template-columns:1fr}
+    .sa-modal{border-radius:16px}
+    .sa-modal-footer{flex-direction:column-reverse}
+    .sa-modal-footer .btn{width:100%;justify-content:center}
+    .gp-form-grid{grid-template-columns:1fr}
+    .al-cell-target,.al-actor-email{display:none}
+    .cat-field input{min-width:100%;width:100%}
+    .cat-form-row{flex-direction:column}
+}
+    </style>
 </head>
-<body class="site-dark superadmin-page">
+<body class="superadmin-page">
 
     <!-- Header -->
     <header class="sa-header">
@@ -19,6 +830,7 @@
                     <i class="fas fa-utensils"></i>
                     <span><span class="food">Food</span><span class="express">Express</span></span>
                 </a>
+                <div class="sa-header-sep"></div>
                 <div class="sa-title-block">
                     <h1>Super Admin Dashboard</h1>
                     <span class="sa-role-badge"><i class="fas fa-crown"></i> <span id="sa-admin-name">Superadmin</span></span>
@@ -104,15 +916,10 @@
                     <i class="fas fa-sync-alt"></i> Refresh
                 </button>
             </div>
-
             <div id="applications-loading" class="sa-loading">
                 <div class="sa-spinner"></div> Loading applications...
             </div>
-
-            <div id="applications-grid" class="sa-applications-grid">
-                <!-- Application cards rendered here -->
-            </div>
-
+            <div id="applications-grid" class="sa-applications-grid"></div>
             <div id="applications-empty" class="sa-empty hidden">
                 <i class="fas fa-file-alt"></i>
                 <h3>No applications found</h3>
@@ -128,15 +935,10 @@
                     <i class="fas fa-sync-alt"></i> Refresh
                 </button>
             </div>
-
             <div id="restaurants-loading" class="sa-loading hidden">
                 <div class="sa-spinner"></div> Loading restaurants...
             </div>
-
-            <div id="restaurants-grid" class="sa-restaurants-grid">
-                <!-- Restaurant cards rendered here -->
-            </div>
-
+            <div id="restaurants-grid" class="sa-restaurants-grid"></div>
             <div id="restaurants-empty" class="sa-empty hidden">
                 <i class="fas fa-store"></i>
                 <h3>No restaurants found</h3>
@@ -146,14 +948,10 @@
 
         <!-- ===== Analytics Tab ===== -->
         <div id="sa-tab-analytics" class="sa-tab hidden">
-
             <div id="analytics-loading" class="sa-loading">
                 <div class="sa-spinner"></div> Loading analytics...
             </div>
-
             <div id="analytics-content" class="hidden">
-
-                <!-- Summary stat cards -->
                 <div class="an-summary-row">
                     <div class="an-summary-card">
                         <div class="an-summary-icon orders-icon"><i class="fas fa-receipt"></i></div>
@@ -163,7 +961,7 @@
                         </div>
                     </div>
                     <div class="an-summary-card">
-                        <div class="an-summary-icon revenue-icon" style="font-size:1.6rem;font-weight:700;line-height:1;">৳</div>
+                        <div class="an-summary-icon revenue-icon" style="font-size:1.5rem;font-weight:800;line-height:1">৳</div>
                         <div class="an-summary-info">
                             <span class="an-summary-num" id="an-total-revenue">—</span>
                             <span class="an-summary-label">Total Revenue</span>
@@ -177,42 +975,28 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- Two-column analytics panels -->
                 <div class="an-panels-row">
-
-                    <!-- User Growth -->
                     <div class="an-panel">
                         <div class="an-panel-header">
                             <h3><i class="fas fa-user-plus"></i> User Growth</h3>
                             <span class="an-panel-subtitle">New signups — last 6 months</span>
                         </div>
-                        <div id="an-user-growth" class="an-bar-chart">
-                            <!-- bars rendered by JS -->
-                        </div>
+                        <div id="an-user-growth" class="an-bar-chart"></div>
                     </div>
-
-                    <!-- Most Popular Restaurants -->
                     <div class="an-panel">
                         <div class="an-panel-header">
                             <h3><i class="fas fa-fire"></i> Most Popular Restaurants</h3>
                             <span class="an-panel-subtitle">Ranked by total order count</span>
                         </div>
-                        <div id="an-popular-restaurants" class="an-rank-list">
-                            <!-- rows rendered by JS -->
-                        </div>
+                        <div id="an-popular-restaurants" class="an-rank-list"></div>
                     </div>
-
                 </div>
             </div>
-
             <div id="analytics-error" class="sa-empty hidden">
                 <i class="fas fa-exclamation-circle"></i>
                 <h3>Failed to load analytics</h3>
                 <p id="analytics-error-msg"></p>
-                <button class="btn btn-outline" onclick="loadAnalytics()">
-                    <i class="fas fa-sync-alt"></i> Retry
-                </button>
+                <button class="btn btn-outline" onclick="loadAnalytics()"><i class="fas fa-sync-alt"></i> Retry</button>
             </div>
         </div>
 
@@ -232,15 +1016,10 @@
                     <i class="fas fa-sync-alt"></i> Refresh
                 </button>
             </div>
-
             <div id="users-loading" class="sa-loading hidden">
                 <div class="sa-spinner"></div> Loading users...
             </div>
-
-            <div id="users-list" class="sa-users-grid">
-                <!-- User cards rendered here -->
-            </div>
-
+            <div id="users-list" class="sa-users-grid"></div>
             <div id="users-empty" class="sa-empty hidden">
                 <i class="fas fa-users"></i>
                 <h3>No users found</h3>
@@ -256,11 +1035,9 @@
                     <i class="fas fa-sync-alt"></i> Refresh
                 </button>
             </div>
-
             <div id="audit-log-loading" class="sa-loading hidden">
                 <div class="sa-spinner"></div> Loading audit log...
             </div>
-
             <div id="audit-log-table-wrap" class="al-table-wrap hidden">
                 <table class="al-table">
                     <thead>
@@ -272,32 +1049,24 @@
                             <th>Note</th>
                         </tr>
                     </thead>
-                    <tbody id="audit-log-tbody">
-                        <!-- rows injected by JS -->
-                    </tbody>
+                    <tbody id="audit-log-tbody"></tbody>
                 </table>
             </div>
-
             <div id="audit-log-empty" class="sa-empty hidden">
                 <i class="fas fa-clipboard-list"></i>
                 <h3>No audit entries yet</h3>
                 <p>Actions taken by superadmins will appear here.</p>
             </div>
-
             <div id="audit-log-error" class="sa-empty hidden">
                 <i class="fas fa-exclamation-circle"></i>
                 <h3>Failed to load audit log</h3>
                 <p id="audit-log-error-msg"></p>
-                <button class="btn btn-outline" onclick="loadAuditLog()">
-                    <i class="fas fa-sync-alt"></i> Retry
-                </button>
+                <button class="btn btn-outline" onclick="loadAuditLog()"><i class="fas fa-sync-alt"></i> Retry</button>
             </div>
         </div>
 
         <!-- ===== Global Promotions Tab ===== -->
         <div id="sa-tab-promotions" class="sa-tab hidden">
-
-            <!-- Create Promo Form -->
             <div class="gp-create-card">
                 <div class="gp-create-header">
                     <h3><i class="fas fa-plus-circle"></i> Create Promo Code</h3>
@@ -340,59 +1109,41 @@
                 <div id="gp-form-error" class="sa-modal-error hidden" style="margin-top:0.75rem"></div>
             </div>
 
-            <!-- Promo List -->
             <div class="sa-tab-toolbar" style="margin-top:1.5rem">
                 <p class="sa-toolbar-note">All platform-wide promo codes. Toggle to activate/deactivate without deleting.</p>
                 <button class="btn btn-outline" onclick="loadGlobalPromos()">
                     <i class="fas fa-sync-alt"></i> Refresh
                 </button>
             </div>
-
             <div id="gp-loading" class="sa-loading hidden">
                 <div class="sa-spinner"></div> Loading promo codes...
             </div>
-
             <div id="gp-table-wrap" class="gp-table-wrap hidden">
                 <table class="gp-table">
                     <thead>
                         <tr>
-                            <th>Code</th>
-                            <th>Type</th>
-                            <th>Value</th>
-                            <th>Min Order</th>
-                            <th>Uses / Cap</th>
-                            <th>Expires</th>
-                            <th>Status</th>
-                            <th>Actions</th>
+                            <th>Code</th><th>Type</th><th>Value</th><th>Min Order</th>
+                            <th>Uses / Cap</th><th>Expires</th><th>Status</th><th>Actions</th>
                         </tr>
                     </thead>
-                    <tbody id="gp-tbody">
-                        <!-- rows injected by JS -->
-                    </tbody>
+                    <tbody id="gp-tbody"></tbody>
                 </table>
             </div>
-
             <div id="gp-empty" class="sa-empty hidden">
                 <i class="fas fa-tag"></i>
                 <h3>No promo codes yet</h3>
                 <p>Create the first platform-wide discount code above.</p>
             </div>
-
             <div id="gp-error" class="sa-empty hidden">
                 <i class="fas fa-exclamation-circle"></i>
                 <h3>Failed to load promo codes</h3>
                 <p id="gp-error-msg"></p>
-                <button class="btn btn-outline" onclick="loadGlobalPromos()">
-                    <i class="fas fa-sync-alt"></i> Retry
-                </button>
+                <button class="btn btn-outline" onclick="loadGlobalPromos()"><i class="fas fa-sync-alt"></i> Retry</button>
             </div>
-
         </div>
 
         <!-- ===== Categories Tab ===== -->
         <div id="sa-tab-categories" class="sa-tab hidden">
-
-            <!-- Create Category Form -->
             <div class="cat-create-card">
                 <div class="cat-create-header">
                     <h3><i class="fas fa-plus-circle"></i> Add Category</h3>
@@ -412,50 +1163,36 @@
                 <div id="cat-form-error" class="sa-modal-error hidden" style="margin-top:0.75rem"></div>
             </div>
 
-            <!-- Category List -->
             <div class="sa-tab-toolbar" style="margin-top:1.5rem">
                 <p class="sa-toolbar-note">All food categories. Inactive categories are hidden from restaurant admins.</p>
                 <button class="btn btn-outline" onclick="loadCategories()">
                     <i class="fas fa-sync-alt"></i> Refresh
                 </button>
             </div>
-
             <div id="cat-loading" class="sa-loading hidden">
                 <div class="sa-spinner"></div> Loading categories...
             </div>
-
             <div id="cat-table-wrap" class="cat-table-wrap hidden">
                 <table class="cat-table">
                     <thead>
                         <tr>
-                            <th>Name</th>
-                            <th>Slug</th>
-                            <th>Foods Using</th>
-                            <th>Status</th>
-                            <th>Actions</th>
+                            <th>Name</th><th>Slug</th><th>Foods Using</th><th>Status</th><th>Actions</th>
                         </tr>
                     </thead>
-                    <tbody id="cat-tbody">
-                        <!-- rows injected by JS -->
-                    </tbody>
+                    <tbody id="cat-tbody"></tbody>
                 </table>
             </div>
-
             <div id="cat-empty" class="sa-empty hidden">
                 <i class="fas fa-layer-group"></i>
                 <h3>No categories yet</h3>
                 <p>Add the first food category above.</p>
             </div>
-
             <div id="cat-error" class="sa-empty hidden">
                 <i class="fas fa-exclamation-circle"></i>
                 <h3>Failed to load categories</h3>
                 <p id="cat-error-msg"></p>
-                <button class="btn btn-outline" onclick="loadCategories()">
-                    <i class="fas fa-sync-alt"></i> Retry
-                </button>
+                <button class="btn btn-outline" onclick="loadCategories()"><i class="fas fa-sync-alt"></i> Retry</button>
             </div>
-
         </div>
 
     </div>
@@ -469,17 +1206,15 @@
             </div>
             <div class="sa-modal-body">
                 <p>Provide a reason for banning this user. They will be immediately locked out.</p>
-                <div class="form-group" style="margin-top:1rem">
+                <div class="form-group">
                     <label for="ban-reason-input">Ban Reason</label>
-                    <textarea id="ban-reason-input" rows="3" placeholder="e.g. Fraudulent activity, policy violation..." style="width:100%;margin-top:0.5rem"></textarea>
+                    <textarea id="ban-reason-input" rows="3" placeholder="e.g. Fraudulent activity, policy violation..."></textarea>
                 </div>
                 <div id="ban-modal-error" class="sa-modal-error hidden"></div>
             </div>
             <div class="sa-modal-footer">
                 <button class="btn btn-outline" id="ban-cancel">Cancel</button>
-                <button class="btn btn-danger" id="ban-confirm">
-                    <i class="fas fa-ban"></i> Confirm Ban
-                </button>
+                <button class="btn btn-danger" id="ban-confirm"><i class="fas fa-ban"></i> Confirm Ban</button>
             </div>
         </div>
     </div>
@@ -493,22 +1228,18 @@
             </div>
             <div class="sa-modal-body">
                 <p>Set a new password for this user (minimum 6 characters).</p>
-                <div class="form-group" style="margin-top:1rem">
+                <div class="form-group">
                     <label for="reset-pw-input">New Password</label>
-                    <div class="sa-pw-input-wrap" style="position:relative;margin-top:0.5rem">
-                        <input type="password" id="reset-pw-input" placeholder="Enter new password" minlength="6" style="width:100%;padding-right:2.5rem">
-                        <button type="button" id="reset-pw-toggle" style="position:absolute;right:0.75rem;top:50%;transform:translateY(-50%);background:none;border:none;color:#64748b;cursor:pointer;font-size:0.9rem">
-                            <i class="fas fa-eye"></i>
-                        </button>
+                    <div class="sa-pw-input-wrap">
+                        <input type="password" id="reset-pw-input" placeholder="Enter new password" minlength="6">
+                        <button type="button" id="reset-pw-toggle"><i class="fas fa-eye"></i></button>
                     </div>
                 </div>
                 <div id="reset-pw-error" class="sa-modal-error hidden"></div>
             </div>
             <div class="sa-modal-footer">
                 <button class="btn btn-outline" id="reset-pw-cancel">Cancel</button>
-                <button class="btn btn-primary" id="reset-pw-confirm">
-                    <i class="fas fa-key"></i> Reset Password
-                </button>
+                <button class="btn btn-primary" id="reset-pw-confirm"><i class="fas fa-key"></i> Reset Password</button>
             </div>
         </div>
     </div>
@@ -522,17 +1253,15 @@
             </div>
             <div class="sa-modal-body">
                 <p>Please provide a reason for rejection. This will be visible to the applicant.</p>
-                <div class="form-group" style="margin-top:1rem">
+                <div class="form-group">
                     <label for="reject-reason">Rejection Reason</label>
-                    <textarea id="reject-reason" rows="3" placeholder="e.g. Location is outside our service area." style="width:100%;margin-top:0.5rem"></textarea>
+                    <textarea id="reject-reason" rows="3" placeholder="e.g. Location is outside our service area."></textarea>
                 </div>
                 <div id="reject-error" class="sa-modal-error hidden"></div>
             </div>
             <div class="sa-modal-footer">
                 <button class="btn btn-outline" id="reject-cancel">Cancel</button>
-                <button class="btn btn-danger" id="reject-confirm">
-                    <i class="fas fa-times-circle"></i> Reject Application
-                </button>
+                <button class="btn btn-danger" id="reject-confirm"><i class="fas fa-times-circle"></i> Reject Application</button>
             </div>
         </div>
     </div>
@@ -551,13 +1280,11 @@
                     <li><i class="fas fa-check"></i> Create a restaurant_admin user account</li>
                     <li><i class="fas fa-key"></i> Generate a temporary password</li>
                 </ul>
-                <p style="color:#64748b;font-size:0.85rem;margin-top:0.75rem">The temporary password will be shown once — share it with the partner.</p>
+                <p style="color:rgba(240,235,230,0.38);font-size:0.82rem;margin-top:0.75rem">The temporary password will be shown once — share it with the partner.</p>
             </div>
             <div class="sa-modal-footer">
                 <button class="btn btn-outline" id="approve-cancel">Cancel</button>
-                <button class="btn btn-success" id="approve-confirm">
-                    <i class="fas fa-check"></i> Approve
-                </button>
+                <button class="btn btn-success" id="approve-confirm"><i class="fas fa-check"></i> Approve</button>
             </div>
         </div>
     </div>
@@ -575,7 +1302,7 @@
                     <h4>Partner account created successfully!</h4>
                 </div>
                 <div class="sa-credentials-box">
-                    <p class="sa-cred-label">Restaurant Admin Login Credentials</p>
+                    <span class="sa-cred-label">Restaurant Admin Login Credentials</span>
                     <div class="sa-cred-row">
                         <span class="sa-cred-key">Email</span>
                         <span class="sa-cred-val" id="result-email"></span>
@@ -612,9 +1339,7 @@
             </div>
             <div class="sa-modal-footer">
                 <button class="btn btn-outline" id="delete-rest-cancel">Cancel</button>
-                <button class="btn btn-danger" id="delete-rest-confirm">
-                    <i class="fas fa-trash"></i> Delete
-                </button>
+                <button class="btn btn-danger" id="delete-rest-confirm"><i class="fas fa-trash"></i> Delete</button>
             </div>
         </div>
     </div>

@@ -3,80 +3,526 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Menu - FoodExpress</title>
-    <link rel="stylesheet" href="../assets/css/style.css">
-    <link rel="stylesheet" href="../assets/css/responsive.css">
+    <title>Menu — FoodExpress</title>
     <link rel="stylesheet" href="../assets/css/add-to-cart.css?v=20260331-2235">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="icon" type="image/svg+xml" href="../assets/images/favicon.svg">
+    <style>
+/* ── Reset ─────────────────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+    --bg:#04050a;
+    --s1:#0d1117;
+    --s2:#131a22;
+    --b0:rgba(255,255,255,0.05);
+    --b1:rgba(255,255,255,0.09);
+    --b2:rgba(255,255,255,0.15);
+    --px:#e85c2c;--pd:#c94d20;--pl:#ff7a4d;
+    --pg:rgba(232,92,44,0.12);
+    --t0:#f0ebe6;
+    --t1:rgba(240,235,230,0.66);
+    --t2:rgba(240,235,230,0.38);
+    --t3:rgba(240,235,230,0.20);
+    --ok:#22c55e;--err:#ef4444;--warn:#f59e0b;
+    --r:24px;--rsm:14px;--rxs:8px;
+    --tr:all 0.22s cubic-bezier(0.4,0,0.2,1);
+    --sh:0 8px 28px rgba(0,0,0,0.36);
+    --shd:0 20px 56px rgba(0,0,0,0.52);
+    --nav-h:68px;
+    --cat-h:54px;
+}
+html{scroll-behavior:smooth}
+body{
+    font-family:'Inter',-apple-system,sans-serif;
+    background:var(--bg);color:var(--t0);
+    line-height:1.6;min-height:100vh;
+    -webkit-font-smoothing:antialiased;
+    background-image:
+        radial-gradient(ellipse at 10% 0%,rgba(232,92,44,0.07) 0%,transparent 35%),
+        radial-gradient(ellipse at 88% 90%,rgba(232,92,44,0.04) 0%,transparent 28%);
+}
+a{text-decoration:none;color:inherit}
+img{max-width:100%;display:block}
+button{font-family:inherit;cursor:pointer;border:none;background:none}
+h1,h2,h3,h4,h5,h6{line-height:1.2;letter-spacing:-0.01em}
+.hidden{display:none!important}
+
+/* ── Buttons ────────────────────────────────────────────── */
+.btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:7px;
+    padding:10px 22px;border-radius:999px;
+    font-size:0.875rem;font-weight:600;cursor:pointer;
+    transition:var(--tr);white-space:nowrap;border:none;font-family:'Space Grotesk',sans-serif;
+}
+.btn-primary{
+    background:linear-gradient(135deg,var(--px),var(--pd));
+    color:#fff;box-shadow:0 3px 14px rgba(232,92,44,0.28);
+}
+.btn-primary:hover{
+    background:linear-gradient(135deg,var(--pl),var(--px));
+    box-shadow:0 5px 22px rgba(232,92,44,0.42);transform:translateY(-1px);
+}
+.btn-outline{
+    background:rgba(255,255,255,0.04);color:var(--t1);
+    border:1.5px solid var(--b2);
+}
+.btn-outline:hover{background:rgba(255,255,255,0.08);border-color:rgba(232,92,44,0.35);color:var(--pl)}
+
+/* ── Navbar ─────────────────────────────────────────────── */
+.navbar{
+    position:sticky;top:0;z-index:200;
+    height:var(--nav-h);
+    background:rgba(6,7,10,0.78);
+    backdrop-filter:blur(24px) saturate(180%);
+    -webkit-backdrop-filter:blur(24px) saturate(180%);
+    border-bottom:1px solid rgba(255,255,255,0.07);
+    box-shadow:0 1px 0 rgba(255,255,255,0.03),0 4px 24px rgba(0,0,0,0.28);
+}
+.navbar .container{
+    display:flex;align-items:center;justify-content:space-between;
+    height:100%;max-width:1280px;margin:0 auto;padding:0 1.5rem;gap:1rem;
+}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.home-logo{gap:10px}
+.logo-mark{
+    width:38px;height:38px;border-radius:11px;
+    display:inline-flex;align-items:center;justify-content:center;
+    background:linear-gradient(135deg,#1e2830,#111820);
+    border:1px solid rgba(232,92,44,0.22);transition:var(--tr);flex-shrink:0;
+}
+.logo-mark i{color:var(--px);font-size:0.95rem}
+.home-logo:hover .logo-mark{background:linear-gradient(135deg,var(--px),var(--pd));border-color:var(--px)}
+.home-logo:hover .logo-mark i{color:#fff}
+.logo-lockup{display:flex;flex-direction:column}
+.logo-wordmark{
+    display:inline-flex;align-items:baseline;gap:1px;
+    font-family:'Space Grotesk',sans-serif;font-size:1.25rem;font-weight:800;letter-spacing:-0.03em;
+    background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);
+    border-radius:999px;padding:4px 12px;transition:var(--tr);
+}
+.logo-wordmark .food{color:var(--t0)}.logo-wordmark .express{color:var(--px)}
+.home-logo:hover .logo-wordmark{background:linear-gradient(135deg,var(--px),var(--pd));border-color:var(--px)}
+.home-logo:hover .food,.home-logo:hover .express{color:#fff}
+
+.nav-links{display:flex;align-items:center;gap:6px;visibility:hidden}
+.nav-links.nav-ready{visibility:visible}
+.nav-links>a:not(.btn):not(.cart-icon){
+    padding:7px 13px;border-radius:999px;font-size:0.875rem;font-weight:500;
+    color:var(--t1);position:relative;
+}
+.nav-links>a:not(.btn):not(.cart-icon):hover{color:var(--t0);background:rgba(255,255,255,0.06)}
+.nav-links>a.active{color:var(--pl)!important}
+.nav-links a:not(.btn):not(.cart-icon)::after{
+    content:'';position:absolute;bottom:-2px;left:50%;width:100%;height:2px;
+    background:var(--px);border-radius:1px;
+    transform:translateX(-50%) scaleX(0);transform-origin:center;
+    transition:transform 0.3s cubic-bezier(0.34,1.56,0.64,1);pointer-events:none;
+}
+.nav-links a:not(.btn):not(.cart-icon):hover::after,
+.nav-links a.active::after{transform:translateX(-50%) scaleX(1)}
+.cart-icon{position:relative;padding:8px;border-radius:10px;color:var(--t1);transition:var(--tr)}
+.cart-icon:hover{color:var(--t0);background:rgba(255,255,255,0.06)}
+.cart-icon i{font-size:1.05rem}
+.cart-count{
+    position:absolute;top:2px;right:2px;
+    background:var(--px);color:#fff;font-size:0.6rem;font-weight:700;
+    width:16px;height:16px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    border:2px solid var(--bg);
+}
+.auth-buttons{display:flex;align-items:center;gap:8px;visibility:hidden}
+.auth-buttons.auth-ready{visibility:visible}
+.user-menu{position:relative}
+.user-btn{
+    display:flex;align-items:center;gap:8px;
+    background:rgba(255,255,255,0.05);border:1px solid var(--b1);
+    border-radius:999px;color:var(--t0);padding:6px 14px 6px 6px;transition:var(--tr);
+}
+.user-btn:hover{background:rgba(255,255,255,0.09)}
+.user-avatar{
+    width:28px;height:28px;border-radius:50%;
+    background:linear-gradient(135deg,var(--px),var(--pd));
+    display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:0.72rem;
+}
+.user-name{font-size:0.875rem;font-weight:600;font-family:'Space Grotesk',sans-serif}
+.user-dropdown{
+    position:absolute;top:calc(100% + 8px);right:0;
+    background:var(--s2);border:1px solid var(--b2);border-radius:var(--rsm);
+    box-shadow:var(--shd);padding:8px;min-width:180px;display:none;z-index:300;
+}
+.user-dropdown.show{display:block}
+.user-dropdown a{
+    display:flex;align-items:center;gap:9px;padding:9px 11px;
+    border-radius:var(--rxs);color:var(--t1);font-size:0.875rem;
+}
+.user-dropdown a:hover{background:rgba(255,255,255,0.06);color:var(--t0)}
+.user-dropdown hr{margin:6px 0;border:none;border-top:1px solid var(--b1)}
+.menu-toggle{display:none;color:var(--t0);font-size:1.35rem;padding:4px}
+
+/* ── Container ──────────────────────────────────────────── */
+.container{max-width:1280px;margin:0 auto;padding:0 1.5rem}
+
+/* ── Restaurant Hero ────────────────────────────────────── */
+#restaurant-header{
+    display:flex;align-items:center;gap:2.5rem;
+    max-width:1280px;margin:2rem auto;padding:2rem 2.5rem;
+    background:linear-gradient(145deg,rgba(13,17,23,0.96),rgba(8,11,16,0.92));
+    border:1px solid var(--b1);border-radius:var(--r);
+    box-shadow:var(--shd);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+    position:relative;overflow:hidden;
+}
+#restaurant-header::before{
+    content:'';position:absolute;inset:0;
+    background:radial-gradient(ellipse at 80% 50%,rgba(232,92,44,0.07) 0%,transparent 55%);
+    pointer-events:none;
+}
+#restaurant-header > img{
+    width:340px;height:220px;object-fit:cover;
+    border-radius:18px;flex-shrink:0;
+    box-shadow:0 16px 40px rgba(0,0,0,0.5);
+    border:1px solid var(--b1);
+}
+.restaurant-header-info{
+    flex:1;min-width:0;
+    display:flex;flex-direction:column;gap:0.75rem;
+    position:relative;z-index:1;
+}
+.restaurant-header-info h2{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:clamp(1.8rem,3vw,2.8rem);
+    font-weight:700;color:var(--t0);
+    line-height:1.1;
+}
+.restaurant-header-info > p{
+    font-size:0.875rem;color:var(--t1);
+    display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+}
+.restaurant-header-info > p i{color:var(--warn)}
+.restaurant-header-details{
+    display:flex;gap:1rem;flex-wrap:wrap;
+    margin-top:0.25rem;
+}
+.restaurant-detail-item{
+    display:flex;align-items:center;gap:7px;
+    font-size:0.82rem;color:var(--t1);
+    background:rgba(255,255,255,0.04);
+    border:1px solid var(--b1);border-radius:999px;
+    padding:5px 14px;
+}
+.restaurant-detail-item i{color:var(--px);font-size:0.75rem}
+
+#restaurant-header .loading{
+    width:100%;text-align:center;padding:2.5rem;
+    color:var(--t2);font-size:0.9rem;
+    display:flex;align-items:center;justify-content:center;gap:10px;
+}
+#restaurant-header .loading::before{
+    content:'';display:block;width:22px;height:22px;flex-shrink:0;
+    border:2.5px solid var(--b2);border-top-color:var(--px);
+    border-radius:50%;animation:spin 0.7s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ── Category Strip ─────────────────────────────────────── */
+.cat-strip-wrap{
+    position:sticky;top:var(--nav-h);z-index:100;
+    background:rgba(4,5,10,0.68);
+    backdrop-filter:blur(28px) saturate(160%);
+    -webkit-backdrop-filter:blur(28px) saturate(160%);
+}
+.cat-strip-wrap::after{
+    content:'';
+    position:absolute;bottom:-18px;left:0;right:0;height:18px;
+    background:linear-gradient(to bottom,rgba(4,5,10,0.45),transparent);
+    pointer-events:none;
+}
+.cat-strip-inner{
+    max-width:1280px;margin:0 auto;padding:0 1.5rem;
+}
+#menu-categories{
+    display:flex;gap:8px;
+    overflow-x:auto;padding:10px 4px;
+    scrollbar-width:none;-ms-overflow-style:none;
+}
+#menu-categories::-webkit-scrollbar{display:none}
+.category-item{
+    padding:8px 20px;border-radius:999px;
+    font-size:0.855rem;font-weight:600;
+    white-space:nowrap;cursor:pointer;
+    transition:var(--tr);flex-shrink:0;
+    border:1.5px solid var(--b1);
+    background:rgba(255,255,255,0.04);
+    color:var(--t1);
+    font-family:'Space Grotesk',sans-serif;
+}
+.category-item:hover{
+    border-color:rgba(232,92,44,0.35);
+    color:var(--pl);background:var(--pg);
+}
+.category-item.active{
+    background:rgba(232,92,44,0.07);
+    border-color:rgba(232,92,44,0.75);
+    color:var(--pl);
+    box-shadow:
+        0 0 5px rgba(232,92,44,0.35),
+        0 0 14px rgba(232,92,44,0.14);
+    text-shadow:0 0 8px rgba(232,92,44,0.45);
+}
+
+/* ── Menu Main ──────────────────────────────────────────── */
+.menu-main{padding:0 1.5rem;max-width:1280px;margin:0 auto}
+
+.menu-items{
+    display:flex;flex-direction:column;
+    gap:3rem;
+    padding:2.5rem 0 4rem;
+}
+
+.menu-items > .loading{
+    display:flex;align-items:center;justify-content:center;gap:10px;
+    padding:4rem;color:var(--t2);font-size:0.9rem;
+}
+.menu-items > .loading::before{
+    content:'';display:block;width:22px;height:22px;flex-shrink:0;
+    border:2.5px solid var(--b2);border-top-color:var(--px);
+    border-radius:50%;animation:spin 0.7s linear infinite;
+}
+
+/* ── Menu Sections ──────────────────────────────────────── */
+.menu-section{
+    display:flex;flex-direction:column;gap:1.25rem;
+    scroll-margin-top:130px;
+}
+.menu-section-header{
+    padding-bottom:1rem;
+    border-bottom:1px solid var(--b0);
+}
+.menu-section-title{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:1.75rem;font-weight:700;
+    color:var(--t0);margin:0;
+    display:flex;align-items:center;gap:0.75rem;
+}
+.menu-section-title::before{
+    content:'';display:inline-block;
+    width:4px;height:1.15em;
+    background:linear-gradient(180deg,var(--px),var(--pd));
+    border-radius:2px;flex-shrink:0;
+}
+
+/* ── Food Card Grid ─────────────────────────────────────── */
+.menu-section-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+    gap:1.125rem;
+}
+
+/* ── Food Card ──────────────────────────────────────────── */
+.food-card{
+    background:linear-gradient(160deg,rgba(13,17,23,0.96),rgba(8,11,16,0.92));
+    border:1px solid var(--b1);
+    border-radius:var(--r);
+    overflow:hidden;cursor:pointer;
+    transition:transform 0.22s,border-color 0.22s,box-shadow 0.22s;
+    display:flex;flex-direction:column;
+    box-shadow:0 4px 16px rgba(0,0,0,0.28);
+}
+.food-card:hover{
+    transform:translateY(-4px);
+    border-color:rgba(232,92,44,0.35);
+    box-shadow:0 16px 48px rgba(0,0,0,0.42),0 0 0 1px rgba(232,92,44,0.1) inset;
+}
+.food-image{
+    height:200px;overflow:hidden;
+    background:rgba(255,255,255,0.03);flex-shrink:0;
+}
+.food-image img{
+    width:100%;height:100%;object-fit:cover;
+    transition:transform 0.4s ease;
+}
+.food-card:hover .food-image img{transform:scale(1.07)}
+
+.food-info{
+    padding:1.25rem;
+    display:flex;flex-direction:column;
+    gap:7px;flex:1;
+}
+.food-header{
+    display:flex;justify-content:space-between;
+    align-items:flex-start;gap:12px;
+    margin-bottom:2px;
+}
+.food-name{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:1rem;font-weight:700;
+    color:var(--t0);line-height:1.35;
+}
+.food-price{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:1.05rem;font-weight:800;
+    color:var(--pl);white-space:nowrap;flex-shrink:0;
+}
+.food-description{
+    font-size:0.8rem;color:var(--t2);line-height:1.65;
+    display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+}
+.food-tags{display:flex;gap:6px;flex-wrap:wrap}
+.food-tag{
+    padding:2px 10px;border-radius:999px;
+    font-size:0.68rem;font-weight:700;letter-spacing:0.03em;
+}
+.food-tag.vegetarian{
+    background:rgba(34,197,94,0.12);color:#86efac;
+    border:1px solid rgba(34,197,94,0.2);
+}
+.food-tag.spicy{
+    background:rgba(239,68,68,0.12);color:#fca5a5;
+    border:1px solid rgba(239,68,68,0.2);
+}
+.food-rating{
+    display:flex;align-items:center;gap:5px;
+    font-size:0.78rem;color:var(--t2);
+}
+.food-rating i{color:var(--warn);font-size:0.72rem}
+.add-to-cart-btn{
+    margin-top:auto;padding-top:12px;
+    width:100%;border-radius:var(--rsm);font-size:0.875rem;
+}
+
+/* ── Mobile Cart Bar ────────────────────────────────────── */
+.mobile-cart-bar{
+    display:none;
+    position:fixed;bottom:0;left:0;right:0;z-index:150;
+    background:rgba(8,10,15,0.92);
+    backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+    border-top:1px solid var(--b1);
+    padding:14px 1.25rem;
+    align-items:center;justify-content:space-between;gap:1rem;
+    box-shadow:0 -8px 32px rgba(0,0,0,0.44);
+}
+.mobile-cart-bar .cart-total{display:flex;flex-direction:column;gap:2px}
+.mobile-cart-bar .cart-total span{font-size:0.72rem;color:var(--t2);text-transform:uppercase;letter-spacing:0.06em}
+#mobile-cart-total{font-size:1.15rem;font-weight:800;color:var(--t0);font-family:'Space Grotesk',sans-serif}
+
+/* ── Modal base (style.css not loaded) ──────────────────── */
+.modal{display:none;position:fixed;top:0;left:0;right:0;bottom:0;z-index:2000;background:rgba(0,0,0,0.6)}
+.modal.show{display:flex}
+body.site-dark .add-to-cart-modal{justify-content:flex-start;padding-left:2.5rem}
+.modal-header{display:flex;justify-content:space-between;align-items:flex-start}
+.modal-close{flex-shrink:0;margin-top:2px;cursor:pointer;background:none;border:none;font-size:1.5rem;color:rgba(240,235,230,0.6);line-height:1}
+.modal-close:hover{color:var(--t0)}
+
+/* ── Footer ─────────────────────────────────────────────── */
+.footer{border-top:1px solid var(--b0);padding:20px 0;background:transparent}
+.footer-bottom{text-align:center;color:var(--t2);font-size:0.79rem}
+
+/* ── Responsive ─────────────────────────────────────────── */
+@media(max-width:1024px){
+    #restaurant-header > img{width:280px;height:180px}
+    .restaurant-header-info h2{font-size:2rem}
+}
+@media(max-width:768px){
+    :root{--nav-h:62px}
+    .nav-links,.auth-buttons{display:none}
+    .menu-toggle{display:block}
+    #restaurant-header{
+        flex-direction:column;gap:1.25rem;
+        padding:1.25rem;margin:1rem;border-radius:18px;
+    }
+    #restaurant-header > img{width:100%;height:200px}
+    .restaurant-header-info h2{font-size:1.7rem}
+    .restaurant-header-details{gap:0.75rem}
+    .menu-main{padding:0 1rem}
+    .menu-section-grid{grid-template-columns:1fr 1fr}
+    .menu-items{gap:2.5rem;padding-bottom:90px}
+    .mobile-cart-bar{display:flex}
+}
+@media(max-width:480px){
+    #restaurant-header{margin:0.75rem}
+    .menu-section-grid{grid-template-columns:1fr}
+    .menu-section-title{font-size:1.4rem}
+    .food-image{height:175px}
+}
+@media(prefers-reduced-motion:reduce){
+    .food-card,.food-image img,.btn{transition:none}
+}
+    </style>
 </head>
 <body class="site-dark">
+
+    <!-- Navbar -->
     <nav class="navbar">
         <div class="container">
             <a href="index.html" class="logo home-logo">
-                <span class="logo-mark" aria-hidden="true">
-                    <i class="fas fa-utensils"></i>
-                </span>
+                <span class="logo-mark" aria-hidden="true"><i class="fas fa-utensils"></i></span>
                 <span class="logo-lockup">
                     <span class="logo-wordmark"><span class="food">Food</span><span class="express">Express</span></span>
                 </span>
             </a>
-            
             <div class="nav-links">
                 <a href="index.html">Home</a>
                 <a href="restaurants.html">Restaurants</a>
                 <a href="orders.html">My Orders</a>
                 <a href="partner-apply.html" class="partner-nav-link">Partner with us</a>
-                <a href="cart.html" class="cart-icon">
+                <a href="cart.html" class="cart-icon" aria-label="Cart">
                     <i class="fas fa-shopping-cart"></i>
                     <span class="cart-count">0</span>
                 </a>
-                <div class="user-menu">
-                    <button class="user-btn">
-                        <i class="fas fa-user"></i>
-                        <span id="username">Guest</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </button>
-                    <div class="user-dropdown">
-                        <a href="settings.html"><i class="fas fa-cog"></i> Settings</a>
-                        <hr>
-                        <a href="login.html" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
-                    </div>
+                <div class="auth-buttons">
+                    <a href="login.html" class="btn btn-outline">Login</a>
+                    <a href="register.html" class="btn btn-primary">Sign Up</a>
                 </div>
             </div>
-            
-            <button class="menu-toggle">
-                <i class="fas fa-bars"></i>
-            </button>
+            <button class="menu-toggle" aria-label="Toggle menu"><i class="fas fa-bars"></i></button>
         </div>
     </nav>
 
-    <div class="container">
-        <div class="restaurant-header" id="restaurant-header">
-            <div class="loading">Loading restaurant info...</div>
-        </div>
-        
-        <div class="menu-container">
-            <div class="menu-sidebar" id="menu-categories">
+    <!-- Restaurant Hero -->
+    <div id="restaurant-header">
+        <div class="loading">Loading restaurant info...</div>
+    </div>
+
+    <!-- Category Strip -->
+    <div class="cat-strip-wrap">
+        <div class="cat-strip-inner">
+            <div id="menu-categories">
                 <div class="category-item active" data-category="all">All Items</div>
             </div>
-            
-            <div class="menu-items" id="menu-items">
-                <div class="loading">Loading menu...</div>
-            </div>
-        </div>
-        
-        <div class="mobile-cart-summary">
-            <div class="cart-total">
-                <span>Cart Total:</span>
-                <strong id="mobile-cart-total">Tk 0.00</strong>
-            </div>
-            <a href="cart.html" class="btn btn-primary">
-                View Cart (<span id="mobile-cart-count">0</span>)
-            </a>
         </div>
     </div>
 
+    <!-- Menu Items -->
+    <div class="menu-main">
+        <div class="menu-items" id="menu-items">
+            <div class="loading">Loading menu...</div>
+        </div>
+    </div>
+
+    <!-- Mobile Cart Bar -->
+    <div class="mobile-cart-bar">
+        <div class="cart-total">
+            <span>Cart Total</span>
+            <strong id="mobile-cart-total">Tk 0.00</strong>
+        </div>
+        <a href="cart.html" class="btn btn-primary">
+            <i class="fas fa-shopping-cart"></i>
+            View Cart (<span id="mobile-cart-count">0</span>)
+        </a>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2026 FoodExpress. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Add-to-Cart Modal (structure preserved exactly) -->
     <div class="modal add-to-cart-modal" id="add-to-cart-modal">
         <div class="modal-content add-to-cart-dialog">
             <div class="modal-header add-to-cart-header">
@@ -86,22 +532,18 @@
                 </div>
                 <button class="modal-close">&times;</button>
             </div>
-            
             <div class="modal-body add-to-cart-body">
                 <div class="modal-item-info add-to-cart-item-info">
                     <p id="modal-item-description">Item description...</p>
                     <div class="modal-price" id="modal-item-price">Tk 0.00</div>
                 </div>
-                
                 <div class="addons-section add-to-cart-section">
                     <div class="add-to-cart-section-head">
                         <h4>Add-ons</h4>
                         <span>Optional</span>
                     </div>
-                    <div id="addons-list" class="addons-list">
-                    </div>
+                    <div id="addons-list" class="addons-list"></div>
                 </div>
-                
                 <div class="special-instructions add-to-cart-section">
                     <div class="add-to-cart-section-head">
                         <h4>Special Instructions</h4>
@@ -110,7 +552,6 @@
                     <label for="instructions" class="sr-only">Special Instructions</label>
                     <textarea id="instructions" placeholder="Less spice, no onions, extra sauce, doorstep drop-off..."></textarea>
                 </div>
-                
                 <div class="quantity-row">
                     <div>
                         <span class="quantity-label">Quantity</span>
@@ -123,7 +564,6 @@
                     </div>
                 </div>
             </div>
-            
             <div class="modal-footer add-to-cart-footer">
                 <div class="modal-total">
                     <span>Total</span>
@@ -134,21 +574,13 @@
         </div>
     </div>
 
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-bottom">
-                <p>&copy; 2026 FoodExpress. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
-
     <script src="../assets/js/main.js"></script>
     <script src="../assets/js/api.js"></script>
     <script src="../assets/js/cart.js"></script>
     <script>
         let currentRestaurantId = null;
         let currentItem = null;
-        
+
         document.addEventListener('DOMContentLoaded', function() {
             checkLoginStatus();
             const urlParams = new URLSearchParams(window.location.search);
@@ -160,8 +592,3 @@
     </script>
 </body>
 </html>
-
-
-
-
-

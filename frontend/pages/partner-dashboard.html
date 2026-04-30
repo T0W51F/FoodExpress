@@ -303,10 +303,10 @@ h4 { font-size: 0.9rem; }
 }
 .pd-nav-item:hover i { color: var(--t1); }
 .pd-nav-item.active {
-    background: linear-gradient(135deg, rgba(232,92,44,0.18), rgba(232,92,44,0.08));
+    background: rgba(255,255,255,0.05);
     color: #fff;
     font-weight: 600;
-    box-shadow: 0 2px 12px rgba(232,92,44,0.12);
+    box-shadow: none;
 }
 .pd-nav-item.active i { color: var(--px); }
 .pd-nav-item.active::before {
@@ -499,16 +499,6 @@ h4 { font-size: 0.9rem; }
     position: relative;
     overflow: hidden;
     transition: border-color 0.22s, transform 0.22s;
-}
-.overview-stat-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, var(--px), transparent 70%);
-    opacity: 0.6;
 }
 .overview-stat-card:hover {
     border-color: var(--b2);
@@ -957,16 +947,6 @@ h4 { font-size: 0.9rem; }
     box-shadow: 0 32px 72px rgba(0,0,0,0.65), 0 0 0 1px rgba(255,255,255,0.04) inset;
     overflow: hidden;
     position: relative;
-}
-.pd-modal::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, var(--px) 0%, var(--pl) 50%, transparent 100%);
-    border-radius: 22px 22px 0 0;
 }
 .pd-modal-sm { max-width: 400px; }
 .pd-modal-header {

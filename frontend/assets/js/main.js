@@ -943,7 +943,7 @@ async function loadMenuItems(restaurantId) {
                 }
                 const section = document.querySelector(`.menu-section[data-category="${category}"]`);
                 if (section) {
-                    const stickyOffset = 120;
+                    const stickyOffset = 130;
                     const top = section.getBoundingClientRect().top + window.scrollY - stickyOffset;
                     window.scrollTo({ top, behavior: 'smooth' });
                 }
@@ -1020,7 +1020,7 @@ function scrollToMenuHash(hash, attempts = 10) {
     }
     const category = target.dataset.category || '';
     if (category) setActiveMenuCategory(category);
-    const stickyOffset = 126;
+    const stickyOffset = 130;
     const top = target.getBoundingClientRect().top + window.scrollY - stickyOffset;
     window.scrollTo({ top, behavior: 'auto' });
 }
