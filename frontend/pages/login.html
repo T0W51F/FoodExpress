@@ -119,15 +119,18 @@
     <script src="../assets/js/main.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Check if user is already logged in
-            if (localStorage.getItem('userLoggedIn') === 'true') {
-                window.location.href = 'index.html';
-            }
+            const urlParams = new URLSearchParams(window.location.search);
 
             // Show banned notice if redirected here after a ban
-            if (new URLSearchParams(window.location.search).get('banned') === '1') {
+            if (urlParams.get('banned') === '1') {
                 const notice = document.getElementById('banned-notice');
                 if (notice) notice.style.display = 'flex';
+            }
+
+            // If user is already logged in, skip the login page
+            if (localStorage.getItem('userLoggedIn') === 'true') {
+                const next = urlParams.get('next');
+                window.location.href = next || 'index.html';
             }
         });
     </script>

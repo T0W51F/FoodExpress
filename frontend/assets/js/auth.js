@@ -184,11 +184,17 @@ async function loginUser(email, password, rememberMe) {
         showNotification('Login successful!', 'success');
 
         const urlParams = new URLSearchParams(window.location.search);
-        const redirect = urlParams.get('redirect');
+        // Support ?next= (canonical) and ?redirect= (legacy fallback)
+        const next = urlParams.get('next');
+        const legacyRedirect = urlParams.get('redirect');
 
         setTimeout(() => {
-            if (redirect) {
-                window.location.href = `${redirect}.html`;
+            if (next) {
+                // next= is a path relative to pages/, e.g. "partner-dashboard.html"
+                window.location.href = next;
+            } else if (legacyRedirect) {
+                // legacy: redirect=cart means cart.html
+                window.location.href = `${legacyRedirect}.html`;
             } else {
                 window.location.href = 'index.html';
             }
@@ -249,8 +255,11 @@ async function registerUser(firstName, lastName, email, phone, password) {
 
         showNotification(data.message || 'Account created successfully!', 'success');
 
+        const urlParams = new URLSearchParams(window.location.search);
+        const next = urlParams.get('next');
+
         setTimeout(() => {
-            window.location.href = 'index.html';
+            window.location.href = next || 'index.html';
         }, 1000);
     } catch (error) {
         showNotification(error.message || 'Registration failed', 'error');

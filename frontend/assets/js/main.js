@@ -1232,6 +1232,17 @@ function updateModalTotal() {
 
 // Add Item to Cart
 function addItemToCart() {
+    // Auth guard — must be logged in to add items
+    if (localStorage.getItem('userLoggedIn') !== 'true') {
+        DOM.addToCartModal?.classList.remove('show');
+        showNotification('Please login to add items to cart', 'error');
+        setTimeout(() => {
+            const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+            window.location.href = `login.html?next=${encodeURIComponent(currentPage)}`;
+        }, 1200);
+        return;
+    }
+
     const quantity = parseInt(document.getElementById('item-quantity').value);
     const addonItems = document.querySelectorAll('.addon-item.selected');
     const instructions = document.getElementById('instructions').value;
@@ -1550,7 +1561,7 @@ function setupCheckoutModal() {
             if (localStorage.getItem('userLoggedIn') !== 'true') {
                 showNotification('Please login to checkout', 'error');
                 setTimeout(() => {
-                    window.location.href = 'login.html?redirect=cart';
+                    window.location.href = 'login.html?next=cart.html';
                 }, 1500);
                 return;
             }

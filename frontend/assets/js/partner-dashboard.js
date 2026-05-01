@@ -16,8 +16,13 @@ function getToken() {
 
 (function authGuard() {
     const user = getUser();
-    if (!user || !getToken() || user.role !== 'restaurant_admin') {
-        window.location.href = 'login.html';
+    if (!user || !getToken()) {
+        window.location.href = 'login.html?next=partner-dashboard.html';
+        return;
+    }
+    if (user.role !== 'restaurant_admin') {
+        // Logged in but wrong role — send to home without creating a redirect loop
+        window.location.href = 'index.html';
     }
 })();
 

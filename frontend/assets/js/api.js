@@ -75,7 +75,12 @@ class APIService {
                 localStorage.removeItem('access_token');
                 localStorage.removeItem('refresh_token');
                 localStorage.removeItem('userLoggedIn');
-                window.location.href = 'login.html';
+                const _currentPage = window.location.pathname.split('/').pop() || 'index.html';
+                const _safeNext = ['login.html', 'register.html', 'index.html'].includes(_currentPage)
+                    ? null : _currentPage;
+                window.location.href = _safeNext
+                    ? `login.html?next=${encodeURIComponent(_safeNext)}`
+                    : 'login.html';
                 return Promise.reject(new Error('Session expired'));
             }
 
@@ -420,10 +425,15 @@ function handleAPIError(error) {
         localStorage.removeItem('access_token');
         localStorage.removeItem('refresh_token');
         localStorage.removeItem('userLoggedIn');
-        
-        // Redirect to login
+
+        // Redirect to login, preserving the current page as ?next=
         setTimeout(() => {
-            window.location.href = 'login.html';
+            const _currentPage = window.location.pathname.split('/').pop() || 'index.html';
+            const _safeNext = ['login.html', 'register.html', 'index.html'].includes(_currentPage)
+                ? null : _currentPage;
+            window.location.href = _safeNext
+                ? `login.html?next=${encodeURIComponent(_safeNext)}`
+                : 'login.html';
         }, 2000);
     }
 }
