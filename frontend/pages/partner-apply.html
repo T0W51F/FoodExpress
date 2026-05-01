@@ -3,29 +3,248 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Partner with FoodExpress - Grow Your Restaurant Business</title>
+    <title>Partner with FoodExpress — Grow Your Restaurant Business</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../assets/css/style.css">
-    <link rel="stylesheet" href="../assets/css/partner-apply.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="icon" type="image/svg+xml" href="../assets/images/favicon.svg">
     <style>
-        body { font-family: 'Inter', sans-serif; }
-        h1, h2, h3, h4, h5, h6 { font-family: 'Space Grotesk', sans-serif; }
-        .navbar {
-            background: rgba(6,7,10,0.78) !important;
-            backdrop-filter: blur(24px) saturate(180%) !important;
-            -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
-            border-bottom: 1px solid rgba(255,255,255,0.07) !important;
-            height: 68px !important;
-        }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+    --bg:#06070a;--surface:#0d1014;--surface2:#131820;
+    --border:rgba(255,255,255,0.07);--bmed:rgba(255,255,255,0.12);
+    --primary:#e85c2c;--pdk:#cf4d1d;--plt:#ff7a4d;
+    --text:#ede8e3;--text2:rgba(237,232,227,0.62);--text3:rgba(237,232,227,0.36);
+    --success:#00b894;--danger:#d63031;--warn:#fdcb6e;
+    --r:16px;--rsm:10px;--rxs:6px;
+    --tr:all 0.25s cubic-bezier(0.4,0,0.2,1);
+    --sh:0 8px 32px rgba(0,0,0,0.45);--shlg:0 20px 60px rgba(0,0,0,0.55);
+}
+html{scroll-behavior:smooth}
+body{
+    font-family:'Inter',-apple-system,sans-serif;
+    background:var(--bg);color:var(--text);
+    line-height:1.6;min-height:100vh;overflow-x:hidden;
+    background-image:
+        radial-gradient(circle at 15% 20%,rgba(232,92,44,0.12) 0%,transparent 38%),
+        radial-gradient(circle at 85% 75%,rgba(232,92,44,0.07) 0%,transparent 32%),
+        radial-gradient(circle at 50% 50%,rgba(9,132,227,0.03) 0%,transparent 50%);
+    background-attachment:fixed;
+}
+body::before{
+    content:'';position:fixed;inset:0;
+    background:linear-gradient(135deg,rgba(5,7,8,0.88),rgba(5,7,8,0.72) 50%,rgba(5,7,8,0.88)),url('../assets/images/foods/auth-foods.jpg') center/cover no-repeat;
+    opacity:0.22;pointer-events:none;z-index:0;
+}
+body>*{position:relative;z-index:1}
+.container{max-width:1200px;margin:0 auto;padding:0 24px;position:relative}
+a{text-decoration:none;color:inherit;transition:var(--tr)}
+img{max-width:100%;display:block}
+button{font-family:inherit;cursor:pointer}
+h1,h2,h3,h4,h5{font-family:'Space Grotesk',sans-serif;font-weight:700;line-height:1.2;color:var(--text)}
+
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:10px 22px;border-radius:999px;font-size:0.9rem;font-weight:600;border:none;cursor:pointer;transition:var(--tr);white-space:nowrap;text-decoration:none}
+.btn-primary{background:linear-gradient(135deg,var(--primary),var(--pdk));color:#fff;box-shadow:0 4px 18px rgba(232,92,44,0.28)}
+.btn-primary:hover{background:linear-gradient(135deg,var(--plt),var(--primary));box-shadow:0 6px 26px rgba(232,92,44,0.44);transform:translateY(-2px);color:#fff}
+.btn-outline{background:rgba(255,255,255,0.04);color:var(--text2);border:1.5px solid var(--bmed)}
+.btn-outline:hover{background:rgba(255,255,255,0.08);border-color:rgba(232,92,44,0.38);color:var(--plt)}
+.btn-block{width:100%;justify-content:center}
+.btn:disabled{opacity:0.5;cursor:not-allowed;transform:none}
+
+/* NAVBAR */
+.navbar{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(6,7,10,0.78);backdrop-filter:blur(24px) saturate(180%);-webkit-backdrop-filter:blur(24px) saturate(180%);border-bottom:1px solid var(--border)}
+.navbar .container{display:flex;align-items:center;justify-content:space-between;height:68px}
+.logo{display:flex;align-items:center;gap:10px}
+.home-logo{gap:10px}
+.home-logo .logo-mark{width:40px;height:40px;border-radius:12px;display:inline-flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#1e2830,#111820);border:1px solid rgba(232,92,44,0.22);transition:var(--tr);flex-shrink:0}
+.home-logo .logo-mark i{color:var(--primary);font-size:1rem}
+.home-logo:hover .logo-mark{background:linear-gradient(135deg,var(--primary),var(--pdk));border-color:var(--primary);box-shadow:0 0 22px rgba(232,92,44,0.35)}
+.home-logo:hover .logo-mark i{color:#fff}
+.home-logo .logo-lockup{display:flex;flex-direction:column}
+.home-logo .logo-wordmark{display:inline-flex;align-items:baseline;gap:1px;font-family:'Space Grotesk',sans-serif;font-size:1.3rem;font-weight:800;letter-spacing:-0.03em;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:999px;padding:4px 12px;transition:var(--tr)}
+.home-logo .food{color:#ede8e3}
+.home-logo .express{color:var(--primary)}
+.home-logo:hover .logo-wordmark{background:linear-gradient(135deg,var(--primary),var(--pdk));border-color:var(--primary)}
+.home-logo:hover .food,.home-logo:hover .express{color:#fff}
+.nav-links{display:flex;align-items:center;gap:4px;visibility:hidden}
+.nav-links.nav-ready{visibility:visible}
+.nav-links>a:not(.btn):not(.cart-icon){padding:7px 14px;border-radius:999px;font-size:0.88rem;font-weight:500;color:var(--text2);position:relative}
+.nav-links>a:not(.btn):not(.cart-icon):hover{color:var(--text);background:rgba(255,255,255,0.06)}
+.nav-links>a.active,.partner-nav-link{color:var(--plt)!important;font-weight:600!important}
+.nav-links a:not(.btn):not(.cart-icon)::after{content:'';position:absolute;bottom:-2px;left:50%;width:100%;height:2px;background:var(--primary);border-radius:1px;transform:translateX(-50%) scaleX(0);transform-origin:center;transition:transform 0.3s cubic-bezier(0.34,1.56,0.64,1);pointer-events:none}
+.nav-links a:not(.btn):not(.cart-icon):hover::after,.nav-links a.active::after,.partner-nav-link::after{transform:translateX(-50%) scaleX(1)!important}
+.cart-icon{position:relative;padding:8px;border-radius:10px;color:var(--text2);transition:var(--tr)}
+.cart-icon:hover{color:var(--text);background:rgba(255,255,255,0.06)}
+.cart-icon i{font-size:1.1rem}
+.cart-count{position:absolute;top:2px;right:2px;background:var(--primary);color:#fff;font-size:0.62rem;font-weight:700;width:17px;height:17px;border-radius:50%;display:flex;align-items:center;justify-content:center;border:2px solid var(--bg)}
+.auth-buttons{display:flex;align-items:center;gap:8px;visibility:hidden}
+.auth-buttons.auth-ready{visibility:visible}
+.user-menu{position:relative}
+.user-btn{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:999px;color:var(--text);padding:6px 14px 6px 6px;transition:var(--tr)}
+.user-btn:hover{background:rgba(255,255,255,0.09)}
+.user-avatar{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--pdk));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:0.75rem}
+.user-name{font-size:0.88rem;font-weight:600}
+.user-dropdown{position:absolute;top:calc(100% + 8px);right:0;background:var(--surface2);border:1px solid var(--bmed);border-radius:var(--rsm);box-shadow:var(--shlg);padding:8px;min-width:200px;display:none;z-index:1000}
+.user-dropdown.show{display:block}
+.user-dropdown a{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:var(--rxs);color:var(--text2);font-size:0.88rem}
+.user-dropdown a:hover{background:rgba(255,255,255,0.06);color:var(--text)}
+.user-dropdown hr{margin:6px 0;border:none;border-top:1px solid var(--border)}
+.menu-toggle{display:none;background:none;border:none;color:var(--text);font-size:1.4rem}
+
+/* HERO */
+.partner-hero{padding:108px 0 64px;border-bottom:1px solid var(--border)}
+.partner-hero-content{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+.partner-badge{
+    display:inline-flex;align-items:center;gap:8px;
+    background:rgba(232,92,44,0.12);color:var(--plt);
+    padding:6px 14px;border-radius:999px;font-size:0.82rem;font-weight:700;
+    border:1px solid rgba(232,92,44,0.24);margin-bottom:18px;
+    letter-spacing:0.04em;text-transform:uppercase;
+}
+.partner-hero-text h1{font-size:clamp(2.2rem,4vw,3rem);letter-spacing:-0.03em;color:#fbfcfd;margin-bottom:14px;line-height:1.1}
+.partner-hero-text p{color:var(--text2);font-size:1.05rem;line-height:1.75;margin-bottom:28px}
+.partner-stats{display:flex;gap:2.5rem}
+.partner-stat{display:flex;flex-direction:column}
+.stat-num{font-size:1.75rem;font-weight:800;color:var(--plt);line-height:1;font-family:'Space Grotesk',sans-serif}
+.stat-label{font-size:0.75rem;color:var(--text3);margin-top:4px;text-transform:uppercase;letter-spacing:0.06em}
+
+.partner-hero-benefits{display:flex;flex-direction:column;gap:12px}
+.benefit-card{
+    background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:18px;
+    padding:18px 20px;display:flex;align-items:flex-start;gap:14px;
+    backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+    transition:border-color 0.25s,background 0.25s;
+}
+.benefit-card:hover{background:rgba(255,255,255,0.055);border-color:rgba(232,92,44,0.24)}
+.benefit-card i{font-size:1.3rem;color:var(--plt);margin-top:2px;flex-shrink:0}
+.benefit-card h3{font-size:0.95rem;font-weight:600;color:var(--text);margin-bottom:4px}
+.benefit-card p{font-size:0.85rem;color:var(--text2);margin:0;line-height:1.6}
+
+/* MAIN */
+.partner-main{padding:56px 0}
+.partner-grid{display:grid;grid-template-columns:1fr 400px;gap:24px;align-items:start}
+
+/* CARDS */
+.partner-form-card,.partner-status-card{
+    background:linear-gradient(160deg,rgba(17,21,25,0.94),rgba(8,10,13,0.9));
+    border:1px solid var(--border);border-radius:28px;padding:28px;
+    backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+    box-shadow:var(--shlg);
+}
+.form-card-header{display:flex;align-items:flex-start;gap:14px;margin-bottom:24px;padding-bottom:20px;border-bottom:1px solid var(--border)}
+.form-card-icon{
+    width:46px;height:46px;border-radius:14px;display:flex;align-items:center;justify-content:center;
+    background:rgba(232,92,44,0.12);border:1px solid rgba(232,92,44,0.22);flex-shrink:0;
+}
+.form-card-icon i{font-size:1.15rem;color:var(--plt)}
+.status-icon{background:rgba(9,132,227,0.12);border-color:rgba(9,132,227,0.22)}
+.status-icon i{color:#4dabf7}
+.form-card-header h2{font-size:1.2rem;color:var(--text);margin-bottom:4px;letter-spacing:-0.01em}
+.form-card-header p{font-size:0.85rem;color:var(--text2);margin:0;line-height:1.6}
+
+/* FORM ELEMENTS */
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.form-group{margin-bottom:18px}
+.form-group:last-of-type{margin-bottom:0}
+.form-group label{display:block;font-size:0.85rem;font-weight:600;color:rgba(246,248,250,0.82);margin-bottom:8px;letter-spacing:0.02em}
+.required{color:var(--plt)}
+.input-with-icon{position:relative}
+.input-with-icon i{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--primary);font-size:0.85rem;pointer-events:none;z-index:2}
+.input-with-icon input{
+    width:100%;min-height:50px;padding:13px 14px 13px 40px;
+    background:rgba(246,249,255,0.93);border:1px solid rgba(255,255,255,0.1);
+    border-radius:12px;color:#101417;font-size:0.9rem;font-family:inherit;
+    transition:border-color 0.2s,box-shadow 0.2s;outline:none;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,0.42);
+}
+.input-with-icon input:focus{
+    border-color:rgba(232,92,44,0.5);
+    box-shadow:0 0 0 3px rgba(232,92,44,0.12),inset 0 1px 0 rgba(255,255,255,0.42);
+}
+.input-with-icon input::placeholder{color:rgba(16,20,23,0.42)}
+textarea{
+    width:100%;padding:13px 14px;background:rgba(246,249,255,0.93);
+    border:1px solid rgba(255,255,255,0.1);border-radius:12px;
+    color:#101417;font-size:0.9rem;font-family:inherit;resize:vertical;
+    transition:border-color 0.2s,box-shadow 0.2s;outline:none;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,0.42);min-height:100px;
+}
+textarea:focus{border-color:rgba(232,92,44,0.5);box-shadow:0 0 0 3px rgba(232,92,44,0.12),inset 0 1px 0 rgba(255,255,255,0.42)}
+textarea::placeholder{color:rgba(16,20,23,0.42)}
+.btn-submit{min-height:50px;border-radius:12px;font-size:0.95rem;box-shadow:0 12px 28px rgba(232,92,44,0.22);margin-top:4px}
+.form-note{text-align:center;font-size:0.79rem;color:var(--text3);margin-top:14px;display:flex;align-items:center;justify-content:center;gap:6px}
+.form-error{background:rgba(214,48,49,0.1);border:1px solid rgba(214,48,49,0.26);color:#fc8181;padding:10px 14px;border-radius:10px;font-size:0.875rem;margin-bottom:14px}
+.hidden{display:none!important}
+.success-message{text-align:center;padding:28px 16px}
+.success-icon{font-size:2.8rem;color:var(--success);margin-bottom:14px}
+.success-message h3{font-size:1.3rem;color:var(--text);margin-bottom:8px}
+.success-message p{color:var(--text2);font-size:0.9rem;line-height:1.6}
+
+/* STATUS RESULT */
+.status-result{margin-top:20px;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:14px;padding:18px;backdrop-filter:blur(12px)}
+.status-result-header{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:8px}
+.status-result-header h3{font-size:0.95rem;color:var(--text)}
+.status-badge{display:inline-block;padding:4px 12px;border-radius:999px;font-size:0.78rem;font-weight:600;text-transform:capitalize}
+.status-pending{background:rgba(253,203,110,0.12);color:#fdcb6e;border:1px solid rgba(253,203,110,0.26)}
+.status-approved{background:rgba(0,184,148,0.12);color:#55efc4;border:1px solid rgba(0,184,148,0.26)}
+.status-rejected{background:rgba(214,48,49,0.12);color:#ff7675;border:1px solid rgba(214,48,49,0.26)}
+.status-submitted{font-size:0.79rem;color:var(--text3);margin-bottom:12px}
+.rejection-reason,.approved-msg,.pending-msg{display:flex;align-items:flex-start;gap:8px;padding:10px 12px;border-radius:10px;font-size:0.875rem}
+.rejection-reason{background:rgba(214,48,49,0.08);color:#fc8181}
+.approved-msg{background:rgba(0,184,148,0.08);color:#55efc4}
+.pending-msg{background:rgba(253,203,110,0.08);color:#fdcb6e}
+.rejection-reason p,.approved-msg p,.pending-msg p{margin:0}
+
+/* HOW IT WORKS */
+.how-it-works{padding:56px 0;border-top:1px solid var(--border)}
+.how-it-works h2{text-align:center;font-size:clamp(1.6rem,3vw,2.2rem);letter-spacing:-0.02em;color:#f8fafc;margin-bottom:40px}
+.steps-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.step-card{
+    text-align:center;padding:28px 20px;
+    background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:22px;
+    backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+    transition:border-color 0.25s,background 0.25s,transform 0.25s;
+}
+.step-card:hover{background:rgba(255,255,255,0.055);border-color:rgba(232,92,44,0.24);transform:translateY(-4px)}
+.step-num{
+    width:46px;height:46px;margin:0 auto 14px;border-radius:50%;
+    background:linear-gradient(135deg,var(--primary),var(--pdk));
+    color:#fff;font-weight:800;font-size:1.15rem;
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Space Grotesk',sans-serif;
+    box-shadow:0 8px 20px rgba(232,92,44,0.28);
+}
+.step-card h3{color:var(--text);font-size:0.98rem;margin-bottom:8px}
+.step-card p{color:var(--text2);font-size:0.85rem;margin:0;line-height:1.65}
+
+/* FOOTER */
+.page-footer{border-top:1px solid var(--border);padding:22px 0;margin-top:0}
+.page-footer p{text-align:center;color:var(--text3);font-size:0.8rem}
+
+/* RESPONSIVE */
+@media(max-width:1024px){
+    .partner-hero-content{grid-template-columns:1fr;gap:2.5rem}
+    .partner-grid{grid-template-columns:1fr}
+    .steps-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:768px){
+    .navbar .container{height:62px}
+    .nav-links,.nav-links.nav-ready{display:none}
+    .auth-buttons,.auth-buttons.auth-ready{display:none}
+    .menu-toggle{display:block}
+    .partner-hero{padding:82px 0 44px}
+    .partner-hero-text h1{font-size:2rem}
+    .partner-stats{gap:1.5rem}
+    .form-row{grid-template-columns:1fr}
+    .steps-grid{grid-template-columns:1fr}
+    .partner-form-card,.partner-status-card{border-radius:20px;padding:22px}
+}
     </style>
 </head>
-<body class="site-dark partner-apply-page">
+<body class="partner-apply-page">
 
-    <!-- Navigation -->
     <nav class="navbar">
         <div class="container">
             <a href="index.html" class="logo home-logo">
@@ -37,6 +256,7 @@
             <div class="nav-links">
                 <a href="index.html">Home</a>
                 <a href="restaurants.html">Restaurants</a>
+                <a href="orders.html">My Orders</a>
                 <a href="partner-apply.html" class="active partner-nav-link">Partner with us</a>
                 <a href="cart.html" class="cart-icon">
                     <i class="fas fa-shopping-cart"></i>
@@ -47,11 +267,10 @@
                     <a href="register.html" class="btn btn-primary">Sign Up</a>
                 </div>
             </div>
-            <button class="menu-toggle"><i class="fas fa-bars"></i></button>
+            <button class="menu-toggle" aria-label="Toggle menu"><i class="fas fa-bars"></i></button>
         </div>
     </nav>
 
-    <!-- Hero Banner -->
     <section class="partner-hero">
         <div class="container">
             <div class="partner-hero-content">
@@ -80,30 +299,34 @@
                 <div class="partner-hero-benefits">
                     <div class="benefit-card">
                         <i class="fas fa-chart-line"></i>
-                        <h3>Boost Revenue</h3>
-                        <p>Average partners see a 35% revenue increase in the first 3 months.</p>
+                        <div>
+                            <h3>Boost Revenue</h3>
+                            <p>Average partners see a 35% revenue increase in the first 3 months.</p>
+                        </div>
                     </div>
                     <div class="benefit-card">
                         <i class="fas fa-users"></i>
-                        <h3>New Customers</h3>
-                        <p>Reach customers who would never have found your restaurant otherwise.</p>
+                        <div>
+                            <h3>New Customers</h3>
+                            <p>Reach customers who would never have found your restaurant otherwise.</p>
+                        </div>
                     </div>
                     <div class="benefit-card">
                         <i class="fas fa-tablet-alt"></i>
-                        <h3>Easy Dashboard</h3>
-                        <p>Manage your menu, orders, and profile from one simple interface.</p>
+                        <div>
+                            <h3>Easy Dashboard</h3>
+                            <p>Manage your menu, orders, and profile from one simple interface.</p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Main Content: Application Form + Status Check -->
     <section class="partner-main">
         <div class="container">
             <div class="partner-grid">
 
-                <!-- Application Form -->
                 <div class="partner-form-card" id="apply-section">
                     <div class="form-card-header">
                         <div class="form-card-icon"><i class="fas fa-store"></i></div>
@@ -117,8 +340,8 @@
                         <div class="success-icon"><i class="fas fa-check-circle"></i></div>
                         <h3>Application Submitted!</h3>
                         <p>We received your application for <strong id="success-business-name"></strong>. Our team will review it within 2 business days.</p>
-                        <p>You can track your application status using the email you provided.</p>
-                        <button class="btn btn-outline" onclick="document.getElementById('apply-success').classList.add('hidden'); document.getElementById('partner-form').reset();">Submit Another</button>
+                        <p style="margin-top:8px">You can track your application status using the email you provided.</p>
+                        <button class="btn btn-outline" style="margin-top:18px" onclick="document.getElementById('apply-success').classList.add('hidden'); document.getElementById('partner-form').reset();">Submit Another</button>
                     </div>
 
                     <form id="partner-form" novalidate>
@@ -166,7 +389,7 @@
 
                         <div class="form-group">
                             <label for="apply-description">Tell us about your restaurant</label>
-                            <textarea id="apply-description" placeholder="Describe your cuisine, specialties, atmosphere, and what makes your restaurant unique..." rows="4"></textarea>
+                            <textarea id="apply-description" placeholder="Describe your cuisine, specialties, atmosphere, and what makes your restaurant unique..."></textarea>
                         </div>
 
                         <div id="apply-error" class="form-error hidden"></div>
@@ -183,7 +406,6 @@
                     </form>
                 </div>
 
-                <!-- Status Check -->
                 <div class="partner-status-card">
                     <div class="form-card-header">
                         <div class="form-card-icon status-icon"><i class="fas fa-search"></i></div>
@@ -235,7 +457,6 @@
         </div>
     </section>
 
-    <!-- How it Works -->
     <section class="how-it-works">
         <div class="container">
             <h2>How the Partnership Works</h2>
@@ -264,9 +485,9 @@
         </div>
     </section>
 
-    <footer style="border-top:1px solid rgba(255,255,255,0.07);padding:22px 0;margin-top:0;">
-        <div class="container" style="text-align:center;">
-            <p style="color:rgba(232,238,242,0.42);font-size:0.8rem;margin:0;">&copy; 2026 FoodExpress. All rights reserved.</p>
+    <footer class="page-footer">
+        <div class="container">
+            <p>&copy; 2026 FoodExpress. All rights reserved.</p>
         </div>
     </footer>
 

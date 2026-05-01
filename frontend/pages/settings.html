@@ -3,49 +3,252 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profile Settings - FoodExpress</title>
+    <title>Profile Settings — FoodExpress</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../assets/css/style.css">
-    <link rel="stylesheet" href="../assets/css/responsive.css">
-    <link rel="stylesheet" href="../assets/css/settings.css">
     <link rel="icon" type="image/svg+xml" href="../assets/images/favicon.svg">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body { font-family: 'Inter', sans-serif; }
-        h1, h2, h3, h4, h5, h6 { font-family: 'Space Grotesk', sans-serif; }
-        .navbar {
-            background: rgba(6,7,10,0.78) !important;
-            backdrop-filter: blur(24px) saturate(180%) !important;
-            -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
-            border-bottom: 1px solid rgba(255,255,255,0.07) !important;
-            height: 68px !important;
-        }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+    --bg:#06070a;--surface:#0d1014;--surface2:#131820;
+    --border:rgba(255,255,255,0.07);--bmed:rgba(255,255,255,0.12);
+    --primary:#e85c2c;--pdk:#cf4d1d;--plt:#ff7a4d;
+    --text:#ede8e3;--text2:rgba(237,232,227,0.62);--text3:rgba(237,232,227,0.36);
+    --success:#00b894;--danger:#d63031;--warn:#fdcb6e;
+    --r:16px;--rsm:10px;--rxs:6px;
+    --tr:all 0.25s cubic-bezier(0.4,0,0.2,1);
+    --sh:0 8px 32px rgba(0,0,0,0.45);--shlg:0 20px 60px rgba(0,0,0,0.55);
+}
+html{scroll-behavior:smooth}
+body{
+    font-family:'Inter',-apple-system,sans-serif;
+    background:var(--bg);color:var(--text);
+    line-height:1.6;min-height:100vh;overflow-x:hidden;
+    background-image:
+        radial-gradient(circle at 14% 12%,rgba(232,92,44,0.14) 0%,transparent 32%),
+        radial-gradient(circle at 85% 15%,rgba(255,255,255,0.04) 0%,transparent 18%),
+        radial-gradient(circle at 88% 82%,rgba(232,92,44,0.04) 0%,transparent 26%);
+    background-attachment:fixed;
+}
+body::before{
+    content:'';position:fixed;inset:0;
+    background:linear-gradient(115deg,rgba(8,10,12,0.78),rgba(8,10,12,0.5)),url('../assets/images/foods/auth-foods.jpg') center/cover no-repeat;
+    opacity:0.12;pointer-events:none;z-index:0;
+}
+.container{max-width:1200px;margin:0 auto;padding:0 24px;position:relative}
+a{text-decoration:none;color:inherit;transition:var(--tr)}
+img{max-width:100%;display:block}
+button{font-family:inherit;cursor:pointer}
+h1,h2,h3,h4,h5{font-family:'Space Grotesk',sans-serif;font-weight:700;line-height:1.2;color:var(--text)}
+
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:10px 22px;border-radius:999px;font-size:0.9rem;font-weight:600;border:none;cursor:pointer;transition:var(--tr);white-space:nowrap;text-decoration:none}
+.btn-primary{background:linear-gradient(135deg,var(--primary),var(--pdk));color:#fff;box-shadow:0 4px 18px rgba(232,92,44,0.28)}
+.btn-primary:hover{background:linear-gradient(135deg,var(--plt),var(--primary));box-shadow:0 6px 26px rgba(232,92,44,0.44);transform:translateY(-2px);color:#fff}
+.btn-outline{background:rgba(255,255,255,0.04);color:var(--text2);border:1.5px solid var(--bmed)}
+.btn-outline:hover{background:rgba(255,255,255,0.08);border-color:rgba(232,92,44,0.38);color:var(--plt)}
+.btn:disabled{opacity:0.5;cursor:not-allowed;transform:none}
+
+/* NAVBAR */
+.navbar{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(6,7,10,0.78);backdrop-filter:blur(24px) saturate(180%);-webkit-backdrop-filter:blur(24px) saturate(180%);border-bottom:1px solid var(--border)}
+.navbar .container{display:flex;align-items:center;justify-content:space-between;height:68px;z-index:1}
+.logo{display:flex;align-items:center;gap:10px}
+.home-logo{gap:10px}
+.home-logo .logo-mark{width:40px;height:40px;border-radius:12px;display:inline-flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#1e2830,#111820);border:1px solid rgba(232,92,44,0.22);transition:var(--tr);flex-shrink:0}
+.home-logo .logo-mark i{color:var(--primary);font-size:1rem}
+.home-logo:hover .logo-mark{background:linear-gradient(135deg,var(--primary),var(--pdk));border-color:var(--primary);box-shadow:0 0 22px rgba(232,92,44,0.35)}
+.home-logo:hover .logo-mark i{color:#fff}
+.home-logo .logo-lockup{display:flex;flex-direction:column}
+.home-logo .logo-wordmark{display:inline-flex;align-items:baseline;gap:1px;font-family:'Space Grotesk',sans-serif;font-size:1.3rem;font-weight:800;letter-spacing:-0.03em;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:999px;padding:4px 12px;transition:var(--tr)}
+.home-logo .food{color:#ede8e3}
+.home-logo .express{color:var(--primary)}
+.home-logo:hover .logo-wordmark{background:linear-gradient(135deg,var(--primary),var(--pdk));border-color:var(--primary)}
+.home-logo:hover .food,.home-logo:hover .express{color:#fff}
+.nav-links{display:flex;align-items:center;gap:4px;visibility:hidden}
+.nav-links.nav-ready{visibility:visible}
+.nav-links>a:not(.btn):not(.cart-icon){padding:7px 14px;border-radius:999px;font-size:0.88rem;font-weight:500;color:var(--text2);position:relative}
+.nav-links>a:not(.btn):not(.cart-icon):hover{color:var(--text);background:rgba(255,255,255,0.06)}
+.nav-links>a.active{color:var(--plt)!important}
+.nav-links a:not(.btn):not(.cart-icon)::after{content:'';position:absolute;bottom:-2px;left:50%;width:100%;height:2px;background:var(--primary);border-radius:1px;transform:translateX(-50%) scaleX(0);transform-origin:center;transition:transform 0.3s cubic-bezier(0.34,1.56,0.64,1);pointer-events:none}
+.nav-links a:not(.btn):not(.cart-icon):hover::after,.nav-links a.active::after{transform:translateX(-50%) scaleX(1)}
+.cart-icon{position:relative;padding:8px;border-radius:10px;color:var(--text2);transition:var(--tr)}
+.cart-icon:hover{color:var(--text);background:rgba(255,255,255,0.06)}
+.cart-icon i{font-size:1.1rem}
+.cart-count{position:absolute;top:2px;right:2px;background:var(--primary);color:#fff;font-size:0.62rem;font-weight:700;width:17px;height:17px;border-radius:50%;display:flex;align-items:center;justify-content:center;border:2px solid var(--bg)}
+.auth-buttons{display:flex;align-items:center;gap:8px;visibility:hidden}
+.auth-buttons.auth-ready{visibility:visible}
+.user-menu{position:relative}
+.user-btn{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:999px;color:var(--text);padding:6px 14px 6px 6px;transition:var(--tr)}
+.user-btn:hover{background:rgba(255,255,255,0.09)}
+.user-avatar{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--pdk));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:0.75rem}
+.user-name{font-size:0.88rem;font-weight:600}
+.user-dropdown{position:absolute;top:calc(100% + 8px);right:0;background:var(--surface2);border:1px solid var(--bmed);border-radius:var(--rsm);box-shadow:var(--shlg);padding:8px;min-width:200px;display:none;z-index:1000}
+.user-dropdown.show{display:block}
+.user-dropdown a{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:var(--rxs);color:var(--text2);font-size:0.88rem}
+.user-dropdown a:hover{background:rgba(255,255,255,0.06);color:var(--text)}
+.user-dropdown hr{margin:6px 0;border:none;border-top:1px solid var(--border)}
+.menu-toggle{display:none;background:none;border:none;color:var(--text);font-size:1.4rem}
+
+/* MAIN SHELL */
+.settings-shell{position:relative;z-index:1;padding-top:98px;padding-bottom:54px}
+
+/* HERO */
+.settings-hero{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(300px,0.8fr);gap:26px;margin-bottom:28px}
+
+.settings-hero-copy,.settings-hero-panel,.settings-sidebar-card,.settings-main-card{
+    position:relative;border-radius:30px;border:1px solid var(--border);
+    background:linear-gradient(160deg,rgba(17,21,25,0.94),rgba(8,10,13,0.9));
+    box-shadow:0 28px 60px rgba(0,0,0,0.28);overflow:hidden;
+}
+.settings-hero-copy::before,.settings-hero-panel::before,.settings-sidebar-card::before,.settings-main-card::before{
+    content:'';position:absolute;inset:0;
+    background:linear-gradient(135deg,rgba(255,255,255,0.045),transparent 56%);
+    pointer-events:none;z-index:0;
+}
+.settings-hero-copy>*,.settings-hero-panel>*,.settings-sidebar-card>*,.settings-main-card>*{position:relative;z-index:1}
+
+.settings-hero-copy{padding:38px 38px 34px}
+.settings-kicker,.settings-section-label{
+    display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:999px;
+    background:rgba(232,92,44,0.12);border:1px solid rgba(232,92,44,0.22);
+    color:#ffb89d;font-size:0.82rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;
+}
+.settings-hero-copy h1{max-width:12ch;margin:18px 0 14px;font-size:clamp(2.6rem,4.5vw,4.2rem);line-height:0.96;letter-spacing:-0.04em;color:#fbfcfd}
+.settings-hero-copy p{max-width:49ch;margin:0;color:var(--text2);font-size:1.05rem;line-height:1.75}
+.settings-hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
+.settings-hero-actions .btn{min-height:48px}
+
+.settings-hero-panel{padding:28px;display:grid;gap:20px;align-content:start}
+.settings-hero-chip{
+    display:inline-flex;align-items:center;gap:10px;width:fit-content;
+    padding:11px 16px;border-radius:999px;background:rgba(255,255,255,0.04);
+    color:var(--text);border:1px solid var(--border);font-size:0.88rem;
+}
+.settings-hero-chip i{color:var(--plt)}
+.settings-hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.settings-hero-grid div,.settings-profile-meta div{
+    padding:16px 18px;border-radius:20px;
+    background:rgba(255,255,255,0.035);border:1px solid rgba(255,255,255,0.07);
+}
+.settings-hero-grid span,.settings-profile-meta span{
+    display:block;color:var(--text3);font-size:0.79rem;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;
+}
+.settings-hero-grid strong,.settings-profile-meta strong,.settings-strip strong{
+    display:block;margin-top:6px;color:var(--text);font-size:0.95rem;font-weight:600;
+}
+
+/* LAYOUT */
+.settings-layout{display:grid;grid-template-columns:300px minmax(0,1fr);gap:24px}
+.settings-layout-single{align-items:start}
+
+.settings-sidebar-card{padding:24px;display:grid;gap:18px;align-content:start}
+.settings-profile-card{
+    border-radius:24px;background:rgba(255,255,255,0.035);border:1px solid rgba(255,255,255,0.07);
+    padding:22px;
+}
+.settings-avatar{
+    width:80px;height:80px;border-radius:50%;margin-bottom:16px;
+    font-size:1.9rem;display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(135deg,var(--primary),var(--pdk));
+    color:#fff;font-weight:800;box-shadow:0 12px 32px rgba(232,92,44,0.32);
+    font-family:'Space Grotesk',sans-serif;
+}
+.settings-profile-card h2{margin:0 0 8px;color:var(--text);font-size:1.15rem}
+.settings-profile-card p{margin:0 0 16px;color:var(--text2);line-height:1.6;font-size:0.9rem}
+.settings-profile-meta{display:grid;gap:10px}
+
+.settings-main-card{padding:28px}
+.settings-section-head{display:flex;justify-content:space-between;gap:18px;align-items:end;margin-bottom:24px}
+.settings-section-head h2{margin:0;color:var(--text);font-size:1.3rem}
+
+.settings-form{display:grid;gap:22px}
+.settings-form-grid{display:grid;gap:16px}
+.settings-form-grid.two-up{grid-template-columns:1fr 1fr}
+.settings-field{display:grid;gap:8px}
+.settings-field span{color:rgba(246,248,250,0.88);font-size:0.88rem;font-weight:600;letter-spacing:0.02em}
+.settings-field input{
+    min-height:52px;padding:14px 18px;border-radius:14px;
+    border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.04);
+    color:var(--text);font-family:inherit;font-size:0.95rem;
+    transition:border-color 0.2s,box-shadow 0.2s,background 0.2s;
+}
+.settings-field input:focus{
+    outline:none;border-color:rgba(232,92,44,0.5);
+    box-shadow:0 0 0 4px rgba(232,92,44,0.1);background:rgba(255,255,255,0.06);
+}
+.settings-field input:disabled{cursor:not-allowed;color:var(--text3);background:rgba(255,255,255,0.02)}
+.settings-field small{color:var(--text3);font-size:0.8rem;line-height:1.5}
+.settings-field-locked{position:relative}
+.settings-field-locked::after{
+    content:'\f023';font-family:'Font Awesome 6 Free';font-weight:900;
+    position:absolute;right:16px;top:44px;color:rgba(232,238,242,0.34);font-size:0.85rem;
+}
+
+.settings-strip{
+    display:flex;justify-content:space-between;gap:16px;align-items:center;
+    padding:16px 20px;border-radius:14px;
+    background:rgba(232,92,44,0.06);border:1px solid rgba(232,92,44,0.14);
+}
+.settings-strip span{
+    display:block;color:#ffb89d;font-size:0.8rem;font-weight:700;
+    letter-spacing:0.06em;text-transform:uppercase;
+}
+.settings-strip strong{color:var(--text2);font-size:0.88rem;font-weight:400;margin-top:3px}
+.settings-strip i{font-size:1.25rem;color:var(--plt);flex-shrink:0}
+
+.settings-actions{display:flex;gap:12px;flex-wrap:wrap}
+.settings-actions .btn{min-height:48px}
+
+/* FOOTER */
+.page-footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:22px 0;margin-top:8px}
+.page-footer p{text-align:center;color:var(--text3);font-size:0.8rem}
+
+/* RESPONSIVE */
+@media(max-width:1080px){
+    .settings-hero,.settings-layout{grid-template-columns:1fr}
+    .settings-hero-copy h1{max-width:none}
+    .settings-section-head{align-items:start;flex-direction:column}
+}
+@media(max-width:768px){
+    .navbar .container{height:62px}
+    .nav-links,.nav-links.nav-ready{display:none}
+    .auth-buttons,.auth-buttons.auth-ready{display:none}
+    .menu-toggle{display:block}
+    .settings-shell{padding-top:82px}
+    .settings-hero-copy,.settings-hero-panel,.settings-sidebar-card,.settings-main-card{border-radius:20px}
+    .settings-hero-copy,.settings-main-card,.settings-sidebar-card{padding:20px}
+    .settings-hero-grid,.settings-form-grid.two-up{grid-template-columns:1fr}
+    .settings-hero-actions,.settings-actions{flex-direction:column}
+    .settings-hero-actions .btn,.settings-actions .btn{width:100%;justify-content:center}
+}
     </style>
 </head>
-<body class="site-dark settings-page">
+<body class="settings-page">
     <nav class="navbar">
         <div class="container">
             <a href="index.html" class="logo home-logo">
                 <span class="logo-mark" aria-hidden="true"><i class="fas fa-utensils"></i></span>
-                <span class="logo-lockup"><span class="logo-wordmark"><span class="food">Food</span><span class="express">Express</span></span></span>
+                <span class="logo-lockup">
+                    <span class="logo-wordmark"><span class="food">Food</span><span class="express">Express</span></span>
+                </span>
             </a>
             <div class="nav-links">
                 <a href="index.html">Home</a>
                 <a href="restaurants.html">Restaurants</a>
                 <a href="orders.html">My Orders</a>
-                <a href="cart.html" class="cart-icon"><i class="fas fa-shopping-cart"></i><span class="cart-count">0</span></a>
-                <div class="user-menu">
-                    <button class="user-btn"><i class="fas fa-user"></i><span id="username">Guest</span><i class="fas fa-chevron-down"></i></button>
-                    <div class="user-dropdown">
-                        <a href="settings.html"><i class="fas fa-cog"></i> Settings</a>
-                        <hr>
-                        <a href="login.html" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
-                    </div>
+                <a href="partner-apply.html" class="partner-nav-link">Partner with us</a>
+                <a href="cart.html" class="cart-icon">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count">0</span>
+                </a>
+                <div class="auth-buttons">
+                    <a href="login.html" class="btn btn-outline">Login</a>
+                    <a href="register.html" class="btn btn-primary">Sign Up</a>
                 </div>
             </div>
-            <button class="menu-toggle"><i class="fas fa-bars"></i></button>
+            <button class="menu-toggle" aria-label="Toggle menu"><i class="fas fa-bars"></i></button>
         </div>
     </nav>
 
@@ -85,7 +288,7 @@
         <section class="settings-layout settings-layout-single">
             <aside class="settings-sidebar-card">
                 <div class="settings-profile-card">
-                    <div id="settings-avatar" class="user-avatar settings-avatar">U</div>
+                    <div id="settings-avatar" class="settings-avatar">U</div>
                     <h2 id="settings-display-name">Your Profile</h2>
                     <p>Changes here shape the name and identity cues used across the storefront.</p>
                     <div class="settings-profile-meta">
@@ -139,9 +342,7 @@
                             <span>Live Preview</span>
                             <strong>Your updated initials and display name refresh as you type.</strong>
                         </div>
-                        <div>
-                            <i class="fas fa-wand-magic-sparkles"></i>
-                        </div>
+                        <i class="fas fa-wand-magic-sparkles"></i>
                     </div>
 
                     <div class="settings-actions">
@@ -153,9 +354,9 @@
         </section>
     </main>
 
-    <footer style="border-top:1px solid rgba(255,255,255,0.07);padding:22px 0;margin-top:40px;">
-        <div class="container" style="text-align:center;">
-            <p style="color:rgba(232,238,242,0.42);font-size:0.8rem;margin:0;">&copy; 2026 FoodExpress. All rights reserved.</p>
+    <footer class="page-footer">
+        <div class="container">
+            <p>&copy; 2026 FoodExpress. All rights reserved.</p>
         </div>
     </footer>
 
@@ -181,10 +382,3 @@
     </script>
 </body>
 </html>
-
-
-
-
-
-
-
