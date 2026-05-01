@@ -380,8 +380,35 @@ body.cart-page .cart-shell{padding-top:104px!important;padding-bottom:64px!impor
         checkLoginStatus();
         loadCartItems();
         updateCartCount();
+        applyCartAuthGate();
         setupCheckoutModal();
     });
+
+    function applyCartAuthGate() {
+        const isLoggedIn = localStorage.getItem('userLoggedIn') === 'true'
+                        && !!localStorage.getItem('access_token');
+        const btn = document.getElementById('checkout-btn');
+        if (!btn) return;
+
+        if (!isLoggedIn) {
+            // Replace the button with a sign-in link that looks identical to the button
+            const wrapper = btn.parentElement;
+            const signInLink = document.createElement('a');
+            signInLink.id = 'checkout-btn';
+            signInLink.href = 'login.html?next=cart.html';
+            signInLink.className = 'btn btn-primary btn-large';
+            signInLink.style.cssText = 'opacity:0.72;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;text-decoration:none';
+            signInLink.innerHTML = '<i class="fas fa-sign-in-alt"></i> Sign in to Order';
+            signInLink.title = 'You must be signed in to place an order';
+            wrapper.replaceChild(signInLink, btn);
+
+            // Add a soft notice beneath the sign-in link
+            const notice = document.createElement('p');
+            notice.style.cssText = 'font-size:0.8rem;color:rgba(237,232,227,0.45);text-align:center;margin-top:8px';
+            notice.textContent = 'Your cart items are saved. Sign in and they will still be here.';
+            wrapper.appendChild(notice);
+        }
+    }
     </script>
 </body>
 </html>

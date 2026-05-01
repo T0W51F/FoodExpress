@@ -411,10 +411,26 @@ async function confirmApprove() {
         const result = await apiCall(`/admin/applications/${approvingId}/approve`, { method: 'POST' });
         closeModal('approve-modal-overlay');
 
-        // Show credentials
+        // Show credentials — temp_password is null when the applicant already had an account
         document.getElementById('result-email').textContent = result.user.email;
-        document.getElementById('result-password').textContent = result.temp_password;
         document.getElementById('result-restaurant-id').textContent = result.restaurant.restaurant_id;
+
+        const hasTempPassword = result.temp_password != null;
+        const credBox       = document.getElementById('result-credentials-box');
+        const noNewCredsMsg = document.getElementById('result-no-new-creds');
+        const credWarning   = document.getElementById('result-cred-warning');
+
+        if (hasTempPassword) {
+            document.getElementById('result-password').textContent = result.temp_password;
+            credBox.classList.remove('hidden');
+            noNewCredsMsg.classList.add('hidden');
+            credWarning.classList.remove('hidden');
+        } else {
+            credBox.classList.add('hidden');
+            noNewCredsMsg.classList.remove('hidden');
+            credWarning.classList.add('hidden');
+        }
+
         openModal('approval-result-overlay');
 
         approvingId = null;
