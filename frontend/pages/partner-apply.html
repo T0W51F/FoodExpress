@@ -494,6 +494,15 @@ textarea::placeholder{color:rgba(16,20,23,0.42)}
     <script src="../assets/js/api.js"></script>
     <script src="../assets/js/main.js"></script>
     <script>
+        // Auth gate: redirect to login before the page is usable
+        (function () {
+            const token = localStorage.getItem('access_token');
+            const loggedIn = localStorage.getItem('userLoggedIn') === 'true';
+            if (!token || !loggedIn) {
+                window.location.href = 'login.html?next=partner-apply.html';
+            }
+        })();
+
         document.addEventListener('DOMContentLoaded', function () {
             const form = document.getElementById('partner-form');
             const statusForm = document.getElementById('status-form');

@@ -226,10 +226,11 @@ class APIService {
         return await this.request(`/restaurants/search/?${queryString}`);
     }
 
-    // Partner Application (public)
+    // Partner Application (requires auth)
     async submitPartnerApplication(data) {
         return await this.request('/partner/apply', {
             method: 'POST',
+            headers: { 'Authorization': `Bearer ${this.getAccessToken()}` },
             body: JSON.stringify(data)
         });
     }

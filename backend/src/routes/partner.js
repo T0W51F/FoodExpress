@@ -1,10 +1,11 @@
 import { Router } from 'express';
+import { requireAuth } from '../middleware/auth.js';
 import { submitPartnerApplication, getApplicationByEmail } from '../data/store.js';
 
 const router = Router();
 
-// POST /api/partner/apply — public, submit a partner application
-router.post('/apply', async (req, res, next) => {
+// POST /api/partner/apply — requires auth; only logged-in users may apply
+router.post('/apply', requireAuth, async (req, res, next) => {
   try {
     const app = await submitPartnerApplication(req.body);
     res.status(201).json(app);
