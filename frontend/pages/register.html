@@ -17,10 +17,8 @@
         body { font-family: 'Inter', -apple-system, sans-serif; }
         h1, h2, h3, h4, h5, h6 { font-family: 'Space Grotesk', sans-serif; }
         .auth-logo { display:flex; align-items:center; gap:10px; margin-bottom:72px; text-decoration:none; width:fit-content; }
-        .auth-logo .logo-mark { width:44px; height:44px; border-radius:14px; display:inline-flex; align-items:center; justify-content:center; background:linear-gradient(135deg,#1e2830,#111820); border:1px solid rgba(232,92,44,0.28); flex-shrink:0; transition:all 0.25s; }
-        .auth-logo .logo-mark i { color:#e85c2c; font-size:1rem; }
-        .auth-logo:hover .logo-mark { background:linear-gradient(135deg,#e85c2c,#cf4d1d); border-color:#e85c2c; box-shadow:0 0 22px rgba(232,92,44,0.35); }
-        .auth-logo:hover .logo-mark i { color:#fff; }
+        .auth-logo .logo-mark { display:inline-flex; align-items:center; justify-content:center; background:none !important; border:none !important; box-shadow:none !important; flex-shrink:0; }
+        .auth-logo .logo-mark i { color:#e85c2c !important; font-size:1.4rem !important; background:none !important; border:none !important; box-shadow:none !important; width:auto !important; height:auto !important; border-radius:0 !important; }
         .auth-logo .logo-wordmark { display:inline-flex; align-items:baseline; gap:1px; font-family:'Space Grotesk',sans-serif; font-size:1.3rem; font-weight:800; letter-spacing:-0.03em; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:999px; padding:4px 12px; transition:all 0.25s; }
         .auth-logo .food { color:#ede8e3; }
         .auth-logo .express { color:#e85c2c; }
@@ -29,6 +27,9 @@
         .btn.btn-primary { background:linear-gradient(135deg,#e85c2c,#cf4d1d) !important; border-radius:999px !important; box-shadow:0 8px 24px rgba(232,92,44,0.32) !important; }
         .btn.btn-primary:hover { background:linear-gradient(135deg,#ff7a4d,#e85c2c) !important; box-shadow:0 12px 32px rgba(232,92,44,0.44) !important; transform:translateY(-1px); }
         .social-btn { border-radius:999px !important; }
+        /* Checkbox alignment fix */
+        .checkbox { align-items:flex-start !important; }
+        .checkbox input[type="checkbox"] { margin-top:3px; flex-shrink:0; }
     </style>
 </head>
 <body class="site-dark register-page">
