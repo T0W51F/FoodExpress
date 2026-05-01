@@ -185,6 +185,15 @@ h3{font-size:1.2rem}h4{font-size:1rem}
     <script src="../assets/js/api.js"></script>
     <script src="../assets/js/main.js"></script>
     <script>
+    // Auth guard: redirect unauthenticated visitors before any page content loads
+    (function () {
+        const token = localStorage.getItem('access_token');
+        const loggedIn = localStorage.getItem('userLoggedIn') === 'true';
+        if (!token || !loggedIn) {
+            window.location.href = 'login.html?next=orders.html';
+        }
+    })();
+
     document.addEventListener('DOMContentLoaded', function() {
         checkLoginStatus();
         loadOrders();

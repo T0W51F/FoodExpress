@@ -364,6 +364,15 @@ h1,h2,h3,h4,h5{font-family:'Space Grotesk',sans-serif;font-weight:700;line-heigh
     <script src="../assets/js/main.js"></script>
     <script src="../assets/js/settings.js"></script>
     <script>
+    // Auth guard: redirect unauthenticated visitors before any page content loads
+    (function () {
+        const token = localStorage.getItem('access_token');
+        const loggedIn = localStorage.getItem('userLoggedIn') === 'true';
+        if (!token || !loggedIn) {
+            window.location.href = 'login.html?next=settings.html';
+        }
+    })();
+
         document.addEventListener('DOMContentLoaded', function() {
             const firstNameInput = document.getElementById('settings-first-name');
             const lastNameInput = document.getElementById('settings-last-name');

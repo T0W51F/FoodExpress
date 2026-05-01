@@ -7,7 +7,10 @@ const router = Router();
 // POST /api/partner/apply — requires auth; only logged-in users may apply
 router.post('/apply', requireAuth, async (req, res, next) => {
   try {
-    const app = await submitPartnerApplication(req.body);
+    // Attach the authenticated user's integer ID so the application is
+    // linked to their account. The store uses this to upgrade the correct
+    // user on approval instead of matching by email.
+    const app = await submitPartnerApplication({ ...req.body, user_id: req.user.user_id });
     res.status(201).json(app);
   } catch (error) {
     next(error);

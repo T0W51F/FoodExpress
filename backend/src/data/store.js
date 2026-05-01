@@ -767,7 +767,10 @@ export async function submitPartnerApplication(data) {
     phone: String(data.phone).trim(),
     address: String(data.address).trim(),
     description: data.description || '',
-    status: 'pending'
+    status: 'pending',
+    // Link the application to the logged-in user so approval can target
+    // the right account directly instead of matching by email.
+    user_id: data.user_id != null ? Number(data.user_id) : null
   });
 
   return serializePartnerApplication(app.toObject());
@@ -847,30 +850,55 @@ export async function approveApplication(application_id) {
     restricted: false
   });
 
-  // Create the restaurant_admin User
-  const newUser = await User.create({
-    user_id: await getNextSequence('users'),
-    first_name: app.contact_name.split(' ')[0] || app.contact_name,
-    last_name: app.contact_name.split(' ').slice(1).join(' ') || '',
-    email: app.email,
-    phone: app.phone,
-    password_hash: await bcrypt.hash(tempPassword, 10),
-    role: 'restaurant_admin',
-    restaurant_id: restaurant.restaurant_id,
-    status: 'active'
-  });
+  // Resolve or create the restaurant_admin User.
+  // If the application was submitted by a logged-in user (app.user_id is set),
+  // upgrade that existing account rather than creating a duplicate.
+  let adminUser;
+  let isNewUser = false;
+
+  if (app.user_id) {
+    adminUser = await User.findOne({ user_id: app.user_id });
+  }
+
+  if (adminUser) {
+    // Upgrade the existing account in-place
+    adminUser.role = 'restaurant_admin';
+    adminUser.restaurant_id = restaurant.restaurant_id;
+    // Update contact details from the application if they have changed
+    if (!adminUser.phone && app.phone) {
+      adminUser.phone = app.phone;
+    }
+    await adminUser.save();
+  } else {
+    // Fall back: create a brand-new account (legacy path for applications
+    // submitted before user linking was introduced, or by unauthenticated users)
+    isNewUser = true;
+    adminUser = await User.create({
+      user_id: await getNextSequence('users'),
+      first_name: app.contact_name.split(' ')[0] || app.contact_name,
+      last_name: app.contact_name.split(' ').slice(1).join(' ') || '',
+      email: app.email,
+      phone: app.phone,
+      password_hash: await bcrypt.hash(tempPassword, 10),
+      role: 'restaurant_admin',
+      restaurant_id: restaurant.restaurant_id,
+      status: 'active'
+    });
+  }
 
   // Update the application
   app.status = 'approved';
-  app.user_id = newUser.user_id;
+  app.user_id = adminUser.user_id;
   app.restaurant_id = restaurant.restaurant_id;
   await app.save();
 
   return {
     application: serializePartnerApplication(app.toObject()),
     restaurant: serializeRestaurant(restaurant.toObject()),
-    user: publicUser(newUser),
-    temp_password: tempPassword
+    user: publicUser(adminUser),
+    // Only emit temp_password when a new account was created so the
+    // superadmin knows to communicate it; existing users keep their password
+    temp_password: isNewUser ? tempPassword : null
   };
 }
 
