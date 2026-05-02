@@ -6,8 +6,7 @@ FoodExpress is a full-stack food delivery platform built as a monorepo with a No
 
 ## 🚀 Live Demo
 
-- 🌐 Frontend: https://foodexpress-five.vercel.app/pages/index.html  
-- ⚙️ Backend API: http://localhost:5000/api  
+- 🌐 Frontend: https://foodexpress-five.vercel.app/pages/index.html   
 
 ---
 
