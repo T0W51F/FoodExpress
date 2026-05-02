@@ -157,13 +157,35 @@ h3{font-size:1.2rem}h4{font-size:1rem}
         <section class="active-order" id="active-order"></section>
 
         <section class="orders-list-section">
+            <div style="display:flex;align-items:end;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-bottom:1rem">
+                <div>
+                    <h2 style="margin:0 0 .35rem">Current Orders</h2>
+                    <p style="margin:0;color:var(--text2)">Orders that are still being prepared or delivered.</p>
+                </div>
+            </div>
             <div class="orders-list" id="orders-list"></div>
 
             <div class="no-orders" id="no-orders" style="display:none">
                 <i class="fas fa-shopping-bag"></i>
-                <h3>No Orders Yet</h3>
-                <p>Your orders will appear here after checkout.</p>
+                <h3>No Active Orders</h3>
+                <p>Your in-progress orders will appear here.</p>
                 <a href="restaurants.html" class="btn btn-primary">Order Now</a>
+            </div>
+        </section>
+
+        <section class="orders-list-section">
+            <div style="display:flex;align-items:end;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-bottom:1rem">
+                <div>
+                    <h2 style="margin:0 0 .35rem">Order History</h2>
+                    <p style="margin:0;color:var(--text2)">Delivered and cancelled orders are kept here.</p>
+                </div>
+            </div>
+            <div class="orders-list" id="orders-history-list"></div>
+
+            <div class="no-orders" id="no-order-history" style="display:none">
+                <i class="fas fa-history"></i>
+                <h3>No Order History Yet</h3>
+                <p>Finished orders will move here automatically.</p>
             </div>
 
             <div class="load-more" hidden>

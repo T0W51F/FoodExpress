@@ -29,6 +29,9 @@ const DOM = {
     heroSearchBtn: document.getElementById('hero-search-btn')
 };
 
+const ACTIVE_ORDER_STATUSES = ['pending', 'confirmed', 'preparing', 'out_for_delivery', 'delivering'];
+const HISTORY_ORDER_STATUSES = ['delivered', 'cancelled'];
+
 async function apiCall(endpoint, options = {}) {
     const baseUrl = window.API?.config?.BASE_URL || 'http://localhost:5000/api';
     const token = localStorage.getItem('access_token');
@@ -1398,7 +1401,7 @@ function renderActiveOrder(orders) {
         return;
     }
 
-    const activeOrder = orders.find(order => ['pending', 'preparing', 'delivering'].includes(order.status));
+    const activeOrder = orders.find(order => ACTIVE_ORDER_STATUSES.includes(order.status));
     if (!activeOrder) {
         activeShell.innerHTML = '';
         activeShell.style.display = 'none';
@@ -1467,6 +1470,30 @@ function renderOrdersCollection(orders) {
     });
 }
 
+function renderOrderHistoryCollection(orders) {
+    const historyList = document.getElementById('orders-history-list');
+    const noHistory = document.getElementById('no-order-history');
+    if (!historyList || !noHistory) {
+        return;
+    }
+
+    if (!orders.length) {
+        historyList.innerHTML = '';
+        noHistory.style.display = 'grid';
+        return;
+    }
+
+    noHistory.style.display = 'none';
+    historyList.innerHTML = orders.map(buildOrderCardHTML).join('');
+
+    document.querySelectorAll('.reorder-btn').forEach(btn => {
+        btn.addEventListener('click', e => {
+            e.preventDefault();
+            reorder(btn.dataset.orderId);
+        });
+    });
+}
+
 // Map a backend order object to the shape the render functions expect
 function normalizeOrderForUI(order) {
     const restaurantInfo = order.restaurant || {};
@@ -1486,6 +1513,7 @@ async function loadOrders() {
     if (localStorage.getItem('userLoggedIn') !== 'true') {
         renderActiveOrder([]);
         renderOrdersCollection([]);
+        renderOrderHistoryCollection([]);
         return;
     }
 
@@ -1493,19 +1521,23 @@ async function loadOrders() {
         const response = await api.getOrders();
         const orders = (response.results || []).map(normalizeOrderForUI);
         renderActiveOrder(orders);
-        renderOrdersCollection(orders);
+        renderOrdersCollection(orders.filter(order => ACTIVE_ORDER_STATUSES.includes(order.status)));
+        renderOrderHistoryCollection(orders.filter(order => HISTORY_ORDER_STATUSES.includes(order.status)));
     } catch (err) {
         console.error('Failed to load orders:', err);
         renderActiveOrder([]);
         renderOrdersCollection([]);
+        renderOrderHistoryCollection([]);
     }
 }
 
 function getStatusText(status) {
     const statusMap = {
         pending: 'Pending',
+        confirmed: 'Confirmed',
         preparing: 'Preparing',
         delivering: 'On the Way',
+        out_for_delivery: 'On the Way',
         delivered: 'Delivered',
         cancelled: 'Cancelled'
     };
@@ -1526,16 +1558,20 @@ async function filterOrders(status) {
     if (localStorage.getItem('userLoggedIn') !== 'true') {
         renderActiveOrder([]);
         renderOrdersCollection([]);
+        renderOrderHistoryCollection([]);
         return;
     }
 
     try {
         const response = await api.getOrders();
         const allOrders = (response.results || []).map(normalizeOrderForUI);
-        const visibleOrders = status === 'all' ? allOrders : allOrders.filter(order => order.status === status);
-        const visibleActiveOrders = status === 'all' ? allOrders : allOrders.filter(order => ['pending', 'preparing', 'delivering'].includes(order.status) && order.status === status);
+        const normalizedStatus = status === 'delivering' ? 'out_for_delivery' : status;
+        const visibleOrders = normalizedStatus === 'all' ? allOrders : allOrders.filter(order => order.status === normalizedStatus);
+        const visibleActiveOrders = visibleOrders.filter(order => ACTIVE_ORDER_STATUSES.includes(order.status));
+        const visibleHistoryOrders = visibleOrders.filter(order => HISTORY_ORDER_STATUSES.includes(order.status));
         renderActiveOrder(visibleActiveOrders);
-        renderOrdersCollection(visibleOrders);
+        renderOrdersCollection(visibleActiveOrders);
+        renderOrderHistoryCollection(visibleHistoryOrders);
     } catch (err) {
         console.error('Failed to filter orders:', err);
     }
