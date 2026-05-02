@@ -1372,7 +1372,8 @@ function renderOrderProgress(status) {
     `;
 }
 
-function buildOrderCardHTML(order) {
+function buildOrderCardHTML(order, options = {}) {
+    const { allowDelete = false } = options;
     const items = Array.isArray(order.items) ? order.items : [];
     const visibleItems = items.slice(0, 3);
     const extraItems = Math.max(0, items.length - visibleItems.length);
@@ -1422,6 +1423,7 @@ function buildOrderCardHTML(order) {
 
             <div class="order-actions">
                 <button class="btn btn-outline reorder-btn" data-order-id="${order.id}"><i class="fas fa-redo"></i> Reorder</button>
+                ${allowDelete ? `<button class="btn btn-outline delete-history-btn" data-order-id="${order.id}" type="button"><i class="fas fa-trash"></i> Delete</button>` : ''}
                 <button class="btn btn-outline" type="button"><i class="fas fa-location-dot"></i> Details</button>
             </div>
         </article>
@@ -1517,12 +1519,36 @@ function renderOrderHistoryCollection(orders) {
     }
 
     noHistory.style.display = 'none';
-    historyList.innerHTML = orders.map(buildOrderCardHTML).join('');
+    historyList.innerHTML = orders.map(order => buildOrderCardHTML(order, { allowDelete: true })).join('');
 
     document.querySelectorAll('.reorder-btn').forEach(btn => {
         btn.addEventListener('click', e => {
             e.preventDefault();
             reorder(btn.dataset.orderId);
+        });
+    });
+
+    historyList.querySelectorAll('.delete-history-btn').forEach(btn => {
+        btn.addEventListener('click', async e => {
+            e.preventDefault();
+            const orderId = btn.dataset.orderId;
+            if (!confirm(`Delete order history for order #${orderId}?`)) {
+                return;
+            }
+
+            btn.disabled = true;
+            try {
+                await api.deleteOrder(orderId);
+                await loadOrders();
+                if (typeof window.showNotification === 'function') {
+                    window.showNotification('Order history deleted', 'success');
+                }
+            } catch (error) {
+                btn.disabled = false;
+                if (typeof window.showNotification === 'function') {
+                    window.showNotification(error.message || 'Failed to delete order history', 'error');
+                }
+            }
         });
     });
 }

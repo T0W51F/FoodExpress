@@ -521,6 +521,22 @@ export async function getOrderById(userId, orderId) {
   return serializeOrder(order);
 }
 
+export async function deleteOrderById(userId, orderId) {
+  const order = await Order.findOne({ user_id: Number(userId), order_id: String(orderId) }).lean();
+  if (!order) {
+    const error = new Error('Order not found');
+    error.status = 404;
+    throw error;
+  }
+  if (!['delivered', 'cancelled'].includes(order.status)) {
+    const error = new Error('Only delivered or cancelled orders can be deleted');
+    error.status = 400;
+    throw error;
+  }
+
+  await Order.deleteOne({ user_id: Number(userId), order_id: String(orderId) });
+}
+
 export async function seedRestaurantAndFoodData() {
   const restaurantsJson = readJson('restaurants.json');
   const foodsJson = readJson('foods.json');

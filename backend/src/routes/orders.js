@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import {
   createOrder,
+  deleteOrderById,
   getCart,
   getOrderById,
   listOrders,
@@ -55,6 +56,15 @@ router.post('/orders/', requireAuth, async (req, res, next) => {
 router.get('/orders/:id/', requireAuth, async (req, res, next) => {
   try {
     res.json(await getOrderById(req.user.user_id, req.params.id));
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.delete('/orders/:id/', requireAuth, async (req, res, next) => {
+  try {
+    await deleteOrderById(req.user.user_id, req.params.id);
+    res.status(204).send();
   } catch (error) {
     next(error);
   }

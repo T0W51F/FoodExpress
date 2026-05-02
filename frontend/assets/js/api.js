@@ -186,6 +186,13 @@ class APIService {
             headers: { 'Authorization': `Bearer ${this.getAccessToken()}` }
         });
     }
+
+    async deleteOrder(id) {
+        return await this.request(`/orders/orders/${id}/`, {
+            method: 'DELETE',
+            headers: { 'Authorization': `Bearer ${this.getAccessToken()}` }
+        });
+    }
     
     // Cart (local storage for Phase 1, will be replaced with API in Phase 3)
     async syncCart(cartData) {
