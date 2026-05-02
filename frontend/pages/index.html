@@ -1054,22 +1054,6 @@ h4{font-size:1.05rem}
     <script src="../assets/js/api.js"></script>
     <script src="../assets/js/main.js"></script>
     <script>
-    async function updateCartCount() {
-        try {
-            const apiBaseUrl = window.API?.config?.BASE_URL || 'http://localhost:5000/api';
-            const response = await fetch(`${apiBaseUrl}/orders/cart/`, {
-                headers: { 'Authorization': `Bearer ${localStorage.getItem('access_token')}` }
-            });
-            if (response.ok) {
-                const cart = await response.json();
-                const totalItems = cart.items?.length || 0;
-                document.querySelectorAll('.cart-count').forEach(el => { el.textContent = totalItems; });
-                const mcc = document.getElementById('mobile-cart-count');
-                if (mcc) mcc.textContent = totalItems;
-            }
-        } catch (e) { console.log('Cart not loaded'); }
-    }
-
     document.addEventListener('DOMContentLoaded', function() {
         checkLoginStatus();
         loadFeaturedRestaurants();
