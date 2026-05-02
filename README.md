@@ -198,7 +198,7 @@ FoodExpress/
 
 1. Clone the repository:
    ```bash
-   git clone <repo-url>
+   git clone <[repo-url](https://github.com/T0W51F/FoodExpress/)>
    cd FoodExpress
    ```
 2. Install backend dependencies:
