@@ -96,7 +96,7 @@ The backend exposes a RESTful API (`/api`) while the frontend is served as a sta
 
 1. Clone the repository:
    ```bash
-   git clone [https://github.com/T0W51F/FoodExpress/]
+   git clone https://github.com/T0W51F/FoodExpress/
    cd FoodExpress
    ```
 2. Install backend dependencies:
