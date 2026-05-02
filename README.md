@@ -2,44 +2,94 @@
 
 FoodExpress is a full-stack food delivery platform built as a monorepo with a Node.js/Express/MongoDB backend and a vanilla HTML/CSS/JavaScript frontend.
 
-## Project Overview
+---
 
-FoodExpress provides restaurant discovery, menu browsing, cart and checkout flows, user authentication, order history, review submission, partner applications, and admin dashboards. The backend exposes a REST API under `/api/` and the frontend is served as a static site under `frontend/pages/`.
+## 🚀 Live Demo
 
-## Features
+- 🌐 Frontend: https://foodexpress-five.vercel.app/pages/index.html  
+- ⚙️ Backend API: http://localhost:5000/api  
 
-- User authentication with email/password registration and login
-- JWT-based access and refresh tokens for session handling
-- Profile view and update endpoints
-- Restaurant listing, featured restaurants, category browsing, and restaurant search
-- Menu item detail retrieval and restaurant-specific food menus
-- Cart save/load sync for logged-in users
-- Order creation, order history, and individual order retrieval
-- Promotion code validation API route
-- Review submission for authenticated users
-- Partner application submission and status lookup
-- Admin and superadmin dashboard support for restaurants, orders, promotions, categories, partner applications, users, and analytics
-- Role-based access control for `customer`, `restaurant_admin`, `admin`, and `superadmin`
-- Docker deployment with MongoDB, backend service, and frontend Nginx service
-- Static frontend deploy-ready configuration via `frontend/vercel.json`
+---
 
-## Technologies Used
 
-- Node.js
-- Express
-- MongoDB
-- Mongoose
-- JSON Web Tokens (JWT)
-- bcryptjs
-- dotenv
-- cors
-- nodemon
-- Vanilla JavaScript
-- HTML5
-- CSS3
-- Nginx (frontend container)
-- Docker
-- Docker Compose
+
+## 💡 Project Overview
+
+FoodExpress is a scalable food delivery system that supports:
+
+- Customer food ordering  
+- Restaurant management  
+- Admin control panel  
+- Partner onboarding system  
+
+The backend exposes a RESTful API (`/api`) while the frontend is served as a static multi-page application.
+
+---
+
+## ✨ Key Features
+
+### 👤 User Features
+- User registration & login  
+- JWT-based authentication (access + refresh tokens)  
+- Profile management  
+- Cart system (save/load)  
+- Order placement & history  
+- Review & rating system  
+
+### 🍽️ Restaurant Features
+- Restaurant listing & search  
+- Menu browsing by category  
+- Featured restaurants  
+
+### 🛒 Order System
+- Add to cart  
+- Checkout flow  
+- Promotion code validation  
+- Order tracking (basic)  
+
+### 🤝 Partner System
+- Restaurant partner application  
+- Partner dashboard  
+- Application status tracking  
+
+### 🛠️ Admin System
+- Admin & superadmin dashboards  
+- Manage:
+  - Restaurants  
+  - Orders  
+  - Promotions  
+  - Categories  
+  - Users  
+  - Partner applications  
+
+- Role-based access control:
+  - `customer`  
+  - `restaurant_admin`  
+  - `admin`  
+  - `superadmin`  
+
+---
+
+## 🛠️ Tech Stack
+
+### Backend
+- Node.js  
+- Express.js  
+- MongoDB + Mongoose  
+- JWT (Authentication)  
+- bcryptjs  
+
+### Frontend
+- HTML5  
+- CSS3  
+- Vanilla JavaScript  
+
+### DevOps
+- Docker  
+- Docker Compose  
+- Nginx (frontend serving)  
+
+---
 
 ## Folder Structure
 
