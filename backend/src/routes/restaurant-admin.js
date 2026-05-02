@@ -159,6 +159,52 @@ async function updateDeliveryWorkload(deliveryPersonId, { activeDelta = 0, compl
   );
 }
 
+async function assignDeliveryPersonToOrder({ orderId, restaurantId, deliveryPersonId }) {
+  const existing = await Order.findOne({ order_id: orderId }).lean();
+  if (!existing) {
+    const error = new Error('Order not found');
+    error.status = 404;
+    throw error;
+  }
+  if (existing.restaurant?.id !== restaurantId) {
+    const error = new Error('Order belongs to a different restaurant');
+    error.status = 403;
+    throw error;
+  }
+  if (['delivered', 'cancelled'].includes(existing.status)) {
+    const error = new Error(`Order is already ${existing.status}`);
+    error.status = 400;
+    throw error;
+  }
+
+  const driver = await DeliveryPerson.findOne({ delivery_person_id: Number(deliveryPersonId) }).lean();
+  if (!driver) {
+    const error = new Error('Delivery person not found');
+    error.status = 404;
+    throw error;
+  }
+
+  const updates = {
+    assigned_delivery_person_id: Number(driver.delivery_person_id),
+    assigned_delivery_person_name: driver.name,
+    assigned_at: new Date(),
+    status: 'out_for_delivery'
+  };
+
+  const updated = await Order.findOneAndUpdate({ order_id: orderId }, updates, { new: true }).lean();
+
+  if (existing.assigned_delivery_person_id && existing.assigned_delivery_person_id !== Number(driver.delivery_person_id)) {
+    await updateDeliveryWorkload(existing.assigned_delivery_person_id, { activeDelta: -1 });
+  }
+  if (existing.assigned_delivery_person_id !== Number(driver.delivery_person_id)) {
+    await updateDeliveryWorkload(driver.delivery_person_id, { activeDelta: 1 });
+  } else if (existing.status !== 'out_for_delivery') {
+    await updateDeliveryWorkload(driver.delivery_person_id, { activeDelta: 1 });
+  }
+
+  return updated;
+}
+
 // PATCH /api/restaurant/orders/:id/status
 router.patch('/orders/:id/status', async (req, res, next) => {
   try {
@@ -199,6 +245,33 @@ router.patch('/orders/:id/status', async (req, res, next) => {
     }
 
     res.json({ order_id: updated.order_id, status: updated.status });
+  } catch (error) {
+    next(error);
+  }
+});
+
+// PATCH /api/restaurant/orders/:id/assign-delivery
+router.patch('/orders/:id/assign-delivery', async (req, res, next) => {
+  try {
+    const restaurantId = getRestaurantId(req);
+    const deliveryPersonId = Number(req.body.delivery_person_id);
+    if (!Number.isFinite(deliveryPersonId) || deliveryPersonId < 1) {
+      return res.status(400).json({ detail: 'A valid delivery_person_id is required' });
+    }
+
+    const updated = await assignDeliveryPersonToOrder({
+      orderId: req.params.id,
+      restaurantId,
+      deliveryPersonId
+    });
+
+    res.json({
+      order_id: updated.order_id,
+      status: updated.status,
+      assigned_delivery_person_id: updated.assigned_delivery_person_id,
+      assigned_delivery_person_name: updated.assigned_delivery_person_name,
+      assigned_at: updated.assigned_at
+    });
   } catch (error) {
     next(error);
   }

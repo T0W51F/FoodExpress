@@ -1056,6 +1056,9 @@ export async function getRestaurantOrders(restaurant_id) {
       address: o.address,
       paymentMethod: o.paymentMethod,
       paymentStatus: o.paymentStatus,
+      assigned_delivery_person_id: o.assigned_delivery_person_id || null,
+      assigned_delivery_person_name: o.assigned_delivery_person_name || '',
+      assigned_at: o.assigned_at || null,
       created_at: o.createdAt
     }))
   };

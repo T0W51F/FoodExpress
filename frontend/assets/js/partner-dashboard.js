@@ -663,6 +663,158 @@ async function loadOrders() {
     }
 }
 
+loadOrders = async function loadOrdersWithDriverAssignment() {
+    const tbody = document.getElementById('orders-tbody');
+    const empty = document.getElementById('orders-empty');
+    const table = document.getElementById('orders-table');
+
+    tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;color:#64748b;padding:2rem;">Loading...</td></tr>';
+    table.classList.remove('hidden');
+    empty.classList.add('hidden');
+
+    try {
+        const [ordersData, driversData] = await Promise.all([
+            apiCall('/restaurant/orders'),
+            apiCall('/restaurant/deliveries')
+        ]);
+        const orders = ordersData.results || [];
+        const drivers = driversData.results || [];
+
+        document.getElementById('stat-orders').textContent = orders.length;
+
+        if (!orders.length) {
+            table.classList.add('hidden');
+            empty.classList.remove('hidden');
+            return;
+        }
+
+        const TERMINAL = ['delivered', 'cancelled'];
+        const ALL_STATUSES = ['pending', 'confirmed', 'preparing', 'out_for_delivery', 'delivered', 'cancelled'];
+
+        tbody.innerHTML = orders.map(order => {
+            const isTerminal = TERMINAL.includes(order.status);
+            const statusOptions = ALL_STATUSES.map(s =>
+                `<option value="${s}" ${order.status === s ? 'selected' : ''}>${s.replace(/_/g, ' ')}</option>`
+            ).join('');
+            const selectedDriverId = Number(order.assigned_delivery_person_id || 0);
+            const driverOptions = [
+                `<option value="">${drivers.length ? 'Select driver' : 'No drivers available'}</option>`,
+                ...drivers.map(driver => {
+                    const isSelected = Number(driver.delivery_person_id) === selectedDriverId;
+                    const statusLabel = driver.status === 'available' ? 'available' : `status: ${driver.status}`;
+                    return `<option value="${driver.delivery_person_id}" ${isSelected ? 'selected' : ''}>${escHtml(driver.name)} (${statusLabel})</option>`;
+                })
+            ].join('');
+
+            return `
+                <tr data-order-id="${order.order_id}">
+                    <td style="font-family:monospace;font-size:0.8rem;color:#94a3b8">#${order.order_id}</td>
+                    <td>${order.items.length} item${order.items.length !== 1 ? 's' : ''}</td>
+                    <td style="font-weight:600;color:#f1f5f9">${Number(order.total || 0).toFixed(2)}Tk</td>
+                    <td style="text-transform:capitalize">${order.paymentMethod || 'cash'}</td>
+                    <td>
+                        <select class="order-status-select status-${order.status}" data-order-id="${order.order_id}" ${isTerminal ? 'disabled' : ''}>
+                            ${statusOptions}
+                        </select>
+                    </td>
+                    <td>
+                        <div style="display:flex;flex-direction:column;gap:6px;min-width:180px">
+                            <select class="order-driver-select" data-order-id="${order.order_id}" ${isTerminal || !drivers.length ? 'disabled' : ''}>
+                                ${driverOptions}
+                            </select>
+                            <span style="font-size:0.72rem;color:#94a3b8">${order.assigned_delivery_person_name ? `Assigned: ${escHtml(order.assigned_delivery_person_name)}` : 'Not assigned'}</span>
+                        </div>
+                    </td>
+                    <td style="color:#64748b;font-size:0.8rem">${formatDate(order.created_at)}</td>
+                    <td>
+                        ${!isTerminal ? `
+                            <div style="display:flex;gap:6px;flex-wrap:wrap">
+                                <button class="btn btn-outline btn-sm assign-driver-btn" data-order-id="${order.order_id}" style="font-size:0.75rem;padding:0.3rem 0.6rem" ${!drivers.length ? 'disabled' : ''}>${order.assigned_delivery_person_id ? 'Reassign' : 'Assign'}</button>
+                                <button class="btn btn-danger btn-sm cancel-order-btn" data-order-id="${order.order_id}" style="font-size:0.75rem;padding:0.3rem 0.6rem">Cancel</button>
+                            </div>
+                        ` : '<span style="color:#475569;font-size:0.75rem">-</span>'}
+                    </td>
+                </tr>
+            `;
+        }).join('');
+
+        tbody.querySelectorAll('.order-status-select').forEach(sel => {
+            sel.addEventListener('change', async function () {
+                const orderId = this.dataset.orderId;
+                const newStatus = this.value;
+                this.disabled = true;
+                try {
+                    await apiCall(`/restaurant/orders/${orderId}/status`, {
+                        method: 'PATCH',
+                        body: JSON.stringify({ status: newStatus })
+                    });
+                    this.className = `order-status-select status-${newStatus}`;
+                    if (['delivered', 'cancelled'].includes(newStatus)) {
+                        this.disabled = true;
+                    } else {
+                        this.disabled = false;
+                    }
+                    await loadOrders();
+                    await loadDrivers();
+                } catch (err) {
+                    alert('Failed to update status: ' + err.message);
+                    this.disabled = false;
+                    await loadOrders();
+                }
+            });
+        });
+
+        tbody.querySelectorAll('.assign-driver-btn').forEach(btn => {
+            btn.addEventListener('click', async function () {
+                const orderId = this.dataset.orderId;
+                const row = this.closest('tr');
+                const select = row.querySelector('.order-driver-select');
+                const deliveryPersonId = Number(select?.value);
+                if (!Number.isFinite(deliveryPersonId) || deliveryPersonId < 1) {
+                    alert('Select a delivery person first.');
+                    return;
+                }
+
+                this.disabled = true;
+                if (select) select.disabled = true;
+                try {
+                    await apiCall(`/restaurant/orders/${orderId}/assign-delivery`, {
+                        method: 'PATCH',
+                        body: JSON.stringify({ delivery_person_id: deliveryPersonId })
+                    });
+                    await loadOrders();
+                    await loadDrivers();
+                } catch (err) {
+                    alert('Failed to assign driver: ' + err.message);
+                    this.disabled = false;
+                    if (select) select.disabled = false;
+                }
+            });
+        });
+
+        tbody.querySelectorAll('.cancel-order-btn').forEach(btn => {
+            btn.addEventListener('click', async function () {
+                if (!confirm('Cancel this order?')) return;
+                const orderId = this.dataset.orderId;
+                this.disabled = true;
+                try {
+                    await apiCall(`/restaurant/orders/${orderId}/status`, {
+                        method: 'PATCH',
+                        body: JSON.stringify({ status: 'cancelled' })
+                    });
+                    await loadOrders();
+                    await loadDrivers();
+                } catch (err) {
+                    alert('Failed to cancel: ' + err.message);
+                    this.disabled = false;
+                }
+            });
+        });
+    } catch (err) {
+        tbody.innerHTML = `<tr><td colspan="8" style="text-align:center;color:#fc8181;padding:2rem;">${err.message}</td></tr>`;
+    }
+};
+
 // ---- Profile Form ----
 function prefillProfileForm(restaurant) {
     document.getElementById('prof-name').value = restaurant.name || '';
