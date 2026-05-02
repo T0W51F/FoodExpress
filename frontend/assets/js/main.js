@@ -1144,84 +1144,117 @@ function showAddToCartModal(item, restaurant = null) {
     
     // Reset quantity
     document.getElementById('item-quantity').value = 1;
-    
-    // Show modal
-    modal.classList.add('show');
+    document.getElementById('instructions').value = '';
     
     // Store current item and restaurant
     window.currentItem = item;
     window.currentRestaurant = restaurant;
-    
+
+    updateModalTotal();
+
     // Setup modal events
     setupModalEvents();
+
+    // Show modal
+    modal.classList.add('show');
 }
 
 // Setup Modal Events
 function setupModalEvents() {
     const modal = DOM.addToCartModal;
+    if (!modal || modal.dataset.eventsBound === 'true') {
+        return;
+    }
+
     const closeBtn = modal.querySelector('.modal-close');
     const decreaseBtn = document.getElementById('decrease-qty');
     const increaseBtn = document.getElementById('increase-qty');
     const quantityInput = document.getElementById('item-quantity');
     const addToCartBtn = document.getElementById('add-to-cart-btn');
-    const addonItems = modal.querySelectorAll('.addon-item');
-    
-    // Close modal
+
     closeBtn.addEventListener('click', () => {
         modal.classList.remove('show');
     });
-    
-    // Close modal when clicking outside
+
     modal.addEventListener('click', (e) => {
         if (e.target === modal) {
             modal.classList.remove('show');
+            return;
         }
-    });
-    
-    // Quantity controls
-    decreaseBtn.addEventListener('click', () => {
-        const current = parseInt(quantityInput.value);
-        if (current > 1) {
-            quantityInput.value = current - 1;
+
+        const addonItem = e.target.closest('.addon-item');
+        if (addonItem) {
+            addonItem.classList.toggle('selected');
             updateModalTotal();
+            return;
         }
-    });
-    
-    increaseBtn.addEventListener('click', () => {
-        const current = parseInt(quantityInput.value);
-        if (current < 20) {
-            quantityInput.value = current + 1;
-            updateModalTotal();
+
+        if (e.target.closest('#decrease-qty')) {
+            const current = parseInt(quantityInput.value, 10) || 1;
+            if (current > 1) {
+                quantityInput.value = current - 1;
+                updateModalTotal();
+            }
+            return;
+        }
+
+        if (e.target.closest('#increase-qty')) {
+            const current = parseInt(quantityInput.value, 10) || 1;
+            if (current < 20) {
+                quantityInput.value = current + 1;
+                updateModalTotal();
+            }
+            return;
+        }
+
+        if (e.target.closest('#add-to-cart-btn')) {
+            addItemToCart();
+            modal.classList.remove('show');
+            return;
         }
     });
 
-    quantityInput.addEventListener('change', () => {
-        let value = parseInt(quantityInput.value);
+    quantityInput.addEventListener('input', () => {
+        let value = parseInt(quantityInput.value, 10);
+        if (Number.isNaN(value)) {
+            value = 1;
+        }
         if (value < 1) value = 1;
         if (value > 20) value = 20;
         quantityInput.value = value;
         updateModalTotal();
     });
-    
-    // Addon selection
-    addonItems.forEach(item => {
-        item.addEventListener('click', () => {
-            item.classList.toggle('selected');
-            updateModalTotal();
-        });
+
+    quantityInput.addEventListener('change', () => {
+        let value = parseInt(quantityInput.value, 10);
+        if (Number.isNaN(value)) {
+            value = 1;
+        }
+        if (value < 1) value = 1;
+        if (value > 20) value = 20;
+        quantityInput.value = value;
+        updateModalTotal();
     });
-    
-    // Add to cart button
-    addToCartBtn.addEventListener('click', () => {
-        addItemToCart();
-        modal.classList.remove('show');
+
+    decreaseBtn.addEventListener('click', e => {
+        e.preventDefault();
     });
+
+    increaseBtn.addEventListener('click', e => {
+        e.preventDefault();
+    });
+
+    addToCartBtn.addEventListener('click', e => {
+        e.preventDefault();
+    });
+
+    modal.dataset.eventsBound = 'true';
 }
 
 // Update Modal Total
 function updateModalTotal() {
-    const quantity = parseInt(document.getElementById('item-quantity').value);
-    const itemPrice = window.currentItem.price;
+    const quantity = parseInt(document.getElementById('item-quantity').value, 10) || 1;
+    const itemPrice = Number(window.currentItem?.price || 0);
     const addonItems = document.querySelectorAll('.addon-item.selected');
     
     let addonsTotal = 0;
