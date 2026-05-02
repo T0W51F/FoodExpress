@@ -390,16 +390,18 @@ export async function createOrder(userId, payload) {
   }
 
   // Fetch authoritative prices from DB — never trust client-supplied totals
-  const foodIds = payload.items.map(item => Number(item.food_id));
+  const foodIds = payload.items.map(item => Number(item.food_id ?? item.id));
   const foods = await Food.find({ food_id: { $in: foodIds } }).lean();
   const foodMap = new Map(foods.map(f => [f.food_id, f]));
 
   let computedSubtotal = 0;
   const verifiedItems = [];
+  const restaurantIds = new Set();
   for (const item of payload.items) {
-    const food = foodMap.get(Number(item.food_id));
+    const foodId = Number(item.food_id ?? item.id);
+    const food = foodMap.get(foodId);
     if (!food) {
-      const error = new Error(`Invalid item: food_id ${item.food_id} not found`);
+      const error = new Error(`Invalid item: food_id ${item.food_id ?? item.id} not found`);
       error.status = 400;
       throw error;
     }
@@ -414,9 +416,40 @@ export async function createOrder(userId, payload) {
       error.status = 400;
       throw error;
     }
+    restaurantIds.add(Number(food.restaurant_id));
     computedSubtotal += food.price * qty;
-    verifiedItems.push({ ...item, quantity: qty, price: food.price, name: food.name, totalPrice: Math.round(food.price * qty * 100) / 100 });
+    verifiedItems.push({
+      ...item,
+      id: food.food_id,
+      food_id: food.food_id,
+      restaurant_id: food.restaurant_id,
+      quantity: qty,
+      price: food.price,
+      name: food.name,
+      image: food.image,
+      category: food.category,
+      vegetarian: Boolean(food.vegetarian),
+      spicy_level: Number(food.spicy_level || 0),
+      rating: Number(food.rating || 0),
+      totalPrice: Math.round(food.price * qty * 100) / 100
+    });
   }
+  if (restaurantIds.size !== 1) {
+    const error = new Error('All items in an order must belong to the same restaurant');
+    error.status = 400;
+    throw error;
+  }
+  const [restaurantId] = [...restaurantIds];
+  const restaurantRecord = await Restaurant.findOne({ restaurant_id: restaurantId }).lean();
+  if (!restaurantRecord) {
+    const error = new Error(`Restaurant with id ${restaurantId} not found`);
+    error.status = 400;
+    throw error;
+  }
+  const authoritativeRestaurant = serializeRestaurant(restaurantRecord);
+  verifiedItems.forEach(item => {
+    item.restaurant = authoritativeRestaurant;
+  });
   computedSubtotal = Number(computedSubtotal.toFixed(2));
   const deliveryFee = computedSubtotal >= 20 ? 0 : 2.99;
   const tax = Number(Number((computedSubtotal * 0.05).toFixed(2)));
@@ -460,7 +493,7 @@ export async function createOrder(userId, payload) {
     cancellation_reason: payload.cancellation_reason || '',
     assigned_delivery_person_id: payload.assigned_delivery_person_id || null,
     assigned_delivery_person_name: payload.assigned_delivery_person_name || '',
-    restaurant: payload.restaurant || null
+    restaurant: authoritativeRestaurant
   });
 
   // Atomically increment the global promo usage counter after the order is saved

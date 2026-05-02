@@ -1719,16 +1719,27 @@ async function placeOrder() {
     }
 
     const restaurantInfo = cart[0]?.restaurant || {};
+    const restaurantIds = [...new Set(cart.map(item => Number(item.restaurant_id ?? item.restaurant?.id)).filter(Number.isFinite))];
+    if (restaurantIds.length > 1) {
+        showNotification('Please place separate orders for each restaurant', 'error');
+        return;
+    }
 
     // Pick up any applied global promo code from localStorage
     const appliedPromos = JSON.parse(localStorage.getItem('appliedPromos') || '[]');
     const appliedPromoCode = appliedPromos.length > 0 ? appliedPromos[0] : null;
 
     const payload = {
-        items: cart,
+        items: cart.map(item => ({
+            ...item,
+            id: Number(item.id ?? item.food_id),
+            food_id: Number(item.food_id ?? item.id),
+            restaurant_id: Number(item.restaurant_id ?? item.restaurant?.id)
+        })),
         address: document.getElementById('delivery-address').value,
         paymentMethod: document.querySelector('input[name="payment"]:checked').value,
         restaurant: {
+            id: Number(restaurantInfo.id ?? restaurantInfo.restaurant_id ?? restaurantIds[0]),
             name: restaurantInfo.name || 'Unknown',
             image: restaurantInfo.image || 'restaurant.png',
             cuisine: restaurantInfo.cuisine || 'Unknown',
