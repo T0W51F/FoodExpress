@@ -314,3 +314,117 @@
         height: 180px;
     }
 }
+
+/* ── Order Review Section ───────────────────────────────── */
+.order-review-section {
+    border-top: 1px solid rgba(255, 255, 255, 0.07);
+    margin-top: 16px;
+    padding-top: 16px;
+}
+
+.review-section-header {
+    margin-bottom: 12px;
+}
+
+.review-section-title {
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(237, 232, 227, 0.45);
+}
+
+.review-items-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.review-item {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.review-item-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.review-item-name {
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: rgba(237, 232, 227, 0.8);
+    min-width: 0;
+    flex: 1;
+}
+
+.star-picker {
+    display: flex;
+    gap: 2px;
+    flex-shrink: 0;
+}
+
+.star-btn {
+    background: none;
+    border: none;
+    font-size: 1.35rem;
+    line-height: 1;
+    padding: 2px;
+    cursor: pointer;
+    color: rgba(237, 232, 227, 0.2);
+    transition: color 0.15s ease, transform 0.1s ease;
+}
+
+.star-btn:hover,
+.star-btn.filled {
+    color: #e85c2c;
+}
+
+.star-btn:active {
+    transform: scale(0.88);
+}
+
+.review-comment {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    color: rgba(237, 232, 227, 0.8);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem;
+    padding: 8px 12px;
+    resize: vertical;
+    min-height: 40px;
+    transition: border-color 0.2s;
+}
+
+.review-comment:focus {
+    outline: none;
+    border-color: rgba(232, 92, 44, 0.35);
+}
+
+.review-comment::placeholder {
+    color: rgba(237, 232, 227, 0.25);
+}
+
+.review-section-footer {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 14px;
+}
+
+.save-reviews-btn {
+    font-size: 0.85rem !important;
+    padding: 8px 20px !important;
+}
+
+.save-reviews-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    transform: none !important;
+    box-shadow: none !important;
+}
