@@ -187,6 +187,20 @@ p{line-height:1.75}
 .tl-content h4{font-size:1rem;margin-bottom:6px}
 .tl-content p{font-size:0.86rem;color:var(--text2);line-height:1.65}
 
+/* ── TEAM ───────────────────────────────────────────────── */
+.team-section{padding:80px 0}
+.team-header{text-align:center;max-width:520px;margin:0 auto 52px}
+.team-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.team-card{background:linear-gradient(140deg,rgba(17,21,25,0.9),rgba(10,12,15,0.84));border:1px solid rgba(255,255,255,0.08);border-radius:var(--r);padding:36px 28px;backdrop-filter:blur(16px);text-align:center;transition:var(--tr);position:relative;overflow:hidden}
+.team-card::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% -20%,rgba(232,92,44,0.09),transparent 60%);opacity:0;transition:opacity 0.35s ease;pointer-events:none}
+.team-card:hover{border-color:rgba(232,92,44,0.3);transform:translateY(-5px);box-shadow:0 24px 52px rgba(0,0,0,0.4)}
+.team-card:hover::after{opacity:1}
+.team-avatar{width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--pdk));display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-family:'Space Grotesk',sans-serif;font-size:1.6rem;font-weight:800;color:#fff;letter-spacing:-0.02em;box-shadow:0 0 0 4px rgba(232,92,44,0.14),0 8px 24px rgba(232,92,44,0.22);position:relative;z-index:1}
+.team-name{font-family:'Space Grotesk',sans-serif;font-size:1.1rem;font-weight:700;margin-bottom:6px;color:var(--text)}
+.team-dept{font-size:0.8rem;font-weight:500;color:var(--primary);letter-spacing:0.05em;text-transform:uppercase;margin-bottom:10px}
+.team-uni{font-size:0.82rem;color:var(--text3);line-height:1.5}
+.team-divider{width:32px;height:2px;background:linear-gradient(90deg,var(--primary),transparent);border-radius:1px;margin:14px auto}
+
 /* ── VALUES ─────────────────────────────────────────────── */
 .values-section{padding:80px 0}
 .values-header{text-align:center;max-width:520px;margin:0 auto 48px}
@@ -229,6 +243,7 @@ p{line-height:1.75}
     .split.reverse .split-visual{order:0}
     .features-grid{grid-template-columns:1fr}
     .values-grid{grid-template-columns:1fr}
+    .team-grid{grid-template-columns:1fr}
     .stats-grid{grid-template-columns:1fr 1fr}
     .timeline::before{left:24px;transform:none}
     .timeline-item{grid-template-columns:48px 1fr}
@@ -240,7 +255,7 @@ p{line-height:1.75}
     .cta-box{padding:40px 24px}
     .footer-inner{flex-direction:column;text-align:center}
     .section{padding:56px 0}
-    .features-section,.story-section,.values-section,.cta-section{padding:56px 0}
+    .features-section,.story-section,.team-section,.values-section,.cta-section{padding:56px 0}
 }
 @media(max-width:480px){
     .stats-grid{grid-template-columns:1fr 1fr}
@@ -478,6 +493,42 @@ p{line-height:1.75}
                             <h4>Reviews & Polish</h4>
                             <p>Item-level reviews, superadmin analytics, and a fully redesigned dark UI — the platform users love using.</p>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="section-divider">
+
+        <!-- TEAM -->
+        <section class="team-section">
+            <div class="container">
+                <div class="team-header" data-animate>
+                    <p class="section-label">The Team</p>
+                    <h2 class="section-title">Built by three</h2>
+                    <p class="section-body" style="margin:0 auto">Three undergraduate students who turned a class project into a fully functional food delivery platform.</p>
+                </div>
+                <div class="team-grid">
+                    <div class="team-card" data-animate data-animate-delay="1">
+                        <div class="team-avatar">HT</div>
+                        <div class="team-name">Hasin Ishraq Towsif</div>
+                        <div class="team-dept">ETE Department</div>
+                        <div class="team-divider"></div>
+                        <div class="team-uni">B.Sc. in Electronics &amp; Telecommunication Engineering</div>
+                    </div>
+                    <div class="team-card" data-animate data-animate-delay="2">
+                        <div class="team-avatar">BU</div>
+                        <div class="team-name">Md. Badar Uddin</div>
+                        <div class="team-dept">ETE Department</div>
+                        <div class="team-divider"></div>
+                        <div class="team-uni">B.Sc. in Electronics &amp; Telecommunication Engineering</div>
+                    </div>
+                    <div class="team-card" data-animate data-animate-delay="3">
+                        <div class="team-avatar">AC</div>
+                        <div class="team-name">Arnab Chakma</div>
+                        <div class="team-dept">ETE Department</div>
+                        <div class="team-divider"></div>
+                        <div class="team-uni">B.Sc. in Electronics &amp; Telecommunication Engineering</div>
                     </div>
                 </div>
             </div>
