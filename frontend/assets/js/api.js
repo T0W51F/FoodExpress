@@ -213,8 +213,9 @@ class APIService {
     }
 
     async submitOrderReviews(orderId, reviews) {
-        return this.request(`/orders/orders/${orderId}/reviews/`, {
+        return await this.request(`/orders/orders/${orderId}/reviews/`, {
             method: 'POST',
+            headers: { 'Authorization': `Bearer ${this.getAccessToken()}` },
             body: JSON.stringify({ reviews })
         });
     }
