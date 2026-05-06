@@ -147,6 +147,14 @@
     padding: 16px;
 }
 
+.order-mini-box,
+.order-info-box,
+.order-summary-box {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
 .order-total {
     color: #fff;
     font-size: 1.8rem;
