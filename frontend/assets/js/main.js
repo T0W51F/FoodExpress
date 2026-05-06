@@ -1389,6 +1389,47 @@ function renderOrderProgress(status) {
     `;
 }
 
+function buildReviewSectionHTML(order) {
+    const items = Array.isArray(order.items) ? order.items : [];
+    const existingReviews = Array.isArray(order.reviews) ? order.reviews : [];
+    const hasExistingReviews = existingReviews.length > 0;
+
+    const reviewItemsHTML = items.map(item => {
+        const existing = existingReviews.find(r => Number(r.food_id) === Number(item.id));
+        const selectedRating = existing ? Number(existing.rating) : 0;
+        const starsHTML = [1, 2, 3, 4, 5].map(val =>
+            `<button class="star-btn${selectedRating >= val ? ' filled' : ''}" data-value="${val}" type="button" aria-label="${val} star${val > 1 ? 's' : ''}">★</button>`
+        ).join('');
+
+        return `
+            <div class="review-item" data-food-id="${item.id}" data-review-id="${existing ? existing.review_id : ''}">
+                <div class="review-item-header">
+                    <span class="review-item-name">${item.name}</span>
+                    <div class="star-picker" data-selected="${selectedRating}">${starsHTML}</div>
+                </div>
+                <textarea class="review-comment" placeholder="Add a comment (optional)" rows="2">${existing ? (existing.comment || '') : ''}</textarea>
+            </div>
+        `;
+    }).join('');
+
+    return `
+        <div class="order-review-section">
+            <div class="review-section-header">
+                <span class="review-section-title">Rate your items</span>
+            </div>
+            <div class="review-items-list">${reviewItemsHTML}</div>
+            <div class="review-section-footer">
+                <button class="btn btn-primary save-reviews-btn"
+                        data-order-id="${order.id}"
+                        ${hasExistingReviews ? '' : 'disabled'}
+                        type="button">
+                    ${hasExistingReviews ? 'Update Reviews' : 'Save Reviews'}
+                </button>
+            </div>
+        </div>
+    `;
+}
+
 function buildOrderCardHTML(order, options = {}) {
     const { allowDelete = false } = options;
     const items = Array.isArray(order.items) ? order.items : [];
@@ -1443,6 +1484,7 @@ function buildOrderCardHTML(order, options = {}) {
                 ${allowDelete ? `<button class="btn btn-outline delete-history-btn" data-order-id="${order.id}" type="button"><i class="fas fa-trash"></i> Delete</button>` : ''}
                 <button class="btn btn-outline" type="button"><i class="fas fa-location-dot"></i> Details</button>
             </div>
+            ${order.status === 'delivered' ? buildReviewSectionHTML(order) : ''}
         </article>
     `;
 }
@@ -1565,6 +1607,79 @@ function renderOrderHistoryCollection(orders) {
                 if (typeof window.showNotification === 'function') {
                     window.showNotification(error.message || 'Failed to delete order history', 'error');
                 }
+            }
+        });
+    });
+
+    // ── Star picker interaction ─────────────────────────────
+    historyList.querySelectorAll('.star-picker').forEach(picker => {
+        const stars = Array.from(picker.querySelectorAll('.star-btn'));
+
+        function applyStarState(upTo) {
+            stars.forEach(s => {
+                const val = Number(s.dataset.value);
+                s.classList.toggle('filled', val <= upTo);
+            });
+        }
+
+        stars.forEach(star => {
+            star.addEventListener('mouseenter', () => {
+                applyStarState(Number(star.dataset.value));
+            });
+        });
+
+        picker.addEventListener('mouseleave', () => {
+            applyStarState(Number(picker.dataset.selected || 0));
+        });
+
+        stars.forEach(star => {
+            star.addEventListener('click', () => {
+                const val = Number(star.dataset.value);
+                picker.dataset.selected = val;
+                applyStarState(val);
+                const saveBtn = picker.closest('.order-card')?.querySelector('.save-reviews-btn');
+                if (saveBtn) saveBtn.disabled = false;
+            });
+        });
+    });
+
+    // ── Save reviews handler ────────────────────────────────
+    historyList.querySelectorAll('.save-reviews-btn').forEach(btn => {
+        btn.addEventListener('click', async () => {
+            const orderId = btn.dataset.orderId;
+            const card = btn.closest('.order-card');
+            if (!card) return;
+
+            const reviewItems = card.querySelectorAll('.review-item');
+            const reviews = [];
+            reviewItems.forEach(item => {
+                const foodId = Number(item.dataset.foodId);
+                const picker = item.querySelector('.star-picker');
+                const rating = Number(picker?.dataset.selected || 0);
+                const comment = (item.querySelector('.review-comment')?.value || '').trim();
+                if (rating > 0) {
+                    reviews.push({ food_id: foodId, rating, comment });
+                }
+            });
+
+            if (reviews.length === 0) {
+                showNotification('Please rate at least one item', 'warning');
+                return;
+            }
+
+            const originalLabel = btn.textContent.trim();
+            btn.disabled = true;
+            btn.textContent = 'Saving…';
+
+            try {
+                await api.submitOrderReviews(orderId, reviews);
+                showNotification('Reviews saved!', 'success');
+                btn.textContent = 'Update Reviews';
+                btn.disabled = false;
+            } catch (error) {
+                showNotification(error.message || 'Failed to save reviews', 'error');
+                btn.textContent = originalLabel;
+                btn.disabled = false;
             }
         });
     });
