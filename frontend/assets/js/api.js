@@ -211,7 +211,14 @@ class APIService {
             body: JSON.stringify(reviewData)
         });
     }
-    
+
+    async submitOrderReviews(orderId, reviews) {
+        return this.request(`/orders/orders/${orderId}/reviews/`, {
+            method: 'POST',
+            body: JSON.stringify({ reviews })
+        });
+    }
+
     // User Profile
     async getProfile() {
         return await this.request('/auth/profile/', {
