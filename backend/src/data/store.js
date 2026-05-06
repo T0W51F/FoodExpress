@@ -88,6 +88,18 @@ function inferPaymentStatus(paymentMethod = 'cash') {
   return normalized === 'cash' ? 'pending' : 'paid';
 }
 
+function serializeReview(review) {
+  return {
+    review_id: review.review_id,
+    food_id: review.food_id,
+    order_id: review.order_id,
+    rating: review.rating,
+    comment: review.comment,
+    created_at: review.createdAt,
+    updated_at: review.updatedAt
+  };
+}
+
 function serializeOrder(order) {
   return {
     id: order.order_id,
@@ -320,6 +332,67 @@ export async function searchRestaurants(query) {
   return listRestaurants({ q: query });
 }
 
+export async function getReviewsByOrder(userId, orderId) {
+  const reviews = await Review.find({
+    user_id: Number(userId),
+    order_id: String(orderId)
+  }).lean();
+  return reviews.map(serializeReview);
+}
+
+export async function upsertOrderReviews(userId, orderId, reviews) {
+  const order = await Order.findOne({
+    order_id: String(orderId),
+    user_id: Number(userId)
+  }).lean();
+
+  if (!order) {
+    const err = new Error('Order not found');
+    err.status = 404;
+    throw err;
+  }
+  if (order.status !== 'delivered') {
+    const err = new Error('Can only review delivered orders');
+    err.status = 400;
+    throw err;
+  }
+
+  const results = [];
+  for (const item of reviews) {
+    const ratingNum = Number(item.rating);
+    if (!Number.isInteger(ratingNum) || ratingNum < 1 || ratingNum > 5) {
+      const err = new Error('rating must be an integer between 1 and 5');
+      err.status = 422;
+      throw err;
+    }
+
+    const existing = await Review.findOne({
+      user_id: Number(userId),
+      order_id: String(orderId),
+      food_id: Number(item.food_id)
+    });
+
+    if (existing) {
+      existing.rating = ratingNum;
+      existing.comment = item.comment || '';
+      await existing.save();
+      results.push(serializeReview(existing));
+    } else {
+      const created = await Review.create({
+        review_id: await getNextSequence('reviews'),
+        user_id: Number(userId),
+        order_id: String(orderId),
+        food_id: Number(item.food_id),
+        rating: ratingNum,
+        comment: item.comment || ''
+      });
+      results.push(serializeReview(created));
+    }
+  }
+
+  return { reviews: results };
+}
+
 export async function addReview(review) {
   if (review.rating === undefined || review.rating === null || review.rating === '') {
     const error = new Error('rating is required');
@@ -371,9 +444,29 @@ export async function saveCart(userId, cart) {
 
 export async function listOrders(userId) {
   const results = await Order.find({ user_id: Number(userId) }).sort({ createdAt: -1 }).lean();
+
+  const deliveredIds = results
+    .filter(o => o.status === 'delivered')
+    .map(o => o.order_id);
+
+  const reviewsByOrder = {};
+  if (deliveredIds.length > 0) {
+    const allReviews = await Review.find({
+      user_id: Number(userId),
+      order_id: { $in: deliveredIds }
+    }).lean();
+    allReviews.forEach(r => {
+      if (!reviewsByOrder[r.order_id]) reviewsByOrder[r.order_id] = [];
+      reviewsByOrder[r.order_id].push(serializeReview(r));
+    });
+  }
+
   return {
     count: results.length,
-    results: results.map(serializeOrder)
+    results: results.map(order => ({
+      ...serializeOrder(order),
+      reviews: reviewsByOrder[order.order_id] || []
+    }))
   };
 }
 
