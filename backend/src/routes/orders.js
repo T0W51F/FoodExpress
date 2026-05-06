@@ -6,6 +6,7 @@ import {
   getOrderById,
   listOrders,
   saveCart,
+  upsertOrderReviews,
   validatePromoCode
 } from '../data/store.js';
 import { requireAuth } from '../middleware/auth.js';
@@ -65,6 +66,19 @@ router.delete('/orders/:id/', requireAuth, async (req, res, next) => {
   try {
     await deleteOrderById(req.user.user_id, req.params.id);
     res.status(204).send();
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.post('/orders/:id/reviews/', requireAuth, async (req, res, next) => {
+  try {
+    const { reviews } = req.body;
+    if (!Array.isArray(reviews) || reviews.length === 0) {
+      return res.status(400).json({ error: 'reviews must be a non-empty array' });
+    }
+    const result = await upsertOrderReviews(req.user.user_id, req.params.id, reviews);
+    res.json(result);
   } catch (error) {
     next(error);
   }
