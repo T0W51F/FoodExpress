@@ -682,6 +682,13 @@ loadOrders = async function loadOrdersWithDriverAssignment() {
 
         document.getElementById('stat-orders').textContent = orders.length;
 
+        const ACTIVE_STATUSES = ['pending', 'confirmed', 'preparing', 'out_for_delivery'];
+        const activeCount = orders.filter(o => ACTIVE_STATUSES.includes(o.status)).length;
+        const activeBadge = document.getElementById('active-orders-badge');
+        document.getElementById('stat-active-orders').textContent = activeCount;
+        activeBadge.textContent = activeCount;
+        activeBadge.style.display = activeCount > 0 ? 'inline-block' : 'none';
+
         if (!orders.length) {
             table.classList.add('hidden');
             empty.classList.remove('hidden');
