@@ -110,6 +110,7 @@ class APIService {
                 throw new Error(errorMessage);
             }
 
+            if (response.status === 204) return null;
             return await response.json();
         } catch (error) {
             clearTimeout(timeoutId);
