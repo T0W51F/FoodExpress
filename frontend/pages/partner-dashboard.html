@@ -706,25 +706,101 @@ h4 { font-size: 0.9rem; }
 
 /* Order status select (JS-rendered inside table rows) */
 .order-status-select {
-    background: rgba(255,255,255,0.06);
-    border: 1px solid var(--b2);
-    border-radius: 8px;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-color: rgba(18,22,30,0.96);
+    background-image: linear-gradient(45deg, transparent 50%, rgba(255,255,255,0.68) 50%), linear-gradient(135deg, rgba(255,255,255,0.68) 50%, transparent 50%);
+    background-position: calc(100% - 16px) calc(50% - 2px), calc(100% - 10px) calc(50% - 2px);
+    background-size: 6px 6px, 6px 6px;
+    background-repeat: no-repeat;
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 10px;
     color: var(--t0);
     font-size: 0.8rem;
-    padding: 5px 8px;
+    font-weight: 600;
+    padding: 8px 34px 8px 12px;
     font-family: inherit;
     cursor: pointer;
     outline: none;
-    transition: border-color 0.2s;
+    min-width: 150px;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.03);
+    transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
 }
-.order-status-select:focus { border-color: rgba(232,92,44,0.45); }
-.order-status-select:disabled { opacity: 0.5; cursor: default; }
+.order-status-select:hover {
+    background-color: rgba(24,29,39,0.98);
+    border-color: rgba(255,255,255,0.18);
+}
+.order-status-select:focus {
+    border-color: rgba(232,92,44,0.45);
+    box-shadow: 0 0 0 3px rgba(232,92,44,0.14);
+}
+.order-status-select:disabled {
+    opacity: 0.55;
+    cursor: default;
+    background-color: rgba(20,24,33,0.86);
+}
+.order-status-select option {
+    background: #12161e;
+    color: #f5f7fb;
+}
 .order-status-select.status-pending    { color: #fcd34d; }
 .order-status-select.status-confirmed  { color: var(--info); }
 .order-status-select.status-preparing  { color: var(--warn); }
 .order-status-select.status-out_for_delivery { color: var(--purple); }
 .order-status-select.status-delivered  { color: var(--ok); }
 .order-status-select.status-cancelled  { color: var(--err); }
+
+.order-driver-cell {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    min-width: 230px;
+}
+.order-driver-select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 100%;
+    background-color: rgba(18,22,30,0.96);
+    background-image: linear-gradient(45deg, transparent 50%, rgba(255,255,255,0.68) 50%), linear-gradient(135deg, rgba(255,255,255,0.68) 50%, transparent 50%);
+    background-position: calc(100% - 16px) calc(50% - 2px), calc(100% - 10px) calc(50% - 2px);
+    background-size: 6px 6px, 6px 6px;
+    background-repeat: no-repeat;
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 10px;
+    color: #f5f7fb;
+    font-size: 0.8rem;
+    font-weight: 500;
+    padding: 8px 34px 8px 12px;
+    font-family: inherit;
+    outline: none;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.03);
+    transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+}
+.order-driver-select:hover {
+    background-color: rgba(24,29,39,0.98);
+    border-color: rgba(255,255,255,0.18);
+}
+.order-driver-select:focus {
+    border-color: rgba(232,92,44,0.45);
+    box-shadow: 0 0 0 3px rgba(232,92,44,0.14);
+}
+.order-driver-select:disabled {
+    opacity: 0.5;
+    cursor: default;
+    background-color: rgba(20,24,33,0.86);
+    color: rgba(241,245,249,0.56);
+}
+.order-driver-select option {
+    background: #12161e;
+    color: #f5f7fb;
+}
+.order-driver-meta {
+    font-size: 0.72rem;
+    color: #94a3b8;
+    line-height: 1.25;
+}
 
 /* Driver/Promo status badges (JS-rendered) */
 .status-badge {

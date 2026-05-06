@@ -718,11 +718,11 @@ loadOrders = async function loadOrdersWithDriverAssignment() {
                         </select>
                     </td>
                     <td>
-                        <div style="display:flex;flex-direction:column;gap:6px;min-width:180px">
+                        <div class="order-driver-cell">
                             <select class="order-driver-select" data-order-id="${order.order_id}" ${isTerminal || !drivers.length ? 'disabled' : ''}>
                                 ${driverOptions}
                             </select>
-                            <span style="font-size:0.72rem;color:#94a3b8">${order.assigned_delivery_person_name ? `Assigned: ${escHtml(order.assigned_delivery_person_name)}` : 'Not assigned'}</span>
+                            <span class="order-driver-meta">${order.assigned_delivery_person_name ? `Assigned: ${escHtml(order.assigned_delivery_person_name)}` : 'Not assigned'}</span>
                         </div>
                     </td>
                     <td style="color:#64748b;font-size:0.8rem">${formatDate(order.created_at)}</td>
