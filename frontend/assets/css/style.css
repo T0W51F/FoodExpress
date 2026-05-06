@@ -3122,6 +3122,8 @@ body.site-dark .auth-right .auth-footer {
     bottom: 28px;
     right: 28px;
     display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
     align-items: center;
     gap: 12px;
     padding: 14px 18px;
@@ -3136,8 +3138,9 @@ body.site-dark .auth-right .auth-footer {
     transform: translateY(16px);
     opacity: 0;
     transition: opacity 0.3s ease, transform 0.3s ease;
+    width: fit-content;
     max-width: 340px;
-    backdrop-filter: blur(12px);
+    height: fit-content;
 }
 .notification.show { opacity: 1; transform: translateY(0); }
 .notification.success { border-color: rgba(0,184,148,0.4); }
