@@ -1091,7 +1091,7 @@ export async function getRestaurantAdminDashboard(restaurant_id) {
     throw error;
   }
 
-  const ordersByStatus = { pending: 0, preparing: 0, delivering: 0, delivered: 0, cancelled: 0 };
+  const ordersByStatus = { pending: 0, confirmed: 0, preparing: 0, out_for_delivery: 0, delivered: 0, cancelled: 0 };
   let totalRevenue = 0;
   orders.forEach(order => {
     const s = order.status || 'pending';
@@ -1104,7 +1104,7 @@ export async function getRestaurantAdminDashboard(restaurant_id) {
     stats: {
       total_foods: foods.length,
       total_orders: orders.length,
-      active_orders: ordersByStatus.pending + ordersByStatus.preparing + ordersByStatus.delivering,
+      active_orders: ordersByStatus.pending + ordersByStatus.confirmed + ordersByStatus.preparing + ordersByStatus.out_for_delivery,
       total_revenue: Number(totalRevenue.toFixed(2)),
       order_status_breakdown: ordersByStatus
     },
