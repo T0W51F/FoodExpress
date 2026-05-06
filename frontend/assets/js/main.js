@@ -3,6 +3,15 @@ function isRestaurantAdmin() {
     return user.role === 'restaurant_admin' || user.role === 'superadmin';
 }
 
+function escapeHTML(str) {
+    return String(str ?? '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+}
+
 // DOM Elements
 const DOM = {
     menuToggle: document.querySelector('.menu-toggle'),
@@ -1404,10 +1413,10 @@ function buildReviewSectionHTML(order) {
         return `
             <div class="review-item" data-food-id="${item.id}" data-review-id="${existing ? existing.review_id : ''}">
                 <div class="review-item-header">
-                    <span class="review-item-name">${item.name}</span>
+                    <span class="review-item-name">${escapeHTML(item.name)}</span>
                     <div class="star-picker" data-selected="${selectedRating}">${starsHTML}</div>
                 </div>
-                <textarea class="review-comment" placeholder="Add a comment (optional)" rows="2">${existing ? (existing.comment || '') : ''}</textarea>
+                <textarea class="review-comment" placeholder="Add a comment (optional)" rows="2">${existing ? escapeHTML(existing.comment || '') : ''}</textarea>
             </div>
         `;
     }).join('');
@@ -1454,10 +1463,10 @@ function buildOrderCardHTML(order, options = {}) {
             </div>
 
             <div class="order-restaurant-row">
-                <img src="../assets/images/foods/${restaurantImage}" alt="${order.restaurant}">
+                <img src="../assets/images/foods/${escapeHTML(restaurantImage)}" alt="${escapeHTML(order.restaurant)}">
                 <div class="order-restaurant-copy">
-                    <h4>${order.restaurant}</h4>
-                    <p>${order.cuisine || 'Restaurant'}</p>
+                    <h4>${escapeHTML(order.restaurant)}</h4>
+                    <p>${escapeHTML(order.cuisine || 'Restaurant')}</p>
                 </div>
             </div>
 
@@ -1465,7 +1474,7 @@ function buildOrderCardHTML(order, options = {}) {
                 <div class="order-items">
                     ${visibleItems.map(item => `
                         <div class="order-line">
-                            <span>${item.quantity || 1}x ${item.name}</span>
+                            <span>${item.quantity || 1}x ${escapeHTML(item.name)}</span>
                             <strong>${formatOrderCurrency(item.totalPrice || ((item.price || 0) * (item.quantity || 0)))}</strong>
                         </div>
                     `).join('')}
@@ -1482,7 +1491,6 @@ function buildOrderCardHTML(order, options = {}) {
             <div class="order-actions">
                 <button class="btn btn-outline reorder-btn" data-order-id="${order.id}"><i class="fas fa-redo"></i> Reorder</button>
                 ${allowDelete ? `<button class="btn btn-outline delete-history-btn" data-order-id="${order.id}" type="button"><i class="fas fa-trash"></i> Delete</button>` : ''}
-                <button class="btn btn-outline" type="button"><i class="fas fa-location-dot"></i> Details</button>
             </div>
             ${order.status === 'delivered' ? buildReviewSectionHTML(order) : ''}
         </article>
@@ -1556,7 +1564,7 @@ function renderOrdersCollection(orders) {
     DOM.noOrders.style.display = 'none';
     DOM.ordersList.innerHTML = orders.map(buildOrderCardHTML).join('');
 
-    document.querySelectorAll('.reorder-btn').forEach(btn => {
+    DOM.ordersList.querySelectorAll('.reorder-btn').forEach(btn => {
         btn.addEventListener('click', e => {
             e.preventDefault();
             reorder(btn.dataset.orderId);
@@ -1580,7 +1588,7 @@ function renderOrderHistoryCollection(orders) {
     noHistory.style.display = 'none';
     historyList.innerHTML = orders.map(order => buildOrderCardHTML(order, { allowDelete: true })).join('');
 
-    document.querySelectorAll('.reorder-btn').forEach(btn => {
+    historyList.querySelectorAll('.reorder-btn').forEach(btn => {
         btn.addEventListener('click', e => {
             e.preventDefault();
             reorder(btn.dataset.orderId);

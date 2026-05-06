@@ -4,7 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Orders — FoodExpress</title>
-    <link rel="stylesheet" href="../assets/css/orders.css?v=20260401-0015">
+    <script>
+    (function () {
+        var token = localStorage.getItem('access_token');
+        var loggedIn = localStorage.getItem('userLoggedIn') === 'true';
+        if (!token || !loggedIn) { window.location.href = 'login.html?next=orders.html'; }
+    })();
+    </script>
+    <link rel="stylesheet" href="../assets/css/orders.css?v=20260506-0001">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -103,7 +110,7 @@ h3{font-size:1.2rem}h4{font-size:1rem}
 @media(max-width:768px){
     .navbar .container{height:62px}
     .nav-links,.nav-links.nav-ready{display:none}
-    .auth-buttons,.auth-buttons.auth-ready{display:none}
+    .nav-links.show{display:flex;flex-direction:column;position:fixed;top:62px;left:0;right:0;background:rgba(6,7,10,0.97);backdrop-filter:blur(24px);border-bottom:1px solid var(--border);padding:16px 20px 20px;gap:4px;z-index:999}
     .menu-toggle{display:block}
 }
     </style>
@@ -186,12 +193,7 @@ h3{font-size:1.2rem}h4{font-size:1rem}
                 <i class="fas fa-history"></i>
                 <h3>No Order History Yet</h3>
                 <p>Finished orders will move here automatically.</p>
-            </div>
-
-            <div class="load-more" hidden>
-                <button class="btn btn-outline" id="load-more-orders">
-                    <i class="fas fa-history"></i> Load More Orders
-                </button>
+                <a href="restaurants.html" class="btn btn-primary">Order Now</a>
             </div>
         </section>
     </main>
@@ -207,15 +209,6 @@ h3{font-size:1.2rem}h4{font-size:1rem}
     <script src="../assets/js/api.js"></script>
     <script src="../assets/js/main.js"></script>
     <script>
-    // Auth guard: redirect unauthenticated visitors before any page content loads
-    (function () {
-        const token = localStorage.getItem('access_token');
-        const loggedIn = localStorage.getItem('userLoggedIn') === 'true';
-        if (!token || !loggedIn) {
-            window.location.href = 'login.html?next=orders.html';
-        }
-    })();
-
     document.addEventListener('DOMContentLoaded', function() {
         checkLoginStatus();
         loadOrders();
