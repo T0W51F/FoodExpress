@@ -1,6 +1,6 @@
 function isRestaurantAdmin() {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
-    return user.role === 'restaurant_admin';
+    return user.role === 'restaurant_admin' || user.role === 'superadmin';
 }
 
 // DOM Elements
@@ -267,8 +267,8 @@ function checkLoginStatus() {
         el.style.display = hidePartnerLink ? 'none' : '';
     });
 
-    // Restaurant admins cannot order — hide cart icon from navbar
-    if (isLoggedIn && user.role === 'restaurant_admin') {
+    // Restaurant admins and superadmins cannot order — hide cart icon from navbar
+    if (isLoggedIn && isRestaurantAdmin()) {
         document.querySelectorAll('.cart-icon').forEach(el => { el.style.display = 'none'; });
     }
 
