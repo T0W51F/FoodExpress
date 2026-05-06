@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+        (function(){var u=JSON.parse(localStorage.getItem('user')||'{}');if(u.role==='restaurant_admin')window.location.replace('partner-dashboard.html');})();
+    </script>
     <title>Your Cart — FoodExpress</title>
     <link rel="stylesheet" href="../assets/css/style.css">
     <link rel="stylesheet" href="../assets/css/cart.css?v=20260331-2230">

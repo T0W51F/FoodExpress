@@ -1,3 +1,8 @@
+function isRestaurantAdmin() {
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    return user.role === 'restaurant_admin';
+}
+
 // DOM Elements
 const DOM = {
     menuToggle: document.querySelector('.menu-toggle'),
@@ -261,6 +266,11 @@ function checkLoginStatus() {
     document.querySelectorAll('.partner-nav-link').forEach(el => {
         el.style.display = hidePartnerLink ? 'none' : '';
     });
+
+    // Restaurant admins cannot order — hide cart icon from navbar
+    if (isLoggedIn && user.role === 'restaurant_admin') {
+        document.querySelectorAll('.cart-icon').forEach(el => { el.style.display = 'none'; });
+    }
 
     bindUserMenuState();
 
@@ -660,6 +670,7 @@ async function loadPopularFoods() {
         const data = await response.json();
         const popular = (data.results || []).slice(0, 6);
 
+        const noCartForAdmin = isRestaurantAdmin();
         DOM.popularFoods.innerHTML = popular.map(food => `
             <div class="card-glow" data-animate>
                 <div class="food-card" data-id="${food.id}">
@@ -669,7 +680,7 @@ async function loadPopularFoods() {
                         <p class="food-description">${food.description}</p>
                         <div class="food-tags">${food.vegetarian ? '<span class="food-tag vegetarian">Vegetarian</span>' : ''}</div>
                         <div class="food-rating"><i class="fas fa-star"></i><span>${food.rating}</span></div>
-                        <button class="btn btn-primary add-to-cart-btn" data-id="${food.id}"><i class="fas fa-plus"></i> Add to Cart</button>
+                        ${noCartForAdmin ? '' : `<button class="btn btn-primary add-to-cart-btn" data-id="${food.id}"><i class="fas fa-plus"></i> Add to Cart</button>`}
                     </div>
                 </div>
             </div>
@@ -963,6 +974,10 @@ function createFoodCardHTML(item) {
         item.vegetarian ? '<span class="food-tag vegetarian">Vegetarian</span>' : '',
         item.spicy_level > 1 ? '<span class="food-tag spicy">Spicy</span>' : ''
     ].filter(Boolean).join('');
+    const addToCartBtn = isRestaurantAdmin() ? '' : `
+                <button class="btn btn-primary add-to-cart-btn" data-id="${item.id}">
+                    <i class="fas fa-plus"></i> Add to Cart
+                </button>`;
 
     return `
         <div class="food-card" data-id="${item.id}">
@@ -979,10 +994,7 @@ function createFoodCardHTML(item) {
                 <div class="food-rating">
                     <i class="fas fa-star"></i>
                     <span>${item.rating ?? 4.5}</span>
-                </div>
-                <button class="btn btn-primary add-to-cart-btn" data-id="${item.id}">
-                    <i class="fas fa-plus"></i> Add to Cart
-                </button>
+                </div>${addToCartBtn}
             </div>
         </div>
     `;
@@ -1268,7 +1280,12 @@ function updateModalTotal() {
 
 // Add Item to Cart
 function addItemToCart() {
-    // Auth guard — must be logged in to add items
+    // Auth guard — must be logged in and not a restaurant admin to add items
+    if (isRestaurantAdmin()) {
+        DOM.addToCartModal?.classList.remove('show');
+        showNotification('Restaurant admins cannot order food', 'error');
+        return;
+    }
     if (localStorage.getItem('userLoggedIn') !== 'true') {
         DOM.addToCartModal?.classList.remove('show');
         showNotification('Please login to add items to cart', 'error');
