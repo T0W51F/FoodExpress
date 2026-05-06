@@ -13,4 +13,7 @@ const reviewSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+reviewSchema.index({ user_id: 1, order_id: 1 });
+reviewSchema.index({ user_id: 1, order_id: 1, food_id: 1 });
+
 export const Review = mongoose.model('Review', reviewSchema);

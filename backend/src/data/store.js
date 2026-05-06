@@ -357,8 +357,20 @@ export async function upsertOrderReviews(userId, orderId, reviews) {
     throw err;
   }
 
+  const orderFoodIds = (order.items || []).map(i => Number(i.id));
+
   const results = [];
   for (const item of reviews) {
+    if (!item.food_id || Number.isNaN(Number(item.food_id))) {
+      const err = new Error('food_id is required and must be a number');
+      err.status = 422;
+      throw err;
+    }
+    if (!orderFoodIds.includes(Number(item.food_id))) {
+      const err = new Error(`food_id ${item.food_id} does not belong to this order`);
+      err.status = 422;
+      throw err;
+    }
     const ratingNum = Number(item.rating);
     if (!Number.isInteger(ratingNum) || ratingNum < 1 || ratingNum > 5) {
       const err = new Error('rating must be an integer between 1 and 5');
